@@ -1,0 +1,10 @@
+<script>
+    let num = 60;
+    let count = setInterval(function () {
+        console.log(--num)
+        if (num <= 0) {
+            clearInterval(count);
+            close();
+        }
+    }, 1000);
+</script>

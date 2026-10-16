@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="title" content="FlexTV">
+  <meta name="author" content="FlexTV">
+  <meta name="description" content="FlexTV">
+  <meta name="keywords" content="FlexTV">
+  <meta property="og:title" content="FlexTV">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="shortcut icon" href="" type="image/x-icon">
+  <title>FlexTV 방송도우미</title>
+
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../css/help_ui.css?202603061141">
+
+  <script type="text/javascript" src="../../js/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="../../js/lodash.min.js?20241223"></script>
+  <script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="../../js/Sortable.js"></script>
+  <script type="text/javascript" src="../../js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../../js/nouislider.min.js"></script>
+  <script type="text/javascript" src="../../js/spectrum.js"></script>
+  <script type="text/javascript" src="../../js/help_ui.js?20100404"></script>
+  <script type="text/javascript" src="../../js/loading-bar.min.js?20100404"></script>
+  <script type="text/javascript" src="../../js/eventlistener.js?202508241249"></script>
+
+  <script src="../../customjs/global.js?20250305"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js"
+    integrity="sha512-uElffqRAo44n9cqo42itgRMY0L0zNZWEj3RGTQwyQsITiz4CB6rALOu1/S4O5iy/vFTMNs8gmTpDXB8mfQpjOg=="
+    crossorigin="anonymous"></script>
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../../demo/mock.js"></script>
+</head>
+
+<body style="background-color:rgba(240, 6, 6, 0)">
+  <div id="popWinBox">
+    <!-- 콘텐츠 삽입 Start -->
+
+    <!-- 목표치 -->
+    <!-- goal box start -->
+    <div class="chat-box display-box-area" style="background-color:rgba(240, 6, 6, 0)">
+      <div class="honeypot-bar-area" style=" visibility: visible;">
+        <!-- 꿀단지 시작 -->
+        <div class="ldHoneypot align-items-center justify-content-center w-100 h-100 position-relative">
+          <!-- svg image(꿀이 차오르는 honey_path를 제어를 위해 svg를 삽입) -->
+          <svg id="honey-jar" class="d-block w-auto" style="height: 100%;" alt="honey pot"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 36.78 39.28">
+            <defs>
+              <clipPath id="clippath">
+                <path id="honey_mask_클리핑_패스_"
+                  d="M32.15,11.07c-.14-.16-.28-.33-.41-.51-.51-.7-1.18-1.14-1.9-1.14H6.92c-.73,0-1.4.45-1.9,1.16-.13.18-.26.35-.41.51-3.5,3.96-3.11,11.11,1.11,20.14.81,1.74,1.97,2.95,3.23,3.42,2.99,1.07,6.08,1.61,9.18,1.61,3.16,0,6.4-.57,9.67-1.69,1.27-.42,2.49-1.68,3.33-3.39,4.19-9.06,4.55-16.21,1.03-20.11h0Z"
+                  fill="none" />
+              </clipPath>
+            </defs>
+            <path id="bottle_패스_"
+              d="M33.02,32.77c-1.1,2.24-2.76,4.08-4.69,4.72-6.87,2.36-13.52,2.36-19.96.07-1.93-.71-3.5-2.48-4.55-4.72C-2.83,18.58.71,11.56,3.17,8.78c.71-.8,1.2-1.9,1.39-3.12.03-.17.05-.35.07-.53.01-.2.02-.38.02-.58l-.96-3.06s0-.08.01-.12c0-.16.03-.31.08-.45.16-.55.56-.93,1.03-.93h26.85c.47,0,.87.38,1.03.93.05.14.08.29.08.45,0,.04,0,.08,0,.12l-.72,2.95c0,.24,0,.46.04.68,0,.18.04.35.07.52.19,1.21.69,2.28,1.41,3.08,2.46,2.73,6.05,9.74-.55,24.04Z"
+              fill="#e4e3ff" />
+            <!-- 꿀 -------->
+            <g clip-path="url(#clippath)">
+              <polygon id="honey_path" class="honey_path" points="1.88 37.25 35.03 37.21 35.15 8.61 2 8.66 1.88 37.25"
+                fill="#f9b938" />
+            </g>
+            <path id="bottle_light_컴파운드_패스_"
+              d="M4.61,23.24c-.33,0-.62-.29-.72-.72-1.26-5.68.09-8.71,1.45-10.24.33-.35.8-.27,1.05.17.25.42.21,1.03-.09,1.38-1.47,1.66-1.8,4.39-.98,8.11.12.53-.11,1.1-.5,1.26-.07.03-.14.04-.22.04ZM5.93,28.03c-.29,0-.55-.22-.68-.58-.16-.44-.3-.89-.44-1.35-.17-.51,0-1.11.39-1.33.38-.22.82.01.99.52,0,.01,0,.02.01.03.13.43.27.85.42,1.26.18.5.02,1.11-.36,1.35-.1.06-.21.1-.32.1Z"
+              fill="#fff" isolation="isolate" opacity=".3" />
+            <path id="bottle_shade_패스_"
+              d="M33.02,32.77c-1.1,2.24-2.76,4.08-4.69,4.72-6.87,2.36-13.52,2.36-19.96.07-1.66-.62-3.06-2.02-4.09-3.84.74.76,1.57,1.32,2.48,1.67,6.44,2.3,13.09,2.3,19.96-.06,1.93-.64,3.59-2.48,4.69-4.72,5.5-11.93,3.93-18.77,1.82-22.3.11.16.22.3.35.45,2.46,2.73,6.05,9.74-.55,24.04Z"
+              fill="#d0d0f7" />
+            <path id="bottle_top_line_컴파운드_패스_"
+              d="M32.77,1.49l-.14.58H3.86s-.17-.57-.17-.57c0-.15-.02-.22.05-.48h28.96s.03.11.05.2l.02.28ZM32.09,3.8H4.41c-.04-.14-.03-.09-.08-.24l-.25-.81h28.38l-.13.51c-.02.19-.1.32-.12.54h-.12Z"
+              fill="#d0d0f7" isolation="isolate" opacity=".5" />
+            <path id="bottle_upside_light_컴파운드_패스_"
+              d="M28.96,6.03h-4.01c-.32-.01-.56-.28-.55-.6.01-.3.25-.54.55-.55h4.01c.32.01.56.28.55.6-.01.3-.25.54-.55.55ZM23.37,6.03h-.59c-.32-.01-.56-.28-.55-.6.01-.3.25-.54.55-.55h.59c.32.01.56.28.55.6-.01.3-.25.54-.55.55Z"
+              fill="#fff" isolation="isolate" opacity=".5" />
+          </svg>
+          <!-- 텍스트 부분 ----------------------------------------------->
+          <div class="label-area position-absolute text-align-center"
+            style="top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; white-space: nowrap;">
+            <div id="main_text" class="main-title mt-3 mb-2">
+              <!-- 꿀단지(2개) -->
+            </div>
+            <div id="sub_text"  class="sub-title">
+              <!-- 1000개 (10%) -->
+            </div>
+          </div>
+        </div>
+        <!-- 꿀단지 끝 -->
+      </div>
+    </div>
+  </div>
+
+  <script src="../../customjs/honeypotLoadingBar.js?202603112035"></script>
+  <script src="../win_honeypot.js?202603061141"></script>
+</body>
+
+</html>

@@ -1,0 +1,1140 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <title>FlexTV 도우미</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/help_ui.css?202506221531">
+
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="js/flipclock.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="demo/mock.js"></script>
+
+    <style>
+        body {
+            font-family: 'NanumGothic';
+            background-color: #1d2331;
+            overflow-y: auto
+        }
+
+        a.link {
+            font-family: 'NanumGothic';
+            text-decoration: underline
+        }
+
+        table td {
+            border: 1px solid #ddd
+        }
+
+        .info-wrap {
+            width: 1600px;
+            margin: 50px auto;
+            padding: 50px 40px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        .title {
+            font-size: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        .box-sam {
+            padding: 10px;
+            background-color: #1d2331
+        }
+
+        .box-sam li {
+            color: #fff
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid #333
+        }
+
+        .nav-tabs .nav-link {
+            font-size: 18px;
+            font-weight: normal;
+            padding: 10px 50px;
+        }
+
+        .nav-tabs .nav-link:hover {
+            border-color: 0;
+            background-color: #f4f4f4
+        }
+
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link.active {
+            font-weight: bold;
+            border-color: #333 #333 #fff;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            clockType1();
+            clockType2();
+            clockType3();
+        });
+
+        function clockType1() {
+            var clockT1;
+            clockT1 = $('.clock').FlipClock({
+                clockFace: 'TwentyFourHourClock',
+                autoStart: true
+            });
+        }
+
+        function clockType2() {
+            var clockT1;
+            clockT1 = $('.clock2').FlipClock({
+                clockFace: 'TwentyFourHourClock',
+                autoStart: true
+            });
+        }
+
+        function clockType3() {
+            var clockT1;
+            clockT1 = $('.clock3').FlipClock({
+                clockFace: 'TwentyFourHourClock',
+                autoStart: true
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col align-self-start">
+
+            </div>
+            <div class="col align-self-center">
+                <button type="button" class="btn btn-outline-warning btn-lg" onclick="onLoginClicked()" style="margin-top:100px;">FlexTV 로그인</button>
+            </div>
+            <div class="col align-self-end">
+
+            </div>
+        </div>
+    </div>
+    <div class="info-wrap">
+        <h1 class="title">FlexTV 퍼블리싱 작업 현황 및 가이드</h1>
+        <div class="info-cont mt-5">
+            <div class="row">
+                <div class="col-2">
+                    <div class="nav flex-column nav-pills" id="nav-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="modi-tab" data-toggle="pill" href="#info-modify" role="tab" aria-controls="page-tab" aria-selected="true">수정/추가 이력</a>
+                        <a class="nav-link" id="page-tab" data-toggle="pill" href="#info-page" role="tab" aria-controls="page-tab" aria-selected="false">페이지</a>
+                        <a class="nav-link" id="compl-tab" data-toggle="pill" href="#info-compl" role="tab" aria-controls="compl-tab" aria-selected="false">완료/미완료</a>
+                        <a class="nav-link " id="class-tab" data-toggle="pill" href="#info-class" role="tab" aria-controls="class-tab" aria-selected="true">기능별 클래스 적용</a>
+                        <a class="nav-link" id="plugin-tab" data-toggle="pill" href="#info-plugin" role="tab" aria-controls="plugin-tab" aria-selected="false">사용한 라이브러리</a>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div class="tab-content" id="nav-pills-tabContent">
+                        <!-- page tab start -->
+                        <div class="tab-pane fade show active" id="info-modify" role="tabpanel" aria-labelledby="info-modify-tab">
+                            <table class="table text-center table-hover">
+                                <colgroup>
+                                    <col style="width:5%">
+                                    <col style="width:10%">
+                                    <col style="width:15%">
+                                    <col style="width:30%">
+                                    <col style="width:40%">
+                                </colgroup>
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">유형</th>
+                                        <th scope="col">날짜</th>
+                                        <th scope="col">내용</th>
+                                        <th scope="col">수정파일</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>수정</td>
+                                        <td>2021-01-05</td>
+                                        <td class="text-left">
+                                            <ul>
+                                                <li>1. 챗팅리스트 하단 출력 및 스크롤 하단 고정<br>(페이지 내 스크립트 추가)</li>
+                                                <li>2. 스크롤시 미리보기 위치 변경</li>
+                                            </ul>
+                                        </td>
+                                        <td class="text-left">
+                                            <ul>
+                                                <li>1. pop_win_chat_scroll.html</li>
+                                                <li>2. help_ui.css</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>수정</td>
+                                        <td>2021-01-03</td>
+                                        <td class="text-left">
+                                            <ul>
+                                                <li>각 화면별 화면보기 팝업 추가</li>
+                                                <li>1. pop_win_chat.html</li>
+                                                <li>2. pop_win_noti.html</li>
+                                                <li>3. pop_win_gift.html</li>
+                                                <li>4. pop_win_goal.html</li>
+                                                <li>5. pop_win_clock.html</li>
+                                            </ul>
+                                        </td>
+                                        <td class="text-left">
+                                            <ul>
+                                                <li>help_ui.css</li>
+                                                <li>pop_win_chat.html, pop_win_noti.html, pop_win_gift.html, pop_win_goal.html, pop_win_clock.html</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>수정/추가</td>
+                                        <td>2020-12-30</td>
+                                        <td class="text-left">
+                                            <ul>
+                                                <li>1. 그라디언트 컬러 수정, 닉네임 랜덤색 추가</li>
+                                                <li>2. 순위메달 아이콘 변경</li>
+                                                <li>3. 시계 디자인 테마 추가</li>
+                                            </ul>
+                                        </td>
+                                        <td class="text-left">
+                                            <ul>
+                                                <li>1. help_ui.css</li>
+                                                <li>2. gift.html, help_ui.css, image</li>
+                                                <li>3. clock.html, help_ui.css, help_ui.js, fonts</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- page tab start -->
+                        <div class="tab-pane fade" id="info-page" role="tabpanel" aria-labelledby="info-page-tab">
+                            <table class="table text-center table-hover">
+                                <colgroup>
+                                    <col style="width:10%">
+                                    <col style="width:35%">
+                                    <col style="width:35%">
+                                    <col style="width:20%">
+                                </colgroup>
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">페이지명</th>
+                                        <th scope="col">파일명</th>
+                                        <th scope="col">완료여부</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row">1</td>
+                                        <td>채팅</td>
+                                        <td><a href="view/chat.html" target="_blank" class="link">chat.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">2</td>
+                                        <td>알림</td>
+                                        <td><a href="view/noti.html" target="_blank" class="link">noti.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">3</td>
+                                        <td>목표치</td>
+                                        <td><a href="view/goal.html" target="_blank" class="link">goal.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">4</td>
+                                        <td>후원자막</td>
+                                        <td><a href="view/gift.html" target="_blank" class="link">gift.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">5</td>
+                                        <td>시계</td>
+                                        <td><a href="view/clock.html" target="_blank" class="link">clock.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">6</td>
+                                        <td>윈도우팝업 - 채팅</td>
+                                        <td><a href="view/pop_win_chat.html" target="_blank" class="link">pop_win_chat.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">7</td>
+                                        <td>윈도우팝업 - 알림</td>
+                                        <td><a href="view/pop_win_noti.html" target="_blank" class="link">pop_win_noti.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">8</td>
+                                        <td>윈도우팝업 - 목표치</td>
+                                        <td><a href="view/pop_win_goal.html" target="_blank" class="link">pop_win_goal.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">9</td>
+                                        <td>윈도우팝업 - 후원자막</td>
+                                        <td><a href="view/pop_win_gift.html" target="_blank" class="link">pop_win_gift.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">10</td>
+                                        <td>윈도우팝업 - 시계</td>
+                                        <td><a href="view/pop_win_clock.html" target="_blank" class="link">pop_win_clock.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">11</td>
+                                        <td>윈도우팝업 - 스크롤 수정 샘플</td>
+                                        <td><a href="view/pop_win_chat_scroll.html" target="_blank" class="link">pop_win_chat_scroll.html</a></td>
+                                        <td>완료</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //page tab end -->
+
+                        <!-- compl tab start -->
+                        <div class="tab-pane fade" id="info-compl" role="tabpanel" aria-labelledby="info-compl-tab">
+                            <table class="table text-center table-hover">
+                                <colgroup>
+                                    <col style="width:20%">
+                                    <col style="width:20%">
+                                    <col style="width:20%">
+                                    <col style="width:40%">
+                                </colgroup>
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">기능</th>
+                                        <th scope="col">공통여부</th>
+                                        <th scope="col">완료여부</th>
+                                        <th scope="col">비고</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row">프리셋</td>
+                                        <td>공통</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">미리보기</td>
+                                        <td>공통</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">스타일,정렬</td>
+                                        <td>공통</td>
+                                        <td>완료</td>
+                                        <td class="text-left">채팅 정렬, 들여쓰기,<br>닉네임우측정렬 확인요망</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">채팅설정</td>
+                                        <td>공통</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">폰트설정</td>
+                                        <td>공통</td>
+                                        <td>완료</td>
+                                        <td class="text-left">만세체, 민국체, 독립체: cdn X > 제외<br>사용 불가 클래스 ff-14, ff-17, ff-40</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">상세 색상</td>
+                                        <td>공통</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">알림&gt;후원레이아웃</td>
+                                        <td>알림</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">알림&gt;후원</td>
+                                        <td>알림</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">알림&gt;팝업표시효과</td>
+                                        <td>알림</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">알림&gt;팝업표시효과</td>
+                                        <td>알림</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">목표&gt;그래프</td>
+                                        <td>목표치</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">목표&gt;목표치 설정</td>
+                                        <td>목표치</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">후원자막 기본설정</td>
+                                        <td>후원자막</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">시계테마</td>
+                                        <td>시계</td>
+                                        <td>완료</td>
+                                        <td class="text-left"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //compl tab end -->
+
+                        <!-- class tab start -->
+                        <div class="tab-pane fade" id="info-class" role="tabpanel" aria-labelledby="info-class-tab">
+
+                            <ul class="nav nav-tabs" id="classTab" role="tablist">
+                                <li class="nav-item" role="tab"><a class="nav-link active" id="chat-tab" data-toggle="tab" href="#chat-class-view" role="tab" aria-controls="chat" aria-selected="true">채팅</a></li>
+                                <li class="nav-item" role="tab"><a class="nav-link" id="noti-tab" data-toggle="tab" href="#noti-class-view" role="tab" aria-controls="noti" aria-selected="false">알림</a></li>
+                                <li class="nav-item" role="tab"><a class="nav-link" id="goal-tab" data-toggle="tab" href="#goal-class-view" role="tab" aria-controls="goal" aria-selected="false">목표치</a></li>
+                                <li class="nav-item" role="tab"><a class="nav-link" id="gift-tab" data-toggle="tab" href="#gift-class-view" role="tab" aria-controls="gift" aria-selected="false">후원자막</a></li>
+                                <li class="nav-item" role="tab"><a class="nav-link" id="clock-tab" data-toggle="tab" href="#clock-class-view" role="tab" aria-controls="clock" aria-selected="false">시계</a></li>
+                            </ul>
+
+                            <div class="tab-content mt-5" id="classTabCont">
+                                <div class="tab-pane fade show active" id="chat-class-view" role="tabpanel" aria-labelledby="chat-class-view">
+                                    <table class="table table-hover">
+                                        <colgroup>
+                                            <col style="width:15%">
+                                            <col style="width:30%">
+                                            <col style="width:30%">
+                                            <col style="width:25%">
+                                        </colgroup>
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="text-center">기능명</th>
+                                                <th scope="col" class="text-center">적용 class</th>
+                                                <th scope="col" class="text-center">적용 tag</th>
+                                                <th scope="col" class="text-center">적용 sample</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row">채팅창 투명도</td>
+                                                <td>
+                                                    <ul>
+                                                        <li><span class="text-secondary">100% : </span>item-opacity-10</li>
+                                                        <li><span class="text-center">~</span></li>
+                                                        <li><span class="text-secondary">0% : </span>item-opacity-0</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                  div class="chat-list-area item-opacity-6"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li class="item-opacity-6">적용 샘플 텍스트 입니다.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">채팅 표시 효과</td>
+                                                <td>
+                                                    <ul>
+                                                        <li>
+                                                            <p class="text-secondary">슬라이드</p>
+                                                            <span>slideInUp, slideInUp, slideInDown, slideInLeft, slideInRight, lightSpeedIn</span>
+
+                                                            <p class="text-secondary mt-2">페이드</p>
+                                                            <span>fadeIn, fadeInDown, fadeInLeft, fadeInRight, fadeInUp</span>
+
+                                                            <p class="text-secondary mt-2">효과</p>
+                                                            <span>bounce, flash, pulse, rubberBand, shake, swing, tada, wobble, jello, jackInTheBox, rollIn</span>
+
+                                                            <p class="text-secondary mt-2">바운스</p>
+                                                            <span>bounceIn, bounceInDown, bounceInLeft, bounceInRight, bounceInUp</span>
+
+                                                            <p class="text-secondary mt-2">플립</p>
+                                                            <span>flip, flipInX, flipInY</span>
+
+                                                            <p class="text-secondary mt-2">회전</p>
+                                                            <span>rotateIn, rotateInDownLeft, rotateInDownRight, rotateInUpLeft, rotateInUpRight</span>
+
+                                                            <p class="text-secondary mt-2">확대</p>
+                                                            <span>zoomIn, zoomInDown, zoomInLeft, zoomInRight, zoomInUp</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area"<br>
+                                  ul class="chat-list"<br>
+                                    li class="animated slideInUp"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li class="slideInUp animated">적용 샘플 텍스트 입니다.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">채팅 효과 속도</td>
+                                                <td>
+                                                    <ul>
+                                                        <li><span class="text-secondary">1초 : </span>item-delay-1s</li>
+                                                        <li><span class="text-center">~</span></li>
+                                                        <li><span class="text-secondary">10초 : </span>item-delay-10s</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area"<br>
+                                  ul class="chat-list"<br>
+                                    li class="animated slideInUp item-delay-5s"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li class="slideInUp animated item-delay-5s">적용 샘플 텍스트 입니다.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">채팅 정렬</td>
+                                                <td>
+                                                    <ul>
+                                                        <li><span class="text-secondary">인라인 : </span>chat-align-inline</li>
+                                                        <li><span class="text-secondary">들여쓰기 : </span>chat-align-indent</li>
+                                                        <li><span class="text-secondary">닉네임 우측정렬 : </span>chat-align-ellipsis</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area"<br>
+                                  ul class="chat-list chat-align-inline"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li><span>아이디 : </span>적용 샘플 텍스트 입니다.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">채팅 표시 방향</td>
+                                                <td>
+                                                    <ul>
+                                                        <li><span class="text-secondary">왼쪽 : </span>text-left</li>
+                                                        <li><span class="text-secondary">오른쪽 : </span>text-right</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area text-right"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li class="text-right"><span>아이디 : </span>적용 샘플 텍스트 입니다.</li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">스크롤 사용</td>
+                                                <td>
+                                                    <ul>
+                                                        <li><span class="text-secondary">사용 : </span>item-srcoll</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area item-srcoll"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li>
+                                                            <div class="chat-list-area item-srcoll" style="height:50px; overflow-y:auto">
+                                                                <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                                <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                                <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                                <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">랜덤색 사용</td>
+                                                <td>
+                                                    <ul>
+                                                        <li><span class="text-secondary">1 : </span>random-color-1</li>
+                                                        <li><span class="text-center">~</span></li>
+                                                        <li><span class="text-secondary">6 : </span>random-color-6</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area"<br>
+                                  ul class="chat-list"<br>
+                                    li class="animated fadeInUp"<br>
+                                      p class="nickname nick-random-color-6"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li class="nick-random-color-6">
+                                                            <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">채팅 페이드 아웃</td>
+                                                <td>
+                                                    <ul>
+                                                        <li>item-fade-out</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area item-fade-out"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li class="item-fade-out">
+                                                            <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                            <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                            <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">폰트 선택</td>
+                                                <td>
+                                                    <ul>
+                                                        <ul>
+                                                            <li><span class="text-secondary">1 : </span>ff-01</li>
+                                                            <li><span class="text-center">~</span></li>
+                                                            <li><span class="text-secondary">41 : </span>ff-41</li>
+                                                            <li><span class="text-secondary">만세체, 민국체, 독립체: cdn X 미사용<br>사용 불가 클래스 ff-14, ff-17, ff-40</span></li>
+                                                        </ul>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area ff-38"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li class="ff-38">
+                                                            <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                            <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">폰트 굵기 표시</td>
+                                                <td>
+                                                    <ul>
+                                                        <ul>
+                                                            <li>font-weight-bold</li>
+                                                        </ul>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="chat-list-area font-weight-bold"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <ul class="box-sam">
+                                                        <li class="font-weight-bold">
+                                                            <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                            <span>아이디 : </span>적용 샘플 텍스트 입니다.<br>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="tab-pane fade" id="noti-class-view" role="tabpanel" aria-labelledby="noti-class-view">
+                                    <table class="table table-hover">
+                                        <colgroup>
+                                            <col style="width:15%">
+                                            <col style="width:30%">
+                                            <col style="width:30%">
+                                            <col style="width:25%">
+                                        </colgroup>
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="text-center">기능명</th>
+                                                <th scope="col" class="text-center">적용 class</th>
+                                                <th scope="col" class="text-center">적용 tag</th>
+                                                <th scope="col" class="text-center">적용 sample</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row">텍스트/팝업 표시효과</td>
+                                                <td>
+                                                    <ul>
+                                                        <li>
+                                                            <p class="text-secondary">슬라이드</p>
+                                                            <span>slideInUp, slideInUp, slideInDown, slideInLeft, slideInRight, lightSpeedIn</span>
+
+                                                            <p class="text-secondary mt-2">페이드</p>
+                                                            <span>fadeIn, fadeInDown, fadeInLeft, fadeInRight, fadeInUp</span>
+
+                                                            <p class="text-secondary mt-2">효과</p>
+                                                            <span>bounce, flash, pulse, rubberBand, shake, swing, tada, wobble, jello, jackInTheBox, rollIn</span>
+
+                                                            <p class="text-secondary mt-2">바운스</p>
+                                                            <span>bounceIn, bounceInDown, bounceInLeft, bounceInRight, bounceInUp</span>
+
+                                                            <p class="text-secondary mt-2">플립</p>
+                                                            <span>flip, flipInX, flipInY</span>
+
+                                                            <p class="text-secondary mt-2">회전</p>
+                                                            <span>rotateIn, rotateInDownLeft, rotateInDownRight, rotateInUpLeft, rotateInUpRight</span>
+
+                                                            <p class="text-secondary mt-2">확대</p>
+                                                            <span>zoomIn, zoomInDown, zoomInLeft, zoomInRight, zoomInUp</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <p>팝업표시효과</p>
+                                                    <code>
+                                div class="noti-img animated bounce"
+                              </code>
+                                                    <p class="mt-5">텍스트 단어별 표시효과</p>
+                                                    <code>
+                                div class="noti-txt"<br>
+                                  p class="word ani-1 animated bounce"
+                              </code>
+                                                    <p class="mt-5">텍스트 글자별 표시효과</p>
+                                                    <code>
+                                p class="word ani-1"<br>
+                                  span class="animated slideInUp infinite item-delay-1s">닉<br>
+                                  span class="animated slideInUp">네<br>
+                                  span class="animated slideInUp">임<br>
+                                /p
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <div class="chat-list-area text-white" style="background-color:#1d2331">
+                                                        <ul class="chat-list">
+                                                            <li class="noti text-center">
+                                                                <div class="noti-img animated bounce infinite">
+                                                                    <img src="images/img_gift_100.png" alt="level">
+                                                                </div>
+                                                                <div class="noti-txt">
+                                                                    <p class="word ani-1">
+                                                                        <span class="animated infinite slideInDown item-delay-1s">닉</span>
+                                                                        <span class="animated infinite slideInDown item-delay-2s">네</span>
+                                                                        <span class="animated infinite slideInDown item-delay-3s">임</span>
+                                                                    </p>
+                                                                    <p class="word word-1">
+                                                                        님께서
+                                                                    </p>
+                                                                    <p class="word ani-2">
+                                                                        <span class="animated infinite slideInDown">1</span>
+                                                                        <span class="animated infinite slideInDown">0</span>
+                                                                        <span class="animated infinite slideInDown">0</span>
+                                                                    </p>
+                                                                    <p class="word word-2">
+                                                                        개를 선물하였습니다.
+                                                                    </p>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="goal-class-view" role="tabpanel" aria-labelledby="goal-class-view">
+                                    <table class="table table-hover">
+                                        <colgroup>
+                                            <col style="width:15%">
+                                            <col style="width:30%">
+                                            <col style="width:30%">
+                                            <col style="width:25%">
+                                        </colgroup>
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="text-center">기능명</th>
+                                                <th scope="col" class="text-center">적용 class</th>
+                                                <th scope="col" class="text-center">적용 tag</th>
+                                                <th scope="col" class="text-center">적용 sample</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row">그래프 굵기</td>
+                                                <td>
+                                                    클래스 X > 스타일 바로 적용
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="goal-box" style="height:40px"
+                              </code>
+                                                </td>
+                                                <td rowspan="3">
+                                                    <div class="chat-box goal-box-area" style="width:300px; height:200px">
+                                                        <div class="goal-bar-area progress-ani">
+                                                            <div class="goal-box" style="height:40px">
+                                                                <p class="goal-tit">오늘의 후원 목표치</p>
+                                                                <div class="goal-bar progress-gradient-3">
+                                                                    <div class="goal-inner animated" style="width: 75%;"></div>
+                                                                </div>
+                                                                <div class="txt start"><span class="value">0</span> 개</span>
+                                                                </div>
+                                                                <div class="txt end"><span class="value">200</span> 개</span>
+                                                                </div>
+                                                                <div class="inner-txt">50개 (25%)</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">텍스트만 표시</td>
+                                                <td>
+                                                    bar-none
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="goal-bar-area bar-none"
+                              </code>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">배경 애니메이션</td>
+                                                <td>
+                                                    progress-ani
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="goal-bar-area progress-ani"
+                              </code>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">그래프 색</td>
+                                                <td>
+                                                    <ul>
+                                                        <li>스타일 바로 적용 시 변경 필요</li>
+                                                        <li><span class="text-secondary">1 : </span>progress-gradient-1</li>
+                                                        <li><span class="text-center">~</span></li>
+                                                        <li><span class="text-secondary">13 : </span>progress-gradient-6</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="goal-bar progress-gradient-3"
+                              </code>
+                                                </td>
+                                                <td>
+                                                    <div class="gradient-color">
+                                                        <a href="#" class="progress-gradient-1">gradient1</a>
+                                                        <a href="#" class="progress-gradient-2">gradient2</a>
+                                                        <a href="#" class="progress-gradient-3">gradient3</a>
+                                                        <a href="#" class="progress-gradient-4">gradient4</a>
+                                                        <a href="#" class="progress-gradient-5">gradient5</a>
+                                                        <a href="#" class="progress-gradient-6">gradient6</a>
+                                                        <a href="#" class="progress-gradient-7">gradient7</a>
+                                                        <a href="#" class="progress-gradient-8">gradient8</a>
+                                                        <a href="#" class="progress-gradient-9">gradient9</a>
+                                                        <a href="#" class="progress-gradient-10">gradient10</a>
+                                                        <a href="#" class="progress-gradient-11">gradient11</a>
+                                                        <a href="#" class="progress-gradient-12">gradient12</a>
+                                                        <a href="#" class="progress-gradient-13">gradient13</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="gift-class-view" role="tabpanel" aria-labelledby="gift-class-view">
+                                    <table class="table table-hover">
+                                        <colgroup>
+                                            <col style="width:15%">
+                                            <col style="width:30%">
+                                            <col style="width:30%">
+                                            <col style="width:25%">
+                                        </colgroup>
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="text-center">기능명</th>
+                                                <th scope="col" class="text-center">적용 class</th>
+                                                <th scope="col" class="text-center">적용 tag</th>
+                                                <th scope="col" class="text-center">적용 sample</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row">후원자막 종류</td>
+                                                <td>
+                                                    <span class="text-secondary">순위</span> : gift-rank
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="gift-list-area gift-rank"
+                              </code>
+                                                </td>
+                                                <td style="background-color:#1d2331">
+                                                    <ul>
+                                                        <li style="font-size:22px; color:#fff"><span><img src="../images/icon_medal_01.png" alt="1등"></span> 플렉스TV<span class="float-right">10,000개</span></li>
+                                                        <li style="font-size:20px; color:#fff"><span><img src="../images/icon_medal_02.png" alt="2등"></span> 플렉스TV<span class="float-right">8,000개</span></li>
+                                                        <li style="font-size:18px; color:#fff"><span><img src="../images/icon_medal_03.png" alt="3등"></span> 플렉스TV<span class="float-right">7,000개</span></li>
+                                                        <li style="font-size:16px; color:#fff">4등</span> 플렉스TV<span class="float-right">5,000개</span></li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="clock-class-view" role="tabpanel" aria-labelledby="clock-class-view">
+                                    <table class="table table-hover">
+                                        <colgroup>
+                                            <col style="width:10%">
+                                            <col style="width:20%">
+                                            <col style="width:30%">
+                                            <col style="width:40%">
+                                        </colgroup>
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col" class="text-center">기능명</th>
+                                                <th scope="col" class="text-center">적용 class</th>
+                                                <th scope="col" class="text-center">적용 tag</th>
+                                                <th scope="col" class="text-center">적용 sample</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row">시계테마</td>
+                                                <td>
+                                                    <ul>
+                                                        <li>clock-type-1</li>
+                                                        <li>clock-type-2</li>
+                                                        <li>clock-type-3</li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <code>
+                                div class="clock-area clock-type-1"
+                              </code>
+                                                </td>
+                                                <td style="background-color:#1d2331">
+                                                    <div class="clock-box clock-type-1">
+                                                        <div class="item-clock">
+                                                            <div class="clock"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clock-box clock-type-2">
+                                                        <div class="item-clock">
+                                                            <div class="clock2"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="clock-box clock-type-3">
+                                                        <div class="item-clock">
+                                                            <div class="clock3"></div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="clock-area" style="transform:scale(0.8)">
+                                <div id="timer"></div>
+                              </div> -->
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- //class tab end -->
+
+                        <!-- plugin tab start -->
+                        <div class="tab-pane fade" id="info-plugin" role="tabpanel" aria-labelledby="info-plugin-tab">
+                            <table class="table text-center table-hover">
+                                <colgroup>
+                                    <col style="width:5%">
+                                    <col style="width:30%">
+                                    <col style="width:25%">
+                                    <col style="width:30%">
+                                    <col style="width:20%">
+                                </colgroup>
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">plugin명(버전)</th>
+                                        <th scope="col">api 사이트</th>
+                                        <th scope="col">사용 유형</th>
+                                        <th scope="col">적용여부</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row">1</td>
+                                        <td>bootstrap(v4.5.3)</td>
+                                        <td><a href="https://getbootstrap.com/" target="_blank" class="link">bootstrap</a></td>
+                                        <td>UI</td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">2</td>
+                                        <td>clipboard.js(v2.0.6)</td>
+                                        <td><a href="https://clipboardjs.com/" target="_blank" class="link">clipboard js</a></td>
+                                        <td>Clipboard</td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">3</td>
+                                        <td>Sortable js(v1.10.2)</td>
+                                        <td><a href="https://github.com/SortableJS/Sortable" target="_blank" class="link">Sortable js</a></td>
+                                        <td>Drag and Drop</td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">4</td>
+                                        <td>nouislider(v14.6.3)</td>
+                                        <td><a href="https://refreshless.com/nouislider/" target="_blank" class="link">nouislider</a></td>
+                                        <td>Slider</td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">4</td>
+                                        <td>Spectrum Colorpicker(v1.8.1)</td>
+                                        <td><a href="http://bgrins.github.io/spectrum/" target="_blank" class="link">Spectrum Colorpicker</a></td>
+                                        <td>Color picker</td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">5</td>
+                                        <td>animate css(v3.7.0)</td>
+                                        <td><a href="http://daneden.me/animate" target="_blank" class="link">animate css</a></td>
+                                        <td>CSS Animation</td>
+                                        <td>완료</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">6</td>
+                                        <td>flipclock.js(v1.1a)</td>
+                                        <td><a href="https://github.com/objectivehtml/FlipClock" target="_blank" class="link">flipclock.js</a></td>
+                                        <td>clock</td>
+                                        <td>완료</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- //plugin tab end -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+<script src="customjs/global.js?20250305"></script>
+<script>
+    axios.defaults.withCredentials = true;
+
+    function onLoginClicked() {
+        login();
+        //   console.log("dddd")
+        //location.href = 'view/chat.html';
+    }
+
+
+
+    function login() {
+
+        console.log(" login  g_url", g_url)
+
+        axios.post(g_url + '/member/login', {
+                branch: 'flex',
+                // authdata: '6q0REZ0gmquLZSbhtGMJ0C0KVE3jl71TvIqyVjpmM1JIOAn6w0JCkih4cL+edsXSuww6d+0CUsD7E+wGtVpH/q4YvKl7BckVheCkMBCfBWwtuD7Lq/ylQc8DyISHpl1S'
+
+                //newbj2
+                authdata: "kEYqVwPZbgFHS1mzADOufggVh2IBJu+1fVsQb/RwDcHDzGb/KRtsgaWsxuqncH0O"
+                //yeoksoon
+                // authdata: "DbflubxSf3hY5II7er2Vu0ZGd0AYpMUnJ0AKjY5238rPEn9YfRQM0BUdwqD4LPtoDGy6WflpsA5+hfFQqcmhAA=="
+                // authdata: "2rLnpMBrp2Q3Sdf9xqfLPQPFPFmF3OdeUU7QFOPamKPfsh6Iy9WqZTYJLKV14uv6iN/13WmAOs32oPkDo4DNGelvKzqu+BBvj7ITkP+AWYJK+d+zeLibSGxbkwivgKZztxyX/oYvFabNnmhrTM+UbNliQQpXVeIRHrCJU9X3aPZq5hp0JKtypMFuXDIJWTgz"
+
+                // authdata: "SMM6++5ErvOFehD01wtFXJ9AhC6SS1B2Ys6xRxfIpsJCU4IK2Vbv00NOjWgXzSYec+k17N0IY/nJQRqcMcwK0LeIB2EGWQpUNhX1p6shEA0+XN1wH2ithi7w3tywLCTYDaxkta43In3tqx6svbyZyw=="
+            })
+            .then(function(response) {
+                let json = response.data;
+                 console.log("login json: ", json);
+                if (json.returnCode == 1) {
+                    if (json.resultMap.returnVal == 1) {
+                        console.log("login sueccess:");
+                        location.href = 'view/chat.html';
+                    } else {
+                        alert(json.message);
+                    }
+                } else if (json.returnCode == -101) {
+                    alert(json.message);
+                } else {
+                    alert(json.message);
+                }
+            })
+            .catch(function(error) {})
+            .then(function() {
+                // always executed
+            });
+    }
+</script>
+
+</html>

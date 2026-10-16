@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>FlexTV 도우미</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- <link rel="stylesheet" href="../css/help_ui.css"> -->
+    <link rel="stylesheet" href="../css/help_ui.css?202506221531">
+
+    <script src="../customjs/global.js?20250305"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../js/Sortable.js"></script>
+    <script type="text/javascript" src="../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../js/spectrum.js"></script>
+    <script type="text/javascript" src="../js/flipclock.js"></script>
+    <script type="text/javascript" src="../js/help_ui.js?2412171239"></script>
+
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+
+    <style>
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- <div class="spinner-border  text-success" role="status" style="display: block; position: fixed; top: 50% ;  left: 50%; z-index:11 ">
+        <span class="sr-only">Loading...</span>
+    </div> -->
+
+    <div id="wrap">
+        <!-- Container Start -->
+        <div id="container">
+
+            <!-- Snb Start -->
+            <div id="nav-snb">
+                <div id="snb-area">
+                    <div class="logo">
+                        <a href="#" title="홈 바로가기"><img src="../images/img_help_logo.png?20260106" alt="flextv"></a>
+                    </div>
+
+                    <div class="snb-user-area">
+                        <p class="img" id="user_pic">
+                           <!-- <img src="../images/ico_user.png" alt="img-user"></a> -->
+                           <img style="width: 34px; height: 34px;" src="../images/ico_user.png" alt="img-user">
+                        </p>
+                        <p class="nick" id="user_name"></p>
+                        <p class="id" id="user_mid"></p>
+                    </div>
+
+
+                    <!-- snb area start -->
+                    <div class="snb-nav-area">
+                        <ul>
+                            <li><a href="chat.html"><span class="ico1">채팅창</span>채팅창</a></li>
+                            <li>
+                                <a href="noti.html" class="on"><span class="ico2">알림</span>알림</a>
+                                <ul class="snb-dep">
+                                    <li><a href="noti.html">후원 알림</a></li>
+                                    <li><a href="noti_roulette.html">룰렛 후원</a></li>
+                                    <li><a href="noti_honeypot.html">꿀단지 후원</a></li>
+                                    <li><a href="noti_heart.html">하트 후원</a></li>
+                                    <!-- <li><a href="noti_luckycard.html" class="on-dep">럭키 카드</a></li> -->
+                                    <!-- <li><a href="challenge_lex.html">도전 렉스</a></li> -->
+                                </ul>
+                            </li>
+                            <li><a href="noti_m.html"><span class="ico2">알림-모바일</span>알림-모바일</a></li>
+                            <li><a href="goal.html"><span class="ico3">목표치</span>목표치</a></li>
+                            <li><a href="goal_m.html"><span class="ico3">목표치_모바일</span>목표치_모바일</a></li>
+                            <li><a href="gift.html"><span class="ico4">후원자막</span>후원자막</a></li>
+                            <!-- <li><a href="gift_video.html"><span class="ico6">영상/음성 후원</span>영상/음성 후원</a></li> -->
+                            <li>
+                                <a href="noti_luckycard.html" class="on"><span class="ico9">게임센터</span>게임센터</a>
+                                <ul class="snb-dep">
+                                    <li><a href="noti_luckycard.html" class="on-dep">럭키카드</a></li>
+                                    <!-- <li><a href="luckyrace.html">플렉스 동달</a></li> -->
+                                    <!-- <li><a href="horserace.html">럭키레이스</a></li> -->
+                                </ul>
+                            </li>
+                            <li><a href="clock.html"><span class="ico5">시계</span>시계</a></li>
+                            <li><a href="excel.html"><span class="ico7">엑셀방송</span>엑셀방송</a></li>
+                            <li><a href="joint.html"><span class="ico8">합동방송</span>합동방송</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 도우미 웹 버전 열기 추가-->
+                    <div class="snb-remote-btn" onclick="openWin('remote.html', 'remotePop', 1000, 800);">
+                        <span><img src="../images/ico_bell.png" alt="알림"></span>
+                        <div>
+                            도우미 웹 버전 열기<br/>
+                            <span>FLEX 라이브 방송 리모컨</span>
+                        </div>
+                    </div>
+
+                    <div class="snb-remote-guide"><a href="../view/remote_guide.html">라이브 방송 리모컨 가이드</a></div>
+                </div>
+                <!-- //snb area end -->
+            </div>
+            <!-- //Snb End -->
+
+            <!-- Content Center Start -->
+            <div id="section-center">
+                <div id="section-center-fix">
+
+                    <!-- Content Start -->
+                    <div id="content">
+                        <div id="cont-area">
+                            <!-- Content View Start -->
+                            <div id="cont-view-area">
+
+                                <!-- title start -->
+                                <div class="help-title">
+                                    <h1>럭키카드 후원</h1>
+                                    <span>
+                                        럭키카드 후원을 방송 화면에 표시할 수 있습니다.<br>
+                                        <a href="noti_luckycard.html" class="btn mt-3">후원 페이지 가기</a>
+                                    </span>
+                                </div>
+                                <!-- //title end -->
+
+                                <div clas="video-guide-box">
+                                    <h5 class="text-white">
+                                        <span class="badge badge-info mr-1" style="font-size:14px;">1</span>
+                                        후원을 이용하시려면 프리셋 설정 및 활성화를 해야 합니다.
+                                    </h5>
+                                    <div class="bg-light p-4 text-center rounded  my-3" style="max-width: 1280px;">
+                                        <span><img src="../images/luckycard_guide_1.png" alt="후원활성화" style="max-width:100%;"></span>
+                                    </div>
+                                    <div class="text-white">
+                                        <p class="mb-1">- 프리셋에 URL을 넣지 않으면 방송에서 유저들이 럭키카드 후원을 확인할 수 없습니다.</p>
+                                        <p>- 꼭 송출 프로그램에 추가해 주시길 바랍니다.</p>
+                                    </div>
+
+                                    <h5 class="text-white mt-5">
+                                        <span class="badge badge-info mr-1" style="font-size:14px;">2</span>
+                                        럭키카드 설정 및 활성화
+                                    </h5>
+                                    <div class="bg-light p-4 text-center rounded my-3" style="max-width: 1280px;">
+                                        <span><img src="../images/luckycard_guide_2.png?202506191448" alt="후원활성화" style="max-width:100%;"></span>
+                                    </div>
+                                    <div class="text-white">
+                                        <p class="mb-1">- 후원을 이용하시려면 활성화를 해야합니다.</p>
+                                        <p class="mb-1">- 최소 후원 렉스는 유저가 후원하는 최소 렉스 입니다.</p>
+                                        <p>- 자동 반환 시간의 기본 설정값은 15분 입니다.</p>
+                                    </div>
+
+                                    <h5 class="text-white mt-5">
+                                        <span class="badge badge-info mr-1" style="font-size:14px;">3</span>
+                                        카드 선택
+                                    </h5>
+                                    <div class="bg-light p-4 text-center rounded my-3" style="max-width: 1000px;">
+                                        <span><img src="../images/luckycard_guide_3.png" alt="후원활성화" style="max-width:100%;"></span>
+                                    </div>
+                                    <div class="text-white">
+                                        <p class="mb-1">- 방송 리모컨 실행 후 럭키카드 탭에서 유저가 후원한 럭키카드의 카드 번호를 선택할 수 있습니다.</p>
+                                        <p class="mb-1">- 카드 선택 후 위에서 추가한 프리셋 URL에서 카드 후원 영상이 나오며 결과를 확인할 수 있습니다.</p>
+                                        <p>- 프리셋 URL을 넣지 않고 선택 시 방송에 송출되지 않습니다. 프리셋 URL을 꼭 송출 프로그램에 넣어주시길 바랍니다.</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- //Content View End -->
+
+                        </div>
+                        <!-- //cont-area End -->
+                    </div>
+                    <!-- //Content End -->
+
+                </div>
+                <!-- //section-center-fix End -->
+            </div>
+            <!-- //section-center End -->
+
+        </div>
+        <!-- //Container End -->
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="title" content="FlexTV">
+<meta name="author" content="FlexTV">
+<meta name="description" content="FlexTV">
+<meta name="keywords" content="FlexTV">
+<meta property="og:title" content="FlexTV">
+<meta property="og:type" content="website">
+<meta property="og:url" content="">
+<meta property="og:image" content="">
+
+<link rel="shortcut icon" href="" type="image/x-icon">
+<title>FlexTV 방송도우미</title>
+
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/help_ui.css?20260518">
+
+<script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="../js/Sortable.js"></script>
+<script type="text/javascript" src="../js/clipboard.min.js"></script>
+<script type="text/javascript" src="../js/nouislider.min.js"></script>
+<script type="text/javascript" src="../js/spectrum.js"></script>
+<script type="text/javascript" src="../js/help_ui.js?20100404"></script>
+<!-- <script>
+jQuery(document).ready(function(){
+	var chatListArea = $('.chat-list-area');
+
+	/* 추가 버튼 클릭 */
+	$('#btn_append').on("click", function() {
+		// 라인 추가
+		$('.chat-list').append('<li class="animated fadeInUp">추가 리스트</li>');
+
+		//스크롤 하단 고정
+		chatListArea.scrollTop(chatListArea.prop('scrollHeight'));
+	});
+
+});
+</script> -->
+<script src="../customjs/global.js?20250305"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js" integrity="sha512-uElffqRAo44n9cqo42itgRMY0L0zNZWEj3RGTQwyQsITiz4CB6rALOu1/S4O5iy/vFTMNs8gmTpDXB8mfQpjOg==" crossorigin="anonymous"></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+
+</head>
+<body style="background-color:rgba(240, 6, 6, 0)">
+<!-- <button type="button" class="btn btn-primary" id="btn_append">리스트 추가 버튼</button> -->
+
+<div id="popWinBox">
+	<!-- 콘텐츠 삽입 Start -->
+
+	<!-- 채팅 -->
+	<!-- chat box start -->
+	<div class="chat-box" style="background-color:rgba(240, 6, 6, 0)">
+		<div class="chat-list-area">
+			<ul class="chat-list">
+				<!-- <li class="animated fadeInUp">
+					<p class="nickname">
+						<span class="ico bj"><img src="../images/ico_preview_bj.png" alt="bj"></span>
+						<span class="ico manager"><img src="../images/ico_preview_manager.png" alt="manager"></span>
+						<span class="ico level"><img src="../images/ico_preview_level.png" alt="level"></span>
+						<span class="nick">닉네임</span>
+						<span class="id">(아이디)</span>
+					</p>
+					<p class="txt">텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트텍스트 텍스트</p>
+				</li>
+				<li class="chat-info animated fadeInUp">
+					<p class="txt"><span class="nick">닉네임</span> 님께서 추천하였습니다.</p>
+				</li> -->
+			</ul>
+		</div>
+	</div>
+	<!-- //chat box End -->
+
+	<!-- //콘텐츠 삽입 End -->
+</div>
+
+<!-- <script src="../customjs/preset.js"></script> -->
+<script src="../win_chat.js?20260707"></script>
+
+
+</body>
+</html>

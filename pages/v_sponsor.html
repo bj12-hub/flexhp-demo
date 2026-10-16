@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="title" content="FlexTV">
+<meta name="author" content="FlexTV">
+<meta name="description" content="FlexTV">
+<meta name="keywords" content="FlexTV">
+<meta property="og:title" content="FlexTV">
+<meta property="og:type" content="website">
+<meta property="og:url" content="">
+<meta property="og:image" content="">
+
+<!-- <link rel="shortcut icon" href="" type="image/x-icon"> -->
+<title>FlexTV 방송도우미</title>
+
+<!-- <link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/help_ui.css?202506221531">
+
+<script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="../js/Sortable.js"></script>
+<script type="text/javascript" src="../js/clipboard.min.js"></script>
+<script type="text/javascript" src="../js/nouislider.min.js"></script>
+<script type="text/javascript" src="../js/spectrum.js"></script>
+<script type="text/javascript" src="../js/help_ui.js?20100404"></script> -->
+<!-- <script>
+jQuery(document).ready(function(){
+	var chatListArea = $('.chat-list-area');
+
+	/* 추가 버튼 클릭 */
+	$('#btn_append').on("click", function() {
+		// 라인 추가
+		$('.chat-list').append('<li class="animated fadeInUp">추가 리스트</li>');
+
+		//스크롤 하단 고정
+		chatListArea.scrollTop(chatListArea.prop('scrollHeight'));
+	});
+
+});
+</script> -->
+<script src="../customjs/global.js?20250305"></script>
+<!-- <script src="../customjs/global.js?20231108"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js" integrity="sha512-uElffqRAo44n9cqo42itgRMY0L0zNZWEj3RGTQwyQsITiz4CB6rALOu1/S4O5iy/vFTMNs8gmTpDXB8mfQpjOg==" crossorigin="anonymous"></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/buzz/1.2.1/buzz.min.js'></script>
+
+<style>
+html, body {
+    margin:0;
+    padding:0;
+    overflow: hidden !important;
+}
+body {
+    position:relative;
+}
+#playerContainer {
+	position: relative !important;
+	width: 100% !important;
+	padding-bottom: 56.25% !important;
+	pointer-events: none !important;
+	overflow: hidden !important;
+    z-index:1;
+}
+
+#player {
+    position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	border: 0 !important;
+	overflow: hidden !important;
+    z-index:2;
+}
+
+.player-txt {
+    display:block;
+    position:absolute;
+    bottom:20px;
+    left:5%;
+    right:5%;
+    max-width:90%;
+    margin:0 auto;
+    text-align:center;
+    z-index:4;
+}
+
+.player-txt .player-txt-inner {
+    display:inline-block;
+    font-weight:bold;
+    padding:4px;
+    font-size:16px;
+    line-height:1.5;
+    color:#fff;
+    /* background-color:rgba(0,0,0,0.8); */
+    text-shadow: 0px 0px 3px rgba(0,0,0,1);
+}
+
+#playerAudioContainer {
+    position:absolute;
+    top:20px;
+    left:5%;
+    right:5%;
+    max-width:90%;
+    z-index:3;
+}
+
+#playerAudio {
+    z-index:4;
+}
+.playerAudio-txt {
+    position:relative;
+    display:block;
+    margin:0 auto;
+    text-align:center;
+    z-index:5;
+}
+.playerAudio-txt .playerAudio-txt-inner {
+    display:inline-block;
+    font-weight:bold;
+    padding:4px;
+    font-size:16px;
+    line-height:1.5;
+    color:#fff;
+    /* background-color:rgba(0,0,0,0.8); */
+    text-shadow: 0px 0px 3px rgba(0,0,0,1);
+}
+.player-txt-inner .c-green,
+.playerAudio-txt-inner .c-green {
+    margin-left:3px;
+    color:#00FFF6;
+}
+.player-txt-inner span:nth-child(1),
+.playerAudio-txt-inner span:nth-child(1) {
+    margin-right:3px;
+}
+
+</style>
+
+</head>
+<body style="background-color:rgba(240, 6, 6, 0)">
+<!-- <button type="button" class="btn btn-primary" id="btn_append">리스트 추가 버튼</button> -->
+
+
+
+
+
+
+
+
+
+    <div id="playerContainer">
+
+        <!-- video -->
+        <div id="player"></div>
+        <div class="player-txt" style="display:none">
+            <div class="player-txt-inner">
+                <span>[영상후원]</span>
+                <span class="c-green"  id="v_nick" ></span>
+                님이<span class="c-green" id="v_lex"></span> 렉스로 후원해주셨습니다!
+            </div>
+        </div>
+
+    </div>
+
+    <!-- audio -->
+    <div id="playerAudioContainer">
+        <div id="playerAudio"></div>
+
+        <div class="playerAudio-txt" style="display:none">
+            <div class="playerAudio-txt-inner">
+                <span>[음성후원]</span>
+                <span class="c-green" id="a_nick"></span>
+                님이 <span class="c-green" id="a_lex"></span> 렉스로 후원해주셨습니다!
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- <script src="../customjs/preset.js"></script> -->
+<!-- <script src="win_v_sponsor.js?20231109"></script> -->
+<script src="../win_v_sponsor.js?202512291902"></script>
+
+</body>
+</html>

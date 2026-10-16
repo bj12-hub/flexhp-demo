@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="title" content="FlexTV" />
+    <meta name="author" content="FlexTV" />
+    <meta name="description" content="FlexTV" />
+    <meta name="keywords" content="FlexTV" />
+    <meta property="og:title" content="FlexTV" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <title>FlexTV 방송도우미</title>
+
+    <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../../css/help_ui.css?202506221531" />
+
+    <script
+      type="text/javascript"
+      src="../../../js/jquery-1.12.4.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../../../js/bootstrap.bundle.min.js"
+    ></script>
+    <script type="text/javascript" src="../../../js/Sortable.js"></script>
+    <script type="text/javascript" src="../../../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../../../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../../../js/spectrum.js"></script>
+    <script
+      type="text/javascript"
+      src="../../../js/help_ui.js?20100507"
+    ></script>
+
+    <script src="../../../customjs/global.js?20250305"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js"
+      integrity="sha512-uElffqRAo44n9cqo42itgRMY0L0zNZWEj3RGTQwyQsITiz4CB6rALOu1/S4O5iy/vFTMNs8gmTpDXB8mfQpjOg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+    ></script>
+    <script src="../../demo/mock.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.2.1/buzz.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!--http://www.html5rocks.com/en/mobile/mobifying/-->
+    <meta
+      name="viewport"
+      content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui=true"
+    />
+
+    <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- force webkit on 360 -->
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <!-- force edge on IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <!-- force full screen on some browser -->
+    <meta name="full-screen" content="yes" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+
+    <!--fix fireball/issues/3568 -->
+    <!--<meta name="browsermode" content="application">-->
+    <meta name="x5-page-mode" content="app" />
+
+    <!--<link rel="apple-touch-icon" href=".png" />-->
+    <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+
+    <link rel="stylesheet" type="text/css" href="style.f76d1.css" />
+
+    <style>
+
+        #banner {
+            opacity: 0;
+        }
+        .bannerImg {
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideInOut 5s ease-in-out forwards;
+        }
+
+        @keyframes slideInOut {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* 20% ~ 80% (1초 ~ 4초): 3초 동안 화면에 정지 유지 */
+            80% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* 80% ~ 100% (4초 ~ 5초): 퇴장 (Slide Down + Fade Out) */
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+
+  </head>
+  <body style="position: relative; background-color: rgba(0, 0, 0, 0)">
+
+    <div id="banner" class="" style="position: absolute; top: 3%; left: 50%; transform: translateX(-50%); z-index: 10;">
+        <div style="position: flex; justify-items: center">
+          <!-- display: none; -->
+            <div style=" display:flex; flex-direction: column; align-items: center; justify-items: center; width: fit-content; color: #000; text-align: center; padding: 10px 20px; background-color: rgba(255, 255, 255, 0.8);">
+                <span style="color: #944DFF; font-family: Pretendard; font-size: 18px; font-style: normal; font-weight: 700; line-height: 24px;">
+                    플렉스 동달 개최권
+                </span>
+                <span><img src="../../images/hp_race_img.png"></span>
+                <span id="sponUserNick">후원자님2</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="GameDiv" cc_exact_fit_screen="true">
+      <div id="Cocos3dGameContainer">
+        <canvas
+          id="GameCanvas"
+          oncontextmenu="event.preventDefault()"
+          tabindex="99"
+          style="display: none"
+        ></canvas>
+      </div>
+      <!-- <button style="position: absolute; bottom: 0; left:40%;" onclick="startGame()">게임 시작</button>
+        <button style="position: absolute; bottom: 0; left:60%;" onclick="gameReady()">게임 준비</button> -->
+    </div>
+
+    <!-- Polyfills bundle. -->
+
+    <script src="src/polyfills.bundle.5adbf.js" charset="utf-8"></script>
+
+    <!-- SystemJS support. -->
+    <script src="src/system.bundle.543e6.js" charset="utf-8"></script>
+
+    <!-- Import map -->
+    <script  src="src/import-map.1d77d.json"  type="systemjs-importmap"  charset="utf-8"></script>
+
+    <script>
+      // console.log("win_luckyrace init~~!");
+      System.import("./index.db99d.js").catch(function (err) {
+        console.error(err);
+      });
+
+
+  
+
+
+    //   fnBoxStart();
+    //   fnBoxEnd();
+    </script>
+
+    <script src="win_luckyrace.js?260128"></script>
+  </body>
+</html>

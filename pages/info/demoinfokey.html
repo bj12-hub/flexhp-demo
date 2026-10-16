@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="" type="image/x-icon">
+    <title>FlexTV 방송도우미</title>
+
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/help_ui.css?202506221531">
+    <!-- FLEXTV 이벤트 룰렛(배너형 · 원판형) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
+    <link rel="stylesheet" href="../../css/event_roulette.css?202610171200">
+
+    <script type="text/javascript" src="../../js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../js/Sortable.js"></script>
+    <script type="text/javascript" src="../../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../../js/spectrum.js"></script>
+    <script type="text/javascript" src="../../js/help_ui.js?20100507"></script>
+
+    <script src="../../customjs/global.js?20250305"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js" integrity="sha512-uElffqRAo44n9cqo42itgRMY0L0zNZWEj3RGTQwyQsITiz4CB6rALOu1/S4O5iy/vFTMNs8gmTpDXB8mfQpjOg==" crossorigin="anonymous"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../../demo/mock.js"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/buzz/1.2.1/buzz.min.js'></script>
+
+
+    <style>
+    /* roulette */
+    .rouletteContainer {
+        position:absolute;
+        left:0;
+        right:0;
+        width:100%;
+        bottom:10px;
+        height:50px;
+        overflow-y:hidden;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        z-index:1;
+    }
+    .roulette-area {
+        width:400px;
+        max-width:400px;
+        height:50px;
+        margin:0 auto;
+    }
+    .roulette-area .roulette .item {
+        height:50px;
+        padding:14px 0;
+        text-align:center;
+        font-weight:bold;
+        color:#fbff00;
+        text-shadow: rgb(0, 0, 0) 2px 0px 0px, rgb(0, 0, 0) 1.75517px 0.958851px 0px, rgb(0, 0, 0) 1.0806px 1.68294px 0px, rgb(0, 0, 0) 0.141474px 1.99499px 0px, rgb(0, 0, 0) -0.832294px 1.81859px 0px, rgb(0, 0, 0) -1.60229px 1.19694px 0px, rgb(0, 0, 0) -1.97998px 0.28224px 0px, rgb(0, 0, 0) -1.87291px -0.701566px 0px, rgb(0, 0, 0) -1.30729px -1.5136px 0px, rgb(0, 0, 0) -0.421592px -1.95506px 0px, rgb(0, 0, 0) 0.567324px -1.91785px 0px, rgb(0, 0, 0) 1.41734px -1.41108px 0px, rgb(0, 0, 0) 1.92034px -0.558831px;
+    }
+
+    /* .roulette-area .item.current {
+    } */
+
+    /* FLEXTV 이벤트 룰렛: 기존 룰렛 자리(알림 아래)에 룰렛 문구와 함께 뜬다 */
+    .ev-roulette-layer {
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:10px;
+        z-index:2;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:8px;
+        opacity:0;
+        transform:translateY(10px);
+        transition:opacity .3s, transform .3s;
+        pointer-events:none;
+    }
+    .ev-roulette-layer.show { opacity:1; transform:none; }
+    .ev-roulette-text {
+        margin:0;
+        padding:0 12px;
+        font-family:"Black Han Sans", "Noto Sans KR", sans-serif;
+        font-size:22px;
+        color:#ffffff;
+        text-align:center;
+        text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+    }
+    .ev-roulette-box.is-banner { width:440px; max-width:96vw; height:76px; --evr-h:76px; }
+    .ev-roulette-box.is-wheel { width:240px; height:218px; }
+
+    </style>
+
+</head>
+<!-- <body > -->
+
+<body style="background-color:rgba(0, 0, 0, 0)">
+
+    <div id="popWinBox">
+
+        <!-- notification box start -->
+        <div class="chat-box">
+            <div class="chat-list-area">
+                <ul class="chat-list">
+                    <!-- <li class="noti">
+						<div class="noti-img">
+							<img src="../../images/img_gift_100.png" alt="level">
+						</div>
+						<div class="noti-txt">
+
+							<p class="word">
+								님께서~~~~~~~~~~~~~~
+							</p>
+
+							<p class="word">
+								개를 선물하였습니다.~~~~~~~~~~~~~
+							</p>
+						</div>
+						<div class="noti-txt">
+							<p class="word" >
+								안녕하세요 채팅메시지 입니다.~~~~~~~~~~~~
+							</p>
+						</div>
+
+
+					</li> -->
+                </ul>
+
+            </div>
+
+            <!-- FLEXTV 이벤트 룰렛 (win_info_tts.js showRocketRoulette) -->
+            <div class="ev-roulette-layer" id="evRouletteLayer" aria-hidden="true">
+                <p class="ev-roulette-text"></p>
+                <div class="ev-roulette-box"></div>
+            </div>
+
+            <!-- roulette -->
+            <div class="rouletteContainer" style="display:none;">
+                <div class="roulette-area">
+                    <!-- <div class="roulette" style="display:none;">
+
+                    </div>  -->
+                </div>
+            </div>
+
+        </div>
+        <!-- //notification box End -->
+
+    </div>
+
+
+
+
+    <!-- <script src="../win_info.js?240304"></script> -->
+     <script src="../../customjs/common.js?202512291902"></script>
+    <script src="../event_roulette.js?202610171200"></script>
+    <script src="../win_info_tts.js?202610171200"></script>
+    <script src="../roulette.js?040507"></script>
+
+</body>
+
+
+</html>

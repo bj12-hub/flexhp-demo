@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>FlexTV 도우미</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="../css/help_ui.css?0240129"> -->
+    <link rel="stylesheet" href="../css/help_ui.css?202506221531">
+
+    <script src="../customjs/global.js?20250305"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../js/Sortable.js"></script>
+    <script type="text/javascript" src="../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../js/spectrum.js"></script>
+    <script type="text/javascript" src="../js/flipclock.js"></script>
+    <script type="text/javascript" src="../js/help_ui.js?2412171239"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/buzz/1.2.1/buzz.min.js'></script>
+
+</head>
+
+<body>
+
+    <div id="wrap">
+        <!-- Container Start -->
+        <div id="container" class="container-roulette-view">
+            <div class="roulette-view-area">
+
+                <div class="help-title">
+                    <h1>알림</h1>
+                    <span>후원 내용을 알림으로 방송화면에 표시해주며, 후원한 시청자의 채팅 내용을 음성으로 읽어줍니다.</span>
+                    <!-- <a href="../view/noti_roulette.html" class="link">설정 바로가기 &gt;</a> -->
+                </div>
+
+                <div class="roulette-user">
+                    <span><img src="../images/ico_user.png" alt="user"></span>
+                    <p><strong id="user_name"></strong>님이 설정한 룰렛입니다.</p>
+                </div>
+
+                <!-- item 1 start -->
+                <!-- <div class="roulette-contents">
+                    <div class="roulette-time">
+                        <span>최종설정</span>
+                        <span id="roulette_date"></span>
+                    </div>
+
+
+                    <div class="roulette-conts">
+
+                        <div class="box">
+                            <div class="tit">룰렛이름</div>
+                            <div class="txt">발렌타인데이혜자 룰렛</div>
+                        </div>
+                        <div class="box">
+                            <div class="tit">후원개수</div>
+                            <div class="txt text-right">
+                                210
+                                <p class="w-100">설정한 개수에 해당하는 후원을 받을 경우 알림팝업이 표시됩니다.</p>
+                            </div>
+                            <span class="ml-2">LEX</span>
+                        </div>
+
+
+                        <div class="box r-list">
+                            <div class="tit">룰렛설정</div>
+                            <div class="roulette-list">
+                                <div class="head">
+                                    <span>룰렛 이름</span>
+                                    <span>룰렛 확률</span>
+                                </div>
+
+                                <div class="list">
+                                    <div class="inner-box">
+                                        <div class="name">꽝</div>
+                                        <div class="per">50</div>
+                                    </div>
+                                    <div class="inner-box">
+                                        <div class="name">꽝</div>
+                                        <div class="per">50</div>
+                                    </div>
+                                </div>
+                                <div class="list-total">
+                                    합계<div class="ml-2">100</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div> -->
+                <!--//item 1 end-->
+
+                <div class="roulette-none" style="display:none;">
+                    설정한 룰렛이 없습니다.
+                    <span>도우미를 이용하여 룰렛을 설정하여 보세요.</span>
+                </div>
+
+            </div>
+        </div>
+        <!-- //Container End -->
+
+
+
+        <!-- <script src="../customjs/preset.js?2402220"></script>-->
+        <script src="../customjs/noti_roulette_view.js?202512291902"></script>
+
+    </div>
+
+
+</body>
+
+</html>

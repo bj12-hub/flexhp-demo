@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>FlexTV 도우미</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- <link rel="stylesheet" href="../css/help_ui.css"> -->
+    <link rel="stylesheet" href="../css/help_ui.css?202506221531">
+
+    <script src="../customjs/global.js?20250305"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../js/Sortable.js"></script>
+    <script type="text/javascript" src="../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../js/spectrum.js"></script>
+    <script type="text/javascript" src="../js/flipclock.js"></script>
+    <script type="text/javascript" src="../js/help_ui.js?2412171239"></script>
+
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+
+    <style>
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- <div class="spinner-border  text-success" role="status" style="display: block; position: fixed; top: 50% ;  left: 50%; z-index:11 ">
+        <span class="sr-only">Loading...</span>
+    </div> -->
+
+    <div id="wrap">
+        <!-- Container Start -->
+        <div id="container">
+
+            <!-- Snb Start -->
+            <div id="nav-snb">
+                <div id="snb-area">
+                    <div class="logo">
+                        <a href="#" title="홈 바로가기"><img src="../images/img_help_logo.png?20260106" alt="flextv"></a>
+                    </div>
+
+                    <div class="snb-user-area">
+                        <p class="img" id="user_pic">
+                           <!-- <img src="../images/ico_user.png" alt="img-user"></a> -->
+                           <img style="width: 34px; height: 34px;" src="../images/ico_user.png" alt="img-user">
+                        </p>
+                        <p class="nick" id="user_name"></p>
+                        <p class="id" id="user_mid"></p>
+                    </div>
+
+
+                    <!-- snb area start -->
+                    <div class="snb-nav-area">
+                        <ul>
+                            <li><a href="chat.html"><span class="ico1">채팅창</span>채팅창</a></li>
+                            <li>
+                                <a href="noti.html" ><span class="ico2">알림</span>알림</a>
+                                <ul class="snb-dep">
+                                    <li><a href="noti.html">후원 알림</a></li>
+                                    <li><a href="noti_roulette.html" >룰렛 후원</a></li>
+                                    <li><a href="noti_heart.html">하트 후원</a></li>
+                                    <!-- <li><a href="noti_luckycard.html">럭키 카드</a></li> -->
+                                    <!-- <li><a href="challenge_lex.html">도전 렉스</a></li> -->
+                                </ul>
+                            </li>
+                            <li><a href="noti_m.html"><span class="ico2">알림-모바일</span>알림-모바일</a></li>
+                            <li><a href="goal.html"><span class="ico3">목표치</span>목표치</a></li>
+                            <li><a href="goal_m.html"><span class="ico3">목표치_모바일</span>목표치_모바일</a></li>
+                            <li><a href="gift.html"><span class="ico4">후원자막</span>후원자막</a></li>
+                            <!-- <li><a href="gift_video.html" class="on"><span class="ico6">영상/음성 후원</span>영상/음성 후원</a></li> -->
+                            <li>
+                                <a href="noti_luckycard.html" ><span class="ico9">게임센터</span>게임센터</a>
+                                <ul class="snb-dep">
+                                    <li><a href="noti_luckycard.html">럭키카드</a></li>
+                                    <!-- <li><a href="luckyrace.html">플렉스 동달</a></li> -->
+                                    <!-- <li><a href="horserace.html">럭키레이스</a></li> -->
+                                </ul>
+                            </li>
+                            <li><a href="clock.html"><span class="ico5">시계</span>시계</a></li>
+                            <li><a href="excel.html"><span class="ico7">엑셀방송</span>엑셀방송</a></li>
+                            <li><a href="joint.html"><span class="ico8">합동방송</span>합동방송</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 도우미 웹 버전 열기 추가-->
+                    <div class="snb-remote-btn" onclick="openWin('remote.html', 'remotePop', 1000, 800);">
+                        <span><img src="../images/ico_bell.png" alt="알림"></span>
+                        <div>
+                            도우미 웹 버전 열기<br/>
+                            <span>FLEX 라이브 방송 리모컨</span>
+                        </div>
+                    </div>
+
+                    <div class="snb-remote-guide"><a href="../view/remote_guide.html">라이브 방송 리모컨 가이드</a></div>
+
+
+                </div>
+                <!-- //snb area end -->
+            </div>
+            <!-- //Snb End -->
+
+            <!-- Content Center Start -->
+            <div id="section-center">
+                <div id="section-center-fix">
+
+                    <!-- Content Start -->
+                    <div id="content">
+                        <div id="cont-area">
+                            <!-- Content View Start -->
+                            <div id="cont-view-area">
+
+                                <!-- title start -->
+                                <div class="help-title">
+                                    <h1>영상/음성 후원</h1>
+                                    <span>
+                                        영상 및 음성을 이용하여 후원이 가능하며 방송화면에 표시할 수 있습니다.<br>
+                                        <a href="gift_video_guide.html" class="btn mt-3">메뉴얼 보기</a>
+                                    </span>
+                                </div>
+                                <!-- //title end -->
+
+                                <!-- preset start -->
+                                <div class="preset-area mb-5">
+                                    <h2 class="section-tit">URL</h2>
+                                    <div class="preset-box">
+                                        <div class="preset-list" style="display:none">
+                                            <ul class="preset-list-box" id="sortList">
+                                                <!-- <li class="selected">
+                                                    <a href="#" class="preset-txt">프리셋</a>
+                                                    <a href="#" class="preset-modify">수정</a>
+                                                    <a href="#" class="preset-delete">삭제</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="preset-txt">프리셋프리셋프리셋프리셋</a>
+                                                    <a href="#" class="preset-modify">수정</a>
+                                                    <a href="#" class="preset-delete">삭제</a>
+                                                </li> -->
+                                            </ul>
+
+                                            <div class="preset-btn" style="display:none">
+                                                <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img src="../images/ico_preset_plus.png" alt=""></span>프리셋 추가</a>
+                                            </div>
+                                        </div>
+                                        <div class="url-area">
+                                            <div class="url-input">
+                                                <input class="form-control" type="text" id="urlCopy" value="" readonly>
+                                            </div>
+                                            <div class="url-btn-box text-center">
+                                                <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopy" style="width:90%">URL복사</button>
+                                                <!-- <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a> -->
+                                            </div>
+                                            <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- //preset end -->
+
+                                <!-- 영상 setup start -->
+                                <div class="setup-area mb-5">
+                                    <h2 class="section-tit">영상 후원 위젯 설정</h2>
+                                    <div class="setup-box">
+
+                                        <div class="setup-item-box">
+                                            <!-- 영상 후원 활성화 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">후원 활성화</p>
+                                                <div class="setup-item">
+                                                    <div class="chk-switch-box d-inline-block switch-video-chk">
+                                                        <input type="checkbox" id="chVideoGiftYn" name="chVideoGiftYn" class="switch-input" >
+                                                        <label for="chVideoGiftYn" class="switch-label" data-bs-toggle="modal" data-bs-target="#videoGiftTerms">
+                                                            <span class="marble"></span>
+                                                            <span class="on">ON</span>
+                                                            <span class="off">OFF</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 후원 렉스 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">후원 최소 렉스</p>
+                                                <div class="setup-item">
+                                                    <input type="text" class="form-control w-25 text-right d-inline-block" id="min_video_gift_num" > <span class="text-white ml-2">렉스</span>
+                                                    <!-- <p class="setup-txt-warn"><img src="../images/ico_warn.png" alt="경고">최소 후원 렉스인 100 렉스 이상 입력해주세요.<br>더 적은 금액으로 입력할 경우, 후원페이지에는 기본 설정 금액으로 표시됩니다.</p> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- 1초당 렉스 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">1초당 렉스</p>
+                                                <div class="setup-item">
+                                                    <input type="text" class="form-control w-25 text-right d-inline-block" id="second_video_gift_num"> <span class="text-white ml-2">렉스</span>
+                                                    <!-- <p class="setup-txt-warn"><img src="../images/ico_warn.png" alt="경고">1초당 1렉스로 설정할 경우 10렉스로 10초동안 재생 가능합니다.</p> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- 최대 영상 길이 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">최대 영상 길이</p>
+                                                <div class="setup-item">
+                                                    <input type="text" class="form-control w-25 text-right d-inline-block" id="max_video_length"> <span class="text-white ml-2">초</span>
+                                                    <!-- <p class="setup-txt-warn"><img src="../images/ico_warn.png" alt="경고">재생 할 수 있는 영상의 최대 길이를 설정합니다.(최소 5초 ~ 60초 내 가능)</p> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- 영상 자동 재생 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">영상 자동 재생</p>
+                                                <div class="setup-item">
+                                                    <div class="chk-switch-box">
+                                                        <input type="checkbox" id="chAutoPlayYn" name="chAutoPlayYn" class="switch-input" checked="checked" disabled="disabled">
+                                                        <label for="chAutoPlayYn" class="switch-label" style="opacity:0.8;">
+                                                            <span class="marble"></span>
+                                                            <span class="on">ON</span>
+                                                            <span class="off">OFF</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 영상 볼륨 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">볼륨 설정</p>
+                                                <div class="setup-item">
+                                                    <div id="sliderGiftVideoVolume" class="slider-item"></div>
+                                                    <div class="slider-value">
+                                                        <input id="giftVideoVolume" class="input-num" readonly><span class="input-unit">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 권한 설정-->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">영상 허용 사이트</p>
+                                                <div class="setup-item">
+                                                    <div class="custom-control custom-control-inline custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="chkYoutube" checked disabled>
+                                                        <label class="custom-control-label" for="chkYoutube">Youtube</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 스팸 필터 Level 2024-01-11 추가 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt filter-level">
+                                                    스팸 필터 레벨
+                                                    <span class="ico-tooltip ml-1"><img src="../images/ico_question.png" alt="안내"></span>
+                                                    <span class="tooltip-area">
+                                                        <span class="arrow-up"></span>
+                                                        <span class="tooltip-txt">이 옵션은 YouTube 영상에만 적용됩니다.<br>설정한 필터 조건에 맞지 않는 영상은 보낼 수<br> 없습니다</span>
+                                                        <span class="tooltip-list">
+                                                          <span>LEVEL1 : 조회수 = 2000회 이상 & 좋아요 = 조회수의 1% 이상</span>
+                                                          <span>LEVEL2 : 조회수 = 40,000회 이상 & 좋아요 = 조회수의 1% 이상</span>
+                                                          <span>LEVEL3 : 조회수 = 300,000회 이상 & 좋아요 = 조회수의 1% 이상</span>
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                                <div class="setup-item">
+                                                    <div class="filter-slider-txt">
+                                                        <span>Lv.1</span>
+                                                        <span>Lv.2</span>
+                                                        <span>Lv.3</span>
+                                                    </div>
+
+                                                    <div id="sliderSpamFilterLevel" class="slider-item"></div>
+                                                    <div class="slider-value">
+                                                        <input id="spamFilterLevel" class="input-num" readonly><span class="input-unit">레벨</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="setup-item-box">
+
+                                            <!-- 영상후원 테스트 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">영상후원 테스트</p>
+                                                <div class="setup-item d-flex">
+                                                    <!-- <div class="mr-3">
+                                                        <div class="d-flex justify-content-center align-items-center" style="width:200px; height:180px; background-color:rgba(0,0,0,0.2)">
+                                                            <video
+                                                                src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+                                                                poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217"
+                                                                width="100%">
+                                                            </video>
+                                                            <video
+                                                                controls
+                                                                src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+                                                                poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217"
+                                                                width="200">
+                                                                Sorry, your browser doesn't support embedded videos, but don't worry, you can
+                                                                <a href="https://archive.org/details/BigBuckBunny_124">download it</a>
+                                                                and watch it with your favorite video player!
+                                                            </video>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="w-75">
+                                                        <div>
+                                                            <span class="text-white mr-2" style="display:inline-block; width:60px">URL</span>
+                                                            <input type="url" class="form-control w-75 d-inline-block" id="test_video_gift_url">
+                                                        </div>
+                                                        <div class="my-4">
+                                                            <span class="text-white mr-2" style="display:inline-block; width:60px">길이(초)</span>
+                                                            <input type="number" class="form-control text-center d-inline-block" style="width:100px" value="0" id="test_video_min_second" maxlength="2">
+                                                            <span class="text-white mr-4">초 부터</span>
+                                                            <input type="number" class="form-control text-center d-inline-block" style="width:100px" value="10" id="test_video_max_second" maxlength="2">
+                                                            <span class="text-white mr-2">초 까지</span>
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" class="btn" id="btn_videoplay">
+                                                                재생<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2" style="width:18px; height:18px;">
+                                                                    <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </button>
+                                                            <!-- <button type="button" class="btn mx-2">
+                                                                정지<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2" style="width:22px; height:22px;">
+                                                                    <path d="M15 6.75a.75.75 0 00-.75.75V18a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75V7.5a.75.75 0 00-.75-.75H15zM20.25 6.75a.75.75 0 00-.75.75V18c0 .414.336.75.75.75H21a.75.75 0 00.75-.75V7.5a.75.75 0 00-.75-.75h-.75zM5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L5.055 7.061z" />
+                                                                </svg>
+                                                            </button>
+                                                            <button type="button" class="btn">
+                                                                초기화<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2" style="width:20px; height:20px;">
+                                                                    <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </button> -->
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- //영상 setup end -->
+
+                                <!-- 음성 setup start -->
+                                <div class="setup-area">
+                                    <h2 class="section-tit">음성 후원 위젯 설정</h2>
+                                    <div class="setup-box">
+
+                                        <!-- 음성 후원 -->
+                                        <div class="setup-item-box">
+                                            <!-- 음성 후원 활성화 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">후원 활성화</p>
+                                                <div class="setup-item">
+                                                    <div class="chk-switch-box">
+                                                        <input type="checkbox" id="chAudioGiftYn" name="chAudioGiftYn" class="switch-input">
+                                                        <label for="chAudioGiftYn" class="switch-label">
+                                                            <span class="marble"></span>
+                                                            <span class="on">ON</span>
+                                                            <span class="off">OFF</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 후원 최소 렉스 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">후원 최소 렉스</p>
+                                                <div class="setup-item">
+                                                    <input type="text" class="form-control w-25 text-right d-inline-block" id="min_audio_gift_num" > <span class="text-white ml-2">렉스</span>
+                                                    <!-- <p class="setup-txt-warn"><img src="../images/ico_warn.png" alt="경고">최소 후원 렉스인 50 렉스 이상 입력해주세요.<br>더 적은 금액으로 입력할 경우, 후원페이지에는 기본 설정 금액으로 표시됩니다.</p> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- 1초당 렉스 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">1초당 렉스</p>
+                                                <div class="setup-item">
+                                                    <input type="text" class="form-control w-25 text-right d-inline-block" id="second_audio_gift_num" > <span class="text-white ml-2">렉스</span>
+                                                    <!-- <p class="setup-txt-warn"><img src="../images/ico_warn.png" alt="경고">1초당 5렉스로 설정할 경우 50렉스로 10초동안 재생 가능합니다.</p> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- 최대 음성 길이 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">최대 음성 길이</p>
+                                                <div class="setup-item">
+                                                    <input type="text" class="form-control w-25 text-right d-inline-block" id="max_audio_gift_length" > <span class="text-white ml-2">초</span>
+                                                    <!-- <p class="setup-txt-warn"><img src="../images/ico_warn.png" alt="경고">재생 할 수 있는 영상의 최대 길이를 설정합니다.(최소 5초 ~ 60초 내 가능)</p> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- 음성 자동 재생 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">음성 자동 재생</p>
+                                                <div class="setup-item">
+                                                    <div class="chk-switch-box">
+                                                        <input type="checkbox" id="chAutoPlayAudioYn" name="chAutoPlayAudioYn" class="switch-input" checked="checked" disabled="disabled">
+                                                        <label for="chAutoPlayAudioYn" class="switch-label" style="opacity: 0.8;">
+                                                            <span class="marble"></span>
+                                                            <span class="on">ON</span>
+                                                            <span class="off">OFF</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 음성 볼륨 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">볼륨 설정</p>
+                                                <div class="setup-item">
+                                                    <div id="sliderGiftAudioVolume" class="slider-item"></div>
+                                                    <div class="slider-value">
+                                                        <input id="giftAudioVolume" class="input-num" readonly><span class="input-unit">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="setup-item-box">
+
+                                            <!-- 음성 후원 테스트 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">음성후원 테스트</p>
+                                                <div class="setup-item d-flex">
+                                                    <!-- <div class="mr-3">
+                                                        <div class="d-flex justify-content-center align-items-center p-2" style="width:200px; height:180px; background-color:rgba(0,0,0,0.2)">
+                                                            <audio controls src="" class="w-100"></audio>
+                                                            <audio controls>
+                                                                <source src="myAudio.mp3" type="audio/mpeg" />
+                                                                <source src="myAudio.ogg" type="audio/ogg" />
+                                                                <p>
+                                                                  Download <a href="myAudio.mp3">MP3</a> or
+                                                                  <a href="myAudio.ogg">OGG</a> audio.
+                                                                </p>
+                                                            </audio>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="w-75">
+                                                        <div>
+                                                            <span class="text-white mr-2" style="display:inline-block; width:60px">URL</span>
+                                                            <input type="url" class="form-control w-75 d-inline-block" id="test_audio_gift_url">
+                                                        </div>
+                                                        <div class="my-4">
+                                                            <!-- <span class="text-white mr-2" style="display:inline-block; width:60px">길이(초)</span>
+                                                            <input type="text" class="form-control text-center d-inline-block" style="width:50px" value="5" id="test_audio_min_second" maxlength="2">
+                                                            <span class="text-white mr-4">초 부터</span>
+                                                            <input type="text" class="form-control text-center d-inline-block" style="width:50px" value="10" id="test_audio_max_second" maxlength="2">
+                                                            <span class="text-white mr-2">초 까지</span> -->
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" class="btn" id="btn_audioplay">
+                                                                재생<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2" style="width:18px; height:18px;">
+                                                                    <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </button>
+                                                            <!-- <button type="button" class="btn mx-2">
+                                                                정지<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2" style="width:22px; height:22px;">
+                                                                    <path d="M15 6.75a.75.75 0 00-.75.75V18a.75.75 0 00.75.75h.75a.75.75 0 00.75-.75V7.5a.75.75 0 00-.75-.75H15zM20.25 6.75a.75.75 0 00-.75.75V18c0 .414.336.75.75.75H21a.75.75 0 00.75-.75V7.5a.75.75 0 00-.75-.75h-.75zM5.055 7.06C3.805 6.347 2.25 7.25 2.25 8.69v8.122c0 1.44 1.555 2.343 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L5.055 7.061z" />
+                                                                </svg>
+                                                            </button>
+                                                            <button type="button" class="btn">
+                                                                초기화<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-2" style="width:20px; height:20px;">
+                                                                    <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </button> -->
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- //음성 setup end -->
+
+                                <!-- 구글 약관 start -->
+                                <div class="setup-area">
+                                    <!-- <h2 class="section-tit">Youtube 약관 안내</h2> -->
+                                    <div class="setup-box">
+                                        <p class="text-white">Youtube 약관 안내(후원 활성화 시 YouTube 서비스 약관에 동의한 것으로 봅니다)</p>
+                                        <div class="mt-2">
+                                            <a href="https://www.youtube.com/t/terms" class="text-white-50" target="_blank">YouTube 서비스 약관</a>
+                                            <span class="text-secondary mx-2">|</span>
+                                            <a href="https://developers.google.com/youtube/terms/api-services-terms-of-service-apac?hl=ko" class="text-white-50" target="_blank">YouTube API 서비스 약관</a>
+                                            <span class="text-secondary mx-2">|</span>
+                                            <a href="https://policies.google.com/privacy?hl=ko" class="text-white-50" target="_blank">구글 개인정보 처리방침</a>
+                                            <span class="text-secondary mx-2">|</span>
+                                            <a href="https://myaccount.google.com/connections?filters=3,4&hl=ko" class="text-white-50" target="_blank">구글 계정 접근 권한 설정</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- //구글 약관 end -->
+
+                                <div class="setup-btn-area">
+                                    <div class="setup-btn">
+                                        <div class="btn-top-area">
+                                            <a href="#" class="btn-top"><img src="../images/ico_top_arrow.png"></a>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-content-center">
+                                            <button type="button" id="btn_save" class="btn mr-3">설정 저장</button>
+                                            <button type="button" id="btn_reset" class="btn type2">설정 초기화</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- //Content View End -->
+
+                        </div>
+                        <!-- //cont-area End -->
+                    </div>
+                    <!-- //Content End -->
+
+                </div>
+                <!-- //section-center-fix End -->
+            </div>
+            <!-- //section-center End -->
+
+        </div>
+        <!-- //Container End -->
+
+
+          <!-- Layer popup : setupCompleted Start -->
+          <div class="modal fade" id="setupCompleted" tabindex="-1" aria-labelledby="setupCompleted" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setupCompleted">설정 저장 완료</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+                    </div>
+                    <div class="modal-body">
+                        저장되었습니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Layer popup : setupCompleted End -->
+
+
+          <!-- Layer popup : setupCompleted Start -->
+
+          <div class="modal fade" id="setupCompleted2" tabindex="-1" aria-labelledby="setupCompleted2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setupCompleted2">초기화</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        현재 표시된 후원내용이 초기화 됩니다.<br>
+                        초기화 하시겠습니까?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id = "btn_reset_ok"  class="btn" data-dismiss="modal">확인</button>
+                        <button type="button" class="btn" data-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+        <!-- //Layer popup : setupCompleted End -->
+
+        <!-- Layer popup : 영상 후원 이용약관 Start -->
+        <div class="modal fade" id="videoGiftTerms" tabindex="-1" aria-labelledby="videoGiftTermsLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">영상 후원 이용약관</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					        <span aria-hidden="true">&times;</span>
+					    </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="video-gift-terms">
+                            <li>영상후원 기능을 이용하게 되면, 후원하는 시청자가 아래 영상을 공유할 수 있습니다.
+                                <p class="mt-2">- 타인의 저작권을 침해하거나 위반하는 영상.</p>
+                                <p>- 폭력적이거나 선정적인 영상 등, FlexTV의 정책을 위반할 수 있는 영상.</p>
+                            </li>
+                            <li>시청자가 공유한 영상에 대해 영상의 저작권자가 권리를 주장하거나,<br>또는 FlexTV의 정책 위반으로 인해 발생할 수 있는 불이익, 또는 민형사적인 책임은 영상을 공유한 시청자 및 공유된 영상을 방송으로 송출한 크리에이터에게 있습니다.<br>저작권과 관련된 부분에 대해서는 저작권 보호센터를 참고하시기 바랍니다.</li>
+                            <li>후원과 함께 영상이 공유된 경우, 크리에이터는 공유된 영상을 미리 확인한 다음 문제의 소지가 될 수 있다고 판단되는 영상은 대시보드에 있는 기능을 이용하여 송출되지 않게끔 하실 것을 권장합니다.</li>
+                        </ul>
+
+                        <p class="terms-txt">위 사항을 확인하셨으며 동의하시는 경우에 아래의 [동의]를 눌러 영상후원<br>기능을 사용하실 수 있습니다.</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-type2 w-25" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn w-25" data-dismiss="modal" onclick="videoGiftConfirm()">동의</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Layer popup : 영상 후원 이용약관 End -->
+
+
+
+
+    </div>
+    <script src="../customjs/preset.js?2412171239"></script>
+    <script src="../customjs/gift_video.js?202512291902"></script>
+
+    <script>
+
+    // jQuery(document).ready(function() {
+    //     fnGiftVideoVolume();
+    //     fnGiftAudioVolume();
+
+    // });
+
+
+    // // slider 영상 볼륨
+    // function fnGiftVideoVolume() {
+    //     var videoVolume = document.getElementById('sliderGiftVideoVolume');
+    //     var videoVolumeVal = document.getElementById('giftVideoVolume');
+
+    //     if (!videoVolume) return;
+
+    //     noUiSlider.create(videoVolume, {
+    //         start: 50,
+    //         connect: 'lower',
+    //         step: 1,
+    //         range: {
+    //             'min': 0,
+    //             'max': 100
+    //         }
+    //     });
+
+    //     videoVolume.noUiSlider.on('update', function(values, handle) {
+    //         videoVolumeVal.value = parseInt(values[handle]);
+    //         // prev_handle_volume(volVal.value)
+    //     });
+
+    //     videoVolumeVal.addEventListener('change', function() {
+    //         videoVolume.noUiSlider.set(this.value);
+    //     });
+    // }
+
+    // // slider 음성 볼륨
+    // function fnGiftAudioVolume() {
+    //     var audioVolume = document.getElementById('sliderGiftAudioVolume');
+    //     var audioVolumeVal = document.getElementById('giftAudioVolume');
+
+    //     if (!audioVolume) return;
+
+    //     noUiSlider.create(audioVolume, {
+    //         start: 50,
+    //         connect: 'lower',
+    //         step: 1,
+    //         range: {
+    //             'min': 0,
+    //             'max': 100
+    //         }
+    //     });
+
+    //     audioVolume.noUiSlider.on('update', function(values, handle) {
+    //         audioVolumeVal.value = parseInt(values[handle]);
+    //         // prev_handle_volume(volVal.value)
+    //     });
+
+    //     audioVolumeVal.addEventListener('change', function() {
+    //         audioVolume.noUiSlider.set(this.value);
+    //     });
+    // }
+
+
+    // var chkVideoGift = document.getElementById('chVideoGiftYn');
+    // var videoTermsPop = new bootstrap.Modal(document.getElementById('videoGiftTerms'), {
+    //     keyboard: false
+    // })
+
+    // document.querySelector(".switch-video-chk").onclick = function(e) {
+    //     e.preventDefault();
+    //     chkVideoGift.checked == false ? videoTermsPop.show() : chkVideoGift.checked = false;
+    //     // console.log(chkVideoGift.checked)
+    // }
+
+    // function videoGiftConfirm() {
+    //     chkVideoGift.checked = true;
+    //     // console.log(chkVideoGift.checked)
+    // }
+
+
+
+    // </script>
+
+</body>
+
+</html>

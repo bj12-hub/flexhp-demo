@@ -1,9 +1,7 @@
 // 정적 미리보기: 서버 주소는 demo/mock.js 에서 정한다
 var g_flextv = "https://www.flextv.co.kr";
 var g_url = "mock:", g_url_socket = "", g_url_tts_base_url = "", g_url_tts = "", g_url_current = "", g_url_roulette_sound = "";
-// var g_flextv = "https://www.flextv.co.kr";
 
-// var g_flextv = "https://test.flextv.co.kr";
 
 console.log("global.js")
 

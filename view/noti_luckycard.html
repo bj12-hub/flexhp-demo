@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>FlexTV 도우미</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/help_ui.css?202506221531">
+
+
+    <script src="../customjs/global.js?20250305"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../js/Sortable.js"></script>
+    <script type="text/javascript" src="../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../js/spectrum.js"></script>
+    <script type="text/javascript" src="../js/flipclock.js"></script>
+    <script type="text/javascript" src="../js/help_ui.js?2412171239"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/buzz/1.2.1/buzz.min.js'></script>
+
+</head>
+
+<body class="noti-body">
+
+
+    <div class="spinner-border  text-success" role="status" style="display: block; position: fixed; top: 50% ;  left: 50%; z-index:11 ">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    <div id="wrap">
+        <!-- Container Start -->
+        <div id="container">
+
+            <!-- Snb Start -->
+            <div id="nav-snb">
+                <div id="snb-area">
+                    <div class="logo">
+                        <a href="#" title="홈 바로가기"><img src="../images/img_help_logo.png?20260106" alt="flextv"></a>
+                    </div>
+
+                    <div class="snb-user-area">
+                        <p class="img" id="user_pic">
+                            <!-- <img src="../images/ico_user.png" alt="img-user"></a> -->
+                            <img style="width: 34px; height: 34px;" src="../images/ico_user.png" alt="img-user">
+                        </p>
+                        <p class="nick" id="user_name"></p>
+                        <p class="id" id="user_mid"></p>
+                    </div>
+
+
+                    <!-- snb area start -->
+                    <div class="snb-nav-area">
+                        <ul>
+                            <li><a href="chat.html"><span class="ico1">채팅창</span>채팅창</a></li>
+                            <li>
+                                <a href="noti.html"><span class="ico2">알림</span>알림</a>
+                                <ul class="snb-dep">
+                                    <li><a href="noti.html">후원 알림</a></li>
+                                    <li><a href="noti_roulette.html">룰렛 후원</a></li>
+                                    <li><a href="noti_honeypot.html">꿀단지 후원</a></li>
+                                    <li><a href="noti_heart.html">하트 후원</a></li>
+                                    <!-- <li><a href="noti_luckycard.html" class="on-dep">럭키 카드</a></li> -->
+                                    <!-- <li><a href="challenge_lex.html">도전 렉스</a></li> -->
+                                </ul>
+                            </li>
+                            <li><a href="noti_m.html"><span class="ico2">알림-모바일</span>알림-모바일</a></li>
+                            <li><a href="goal.html"><span class="ico3">목표치</span>목표치</a></li>
+                            <li><a href="goal_m.html"><span class="ico3">목표치_모바일</span>목표치_모바일</a></li>
+                            <li><a href="gift.html"><span class="ico4">후원자막</span>후원자막</a></li>
+                            <!-- <li><a href="gift_video.html"><span class="ico6">영상/음성 후원</span>영상/음성 후원</a></li> -->
+                            <li>
+                                <a href="noti_luckycard.html" class="on"><span class="ico9">게임센터</span>게임센터</a>
+                                <ul class="snb-dep">
+                                    <li><a href="noti_luckycard.html" class="on-dep">럭키카드</a></li>
+                                    <!-- <li><a href="luckyrace.html">플렉스 동달</a></li> -->
+                                    <!-- <li><a href="horserace.html">럭키레이스</a></li> -->
+                                </ul>
+                            </li>
+                            <li><a href="clock.html"><span class="ico5">시계</span>시계</a></li>
+                            <li><a href="excel.html"><span class="ico7">엑셀방송</span>엑셀방송</a></li>
+                            <li><a href="joint.html"><span class="ico8">합동방송</span>합동방송</a></li>
+                        </ul>
+                    </div>
+                    <!-- 도우미 웹 버전 열기 추가-->
+                    <div class="snb-remote-btn" onclick="openWin('remote.html', 'remotePop', 1000, 800);">
+                        <span><img src="../images/ico_bell.png" alt="알림"></span>
+                        <div>
+                            도우미 웹 버전 열기<br/>
+                            <span>FLEX 라이브 방송 리모컨</span>
+                        </div>
+                    </div>
+                    <div class="snb-remote-guide"><a href="../view/remote_guide.html">라이브 방송 리모컨 가이드</a></div>
+                </div>
+                <!-- //snb area end -->
+            </div>
+            <!-- //Snb End -->
+
+            <!-- Content Center Start -->
+            <div id="section-center">
+                <div id="section-center-fix">
+
+                    <!-- Content Start -->
+                    <div id="content">
+                        <div id="cont-area">
+                            <!-- Content View Start -->
+                            <div id="cont-view-area">
+
+                                <!-- title start -->
+                                <div class="help-title">
+                                    <h1>럭키카드 후원</h1>
+                                    <span>
+                                        럭키카드 후원을 방송 화면에 표시할 수 있습니다.<br>
+                                        <a href="noti_luckycard_guide.html" class="btn mt-3">메뉴얼 보기</a>
+                                    </span>
+                                </div>
+                                <!-- //title end -->
+
+                                <!-- preset start -->
+                                <div class="preset-area mb-5">
+                                    <h2 class="section-tit">프리셋</h2>
+                                    <div class="preset-box">
+                                        <div class="preset-list" style="display:none;">
+                                            <ul class="preset-list-box" id="sortList">
+
+                                            </ul>
+
+                                            <div class="preset-btn" style="display:none">
+                                                <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img src="../images/ico_preset_plus.png" alt=""></span>프리셋 추가</a>
+                                            </div>
+                                        </div>
+                                        <div class="url-area">
+                                            <div class="url-input">
+                                                <input class="form-control" type="text" id="urlCopy" value="" readonly>
+                                            </div>
+                                            <div class="url-btn-box">
+                                                <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopy">URL복사</button>
+                                                <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                                            </div>
+                                            <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- //preset end -->
+
+                                <!-- preview start -->
+                                <div class="preview-area">
+                                    <h2 class="preview-tit">미리보기</h2>
+
+                                    <!-- notification box start -->
+                                    <div class="chat-box">
+                                        <div class="chat-list-area lucky-card">
+                                            <ul class="chat-list">
+
+                                                <li class="card-li">
+                                                    <div class="card-txt">
+                                                        <p class="word">
+                                                            <span class="nick-color">플렉스티비</span>님께서
+                                                        </p>
+                                                        <p class="word">
+                                                            <span class="reward-color">10,000</span>개를 선물하였습니다.
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-img">
+                                                        <img src="../images/img_luckycard_preview.png?20260106" alt="luckycard">
+                                                    </div>
+
+                                                    <div class="card-txt alert">
+                                                        <p class="word">
+                                                            <span class="nick-color">플렉스티비</span>
+                                                        </p>
+                                                        <p class="word inner-time">
+                                                            <span>
+                                                                <span class="reward-color">10,000</span>LEX 럭키 카드
+                                                            </span>
+                                                            <span class="time time-color">29분 30초</span>
+                                                        </p>
+                                                    </div>
+
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- //notification box End -->
+<!--
+                                    <div class="preview-test-area">
+                                        <ul class="text-box">
+                                            <li>
+                                                <input class="form-control" type="text" id="val_flex" name="" value="0">
+                                                <button type="button" class="btn" id="btn_flex">플렉스</button>
+                                                <button type="button" class="btn" id="btn_recommend">추천</button>
+                                            </li>
+
+                                            <li>
+                                                <button type="button" class="btn" id="btn_win_reset">초기화</button>
+                                                <button type="button" class="btn" id="btn_win_reload">새로고침</button>
+                                            </li>
+                                        </ul>
+                                    </div> -->
+
+                                </div>
+                                <!-- //preview end -->
+
+                                <!-- setup start -->
+                                <div class="setup-area">
+
+                                    <h2 class="section-tit">럭키 카드 설정</h2>
+                                    <div class="setup-box">
+                                        <div class="setup-item-box">
+
+                                            <!-- 후원 활성화 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt tooltip-box">
+                                                    후원 활성화
+                                                    <span class="ico-tooltip ml-1"><img src="../images/ico_question.png" alt="안내"></span>
+                                                    <span class="tooltip-area">
+                                                        <span class="arrow-up"></span>
+                                                        <span class="tooltip-txt mb-0">프리셋 URL을 송출 프로그램에 추가해 주세요.</span>
+                                                    </span>
+                                                </p>
+                                                <div class="setup-item">
+                                                    <div class="chk-switch-box">
+                                                        <input type="checkbox" id="giftYn" name="giftYn" class="switch-input">
+                                                        <label for="giftYn" class="switch-label">
+                                                            <span class="marble"></span>
+                                                            <span class="on">ON</span>
+                                                            <span class="off">OFF</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 최소 당첨 렉스 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt tooltip-box">
+                                                    최소 당첨 렉스
+                                                    <span class="ico-tooltip ml-1"><img src="../images/ico_question.png" alt="안내"></span>
+                                                    <span class="tooltip-area">
+                                                        <span class="arrow-up"></span>
+                                                        <span class="tooltip-txt mb-0">최소 100렉스부터 설정 가능합니다.</span>
+                                                    </span>
+                                                </p>
+                                                <div class="setup-item">
+                                                    <input type="text" id="input_txt_gift_start" class="form-control w-50 text-right d-inline-block" value="100"> <span class="text-white">렉스</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- 자동반환시간 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt tooltip-box">
+                                                    자동반환시간
+                                                    <span class="ico-tooltip ml-1"><img src="../images/ico_question.png" alt="안내"></span>
+                                                    <span class="tooltip-area">
+                                                        <span class="arrow-up"></span>
+                                                        <span class="tooltip-txt mb-0">시간 내에 선택하지 않을 경우 렉스는 후원한<br> 유저에게 전액 반환됩니다.</span>
+                                                    </span>
+                                                </p>
+                                                <div class="setup-item">
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="autoReturn1" name="autoReturn" class="custom-control-input" value="1">
+                                                        <label class="custom-control-label" for="autoReturn1">1분</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="autoReturn2" name="autoReturn" class="custom-control-input" value="5">
+                                                        <label class="custom-control-label" for="autoReturn2">5분</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="autoReturn3" name="autoReturn" class="custom-control-input" value="10">
+                                                        <label class="custom-control-label" for="autoReturn3">10분</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="autoReturn4" name="autoReturn" class="custom-control-input" value="15">
+                                                        <label class="custom-control-label" for="autoReturn4">15분</label>
+                                                    </div>
+                                                    <!-- <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="autoReturn5" name="autoReturn" class="custom-control-input" value="30" >
+                                                        <label class="custom-control-label" for="autoReturn5">30분</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="autoReturn6" name="autoReturn" class="custom-control-input" value="60">
+                                                        <label class="custom-control-label" for="autoReturn6">60분</label>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="setup-item-box">
+                                            <!-- 알림방식 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">알림방식</p>
+                                                <div class="setup-item">
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="notiSys1" name="notiSys" class="custom-control-input" value="사용안함">
+                                                        <label class="custom-control-label" for="notiSys1">사용안함</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="notiSys2" name="notiSys" class="custom-control-input" value="알림음">
+                                                        <label class="custom-control-label" for="notiSys2">알림음</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="notiSys3" name="notiSys" class="custom-control-input" value="알림음성" checked="checked">
+                                                        <label class="custom-control-label" for="notiSys3">알림 음성</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 알림텍스트 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">알림텍스트</p>
+                                                <div class="setup-item">
+                                                    <textarea class="form-control" id="notiTxtArea1" rows="3">{닉네임}님 플렉스{개수}개 럭키카드를 등록하셨습니다.</textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- 채팅음성 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">채팅음성</p>
+                                                <div class="setup-item">
+                                                    <div class="chk-switch-box">
+                                                        <input type="checkbox" id="chVoiceYn" name="chVoiceYn" class="switch-input">
+                                                        <label for="chVoiceYn" class="switch-label">
+													  <span class="marble"></span>
+													  <span class="on">ON</span>
+													  <span class="off">OFF</span>
+													</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 닉네임 폰트 -->
+                                        <div class="setup-item-box">
+
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">닉네임 폰트</p>
+                                                <div class="setup-item">
+                                                    <!-- 폰트 설정 select-->
+                                                    <select id="nickNamefontFamily" name="nickNamefontFamily" class="font-family-select">
+                                                        <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                                                        <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                                                        <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                                                        <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                                                        <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                                                        <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                                                        <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                                                        <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                                                        <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                                                        <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                                                        <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                                                        <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                                                        <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                                                        <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                                                        <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                                                        <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                                                        <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                                                        <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                                                        <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                                                        <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                                                        <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                                                        <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                                                        <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                                                        <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                                                        <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                                                        <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                                                        <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                                                        <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                                                        <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                                                        <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                                                        <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                                                        <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                                                        <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                                                        <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                                                        <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                                                        <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                                                        <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                                                        <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+												    </select>
+
+                                                    <div class="font-view-select">
+                                                        <button class="btn-luckycard-select" id="fontSelect1" value="ff-01" onclick="fontFamilyLuckycard(this, 1);">
+                                                            <li><img src="../images/img_font_1.png" alt=""><span>검은고딕</span></li>
+                                                        </button>
+                                                        <div class="font-view-area">
+                                                            <ul id="font-view-list1"></ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="custom-control custom-control-inline custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="nicknameFontBold">
+                                                        <label class="custom-control-label" for="nicknameFontBold">폰트 굵게 표시</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 닉네임 폰트 크기 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">닉네임 폰트 크기</p>
+                                                <div class="setup-item">
+                                                    <div id="slide_nick_font_size" class="slider-item"></div>
+                                                    <div class="slider-value">
+                                                        <input id="slide_nick_font_size_val" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 닉네임 폰트 색상 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">닉네임 폰트 색상</p>
+                                                <div class="setup-item">
+                                                    <ul class="chat-detail-color">
+                                                        <li class="w-100">
+                                                            <div class="color-picker-area">
+                                                                <input type='text' value='#ffffff' name='nicknameColor' id='colorPicker_nick_color' readonly class="form-control">
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- 상금 폰트 -->
+                                        <div class="setup-item-box">
+
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">상금 폰트</p>
+                                                <div class="setup-item">
+                                                    <!-- 폰트 설정 select-->
+                                                    <select id="rewardFontFamily" name="rewardFontFamily" class="font-family-select">
+                                                        <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                                                        <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                                                        <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                                                        <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                                                        <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                                                        <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                                                        <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                                                        <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                                                        <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                                                        <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                                                        <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                                                        <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                                                        <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                                                        <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                                                        <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                                                        <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                                                        <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                                                        <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                                                        <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                                                        <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                                                        <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                                                        <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                                                        <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                                                        <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                                                        <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                                                        <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                                                        <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                                                        <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                                                        <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                                                        <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                                                        <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                                                        <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                                                        <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                                                        <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                                                        <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                                                        <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                                                        <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                                                        <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+												    </select>
+
+                                                    <div class="font-view-select">
+                                                        <button class="btn-luckycard-select" id="fontSelect2" value="ff-01" onclick="fontFamilyLuckycard(this, 2);">
+                                                            <li><img src="../images/img_font_1.png" alt=""><span>검은고딕</span></li>
+                                                        </button>
+                                                        <div class="font-view-area">
+                                                            <ul id="font-view-list2"></ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="custom-control custom-control-inline custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="rewardFontBold">
+                                                        <label class="custom-control-label" for="rewardFontBold">폰트 굵게 표시</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 상금 폰트 크기 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">상금 폰트 크기</p>
+                                                <div class="setup-item">
+                                                    <div id="slide_reward_font_size" class="slider-item"></div>
+                                                    <div class="slider-value">
+                                                        <input id="slide_reward_font_size_val" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 상금 폰트 색상 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">상금 폰트 색상</p>
+                                                <div class="setup-item">
+                                                    <ul class="chat-detail-color">
+                                                        <li class="w-100">
+                                                            <div class="color-picker-area">
+                                                                <input type='text' value='#ffffff' name='rewardColor' id='colorPicker_reward_color' readonly class="form-control">
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 남은시간 폰트 -->
+                                        <div class="setup-item-box">
+
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">남은 시간 폰트</p>
+                                                <div class="setup-item">
+                                                    <!-- 폰트 설정 select-->
+                                                    <select id="timeFontFamily" name="timeFontFamily" class="font-family-select">
+                                                        <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                                                        <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                                                        <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                                                        <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                                                        <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                                                        <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                                                        <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                                                        <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                                                        <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                                                        <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                                                        <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                                                        <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                                                        <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                                                        <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                                                        <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                                                        <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                                                        <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                                                        <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                                                        <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                                                        <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                                                        <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                                                        <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                                                        <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                                                        <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                                                        <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                                                        <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                                                        <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                                                        <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                                                        <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                                                        <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                                                        <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                                                        <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                                                        <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                                                        <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                                                        <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                                                        <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                                                        <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                                                        <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+												    </select>
+
+                                                    <div class="font-view-select">
+                                                        <button class="btn-luckycard-select" id="fontSelect3" value="ff-01" onclick="fontFamilyLuckycard(this, 3);">
+                                                            <li><img src="../images/img_font_1.png" alt=""><span>검은고딕</span></li>
+                                                        </button>
+                                                        <div class="font-view-area">
+                                                            <ul id="font-view-list3"></ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="custom-control custom-control-inline custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="timeFontBold">
+                                                        <label class="custom-control-label" for="timeFontBold">폰트 굵게 표시</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 남은 시간 폰트 크기 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">남은 시간 폰트 크기</p>
+                                                <div class="setup-item">
+                                                    <div id="slide_time_font_size" class="slider-item"></div>
+                                                    <div class="slider-value">
+                                                        <input id="slide_time_font_size_val" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 남은 시간 폰트 색상 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt">남은 시간 폰트 색상</p>
+                                                <div class="setup-item">
+                                                    <ul class="chat-detail-color">
+                                                        <li class="w-100">
+                                                            <div class="color-picker-area">
+                                                                <input type='text' value='#ffffff' name='timeColor' id='colorPicker_time_color' readonly class="form-control">
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- //setup end -->
+
+                                <div class="setup-btn-area">
+                                    <div class="setup-btn">
+                                        <div class="btn-top-area">
+                                            <a href="#" class="btn-top"><img src="../images/ico_top_arrow.png"></a>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-content-center">
+                                            <button type="button" id="btn_save" class="btn mr-3">설정 저장</button>
+                                            <button type="button" id="btn_reset" class="btn type2">설정 초기화</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- //Content View End -->
+
+                        </div>
+                        <!-- //cont-area End -->
+                    </div>
+                    <!-- //Content End -->
+
+                </div>
+                <!-- //section-center-fix End -->
+            </div>
+            <!-- //section-center End -->
+
+        </div>
+        <!-- //Container End -->
+
+
+        <!-- Layer popup : setupCompleted Start -->
+        <div class="modal fade" id="setupCompleted" tabindex="-1" aria-labelledby="setupCompleted" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setupCompleted">설정 저장 완료</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+                    </div>
+                    <div class="modal-body">
+                        저장되었습니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Layer popup : setupCompleted End -->
+
+        <!-- Layer popup : bgm 삭제 Start -->
+        <div class="modal fade" id="titleBgmDeletePopup" tabindex="-1" aria-labelledby="titleBgmDeletePopupLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">BGM 삭제</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>설정하신 BGM을 삭제 하시겠습니까?</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn" data-dismiss="modal" onclick="onBgmListDelete(bgmDeleteList)">확인</button>
+                        <button type="button" class="btn btn-type2" data-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Layer popup : bgm 삭제 End -->
+
+        <script src="../customjs/common.js?202512291902"></script>
+        <script src="../customjs/preset.js?2412171239"></script>
+        <!-- <script src="../customjs/noti_luckycard.js?240418"></script> -->
+        <script src="../customjs/noti_luckycard.js?202512291902"></script>
+
+    </div>
+
+    <script>
+
+    // jQuery(document).ready(function() {
+
+    //     setFontFamilyLuckycard();
+    //     set_slide_nick_font_size_init();
+    //     set_slide_reward_font_size_init();
+    //     set_slide_time_font_size_init();
+
+    // });
+
+
+    // // 임시 폰트 설정
+    // var fontFamilyValue = {
+    //     font_nick : 'ff-05',
+    //     font_reward : 'ff-12',
+    //     font_time : 'ff-22'
+    // }
+
+    // function setFontFamilyLuckycard() {
+    //     var fontNick = document.getElementById('fontSelect1');
+    //     var fontReward = document.getElementById('fontSelect2');
+    //     var fontTime = document.getElementById('fontSelect3');
+    //     var getSelect = document.getElementById('nickNamefontFmaily');
+
+    //     // 임시 폰트 순회 key, value 비교 후 set
+    //     Object.entries(fontFamilyValue).forEach(([key, value]) => {
+    //         console.log('value', key, value)
+
+    //         if(key == 'font_nick') {
+    //             if(fontNick.value !== value) {
+    //                 fontNick.value = value;
+    //                 initFont(fontNick, value, getSelect);
+    //             }
+    //         } else if(key == 'font_reward') {
+    //             if(fontReward.value !== value) {
+    //                 fontReward.value = value;
+    //                 initFont(fontReward, value, getSelect);
+    //             }
+    //         } else if(key == 'font_time') {
+    //             if(fontTime.value !== value) {
+    //                 fontTime.value = value;
+    //                 initFont(fontTime, value, getSelect);
+    //             }
+    //         }
+    //     });
+
+    //     var setList1 = document.getElementById('font-view-list1');
+    //     var setList2 = document.getElementById('font-view-list2');
+    //     var setList3 = document.getElementById('font-view-list3');
+
+    //     // set 리스트 추가
+    //     $(getSelect.children).each(function() {
+    //         var img = $(this).attr("data-thumbnail");
+    //         var text = this.innerText;
+    //         var value = $(this).val();
+    //         var item = '<li><img src="' + img + '" alt="" value="' + value + '"/><span>' + text + '</span></li>';
+    //         setList1.innerHTML += item;
+    //         setList2.innerHTML += item;
+    //         setList3.innerHTML += item;
+    //     });
+    // }
+
+    // function initFont(_target, _value, _select) {
+    //     // console.log('target', _target, _value, _select);
+
+    //     $(_select.children).each(function() {
+    //         if(_value == this.value) {
+    //             var img = $(this).attr("data-thumbnail");
+    //             var text = this.innerText;
+    //             var value = $(this).val();
+    //             var item = '<li><img src="' + img + '" alt="" value="' + value + '"/><span>' + text + '</span></li>';
+    //             _target.innerHTML = item;
+    //             return false;
+    //         }
+    //     });
+    // }
+
+    // //폰트 설정 select
+    // function fontFamilyLuckycard(e) {
+    //     var target = e.parentElement.previousElementSibling;
+    //     var selectOption = target.children;
+    //     var fontList = e.nextElementSibling.children[0];
+    //     // console.log('e', e, target, selectOption, fontList, fontList.children.length);
+
+    //     $(e.nextElementSibling).toggle();
+
+    //     $(fontList.children).click(function() {
+    //         var img = $(this).find('img').attr("src");
+    //         var value = $(this).find('img').attr('value');
+    //         var text = this.innerText;
+    //         var item = '<li><img src="' + img + '" alt="" /><span>' + text + '</span></li>';
+
+    //         $(e).html(item).val(value);
+    //         $(e).next().css('display','none');
+    //         // .siblings().css({"border": "2px solid red"});
+    //     });
+
+    // }
+
+
+    // // color 설정
+    // var sampleColor = '#000000';
+
+    // setTextColor($("#colorPicker_nick_color"), sampleColor );
+    // setTextColor($("#colorPicker_reward_color"), sampleColor );
+    // setTextColor($("#colorPicker_time_color"), sampleColor );
+
+
+    // function setTextColor(_target, _color)
+    // {
+
+    // _target.val(_color);
+    // _target.spectrum({
+    //     color: _color,
+    //     showInput: true,
+    //     showAlpha: false,
+    //     className: "color-picker",
+    //     showInitial: true,
+    //     preferredFormat: "hex",
+    //     chooseText: "선택",
+    //     cancelText: "취소",
+    //     change: function(e) {
+    //        // console.log(" $(this) :",  $(this), e);
+    //         switch( $(this).attr("id"))
+    //         {
+    //             case "colorPicker_nick_color":
+    //                 current_data.noti_nick_color = $(this).val();
+    //                // console.log("dddd", $(".word_nick"), current_data.noti_nick_color)
+    //                 // $(".word_nick").css("color",  current_data.noti_nick_color )
+
+    //                 break;
+    //             case "colorPicker_reward_color":
+    //                 current_data.noti_reward_color = $(this).val();
+    //                 // $(".word").css("color",  current_data.noti_font_color )
+
+    //                 break;
+    //             case "colorPicker_time_color":
+    //                 current_data.noti_time_color = $(this).val();
+    //                 // $(".word_flex").css("color",  current_data.noti_number_color )
+    //                 break;
+    //         }
+
+    //     },
+    //     // move: function(color){
+    //     //     console.log('background-color~~~',color.toHex8String());
+    //     // }
+    //     });
+    // }
+
+
+
+    // // 닉네임 폰트사이즈 슬라이더
+    // function set_slide_nick_font_size_init() {
+
+    //     slide_nick_font_size = document.getElementById('slide_nick_font_size');
+    //     var spVal02 = document.getElementById('slide_nick_font_size_val');
+
+    //     noUiSlider.create(slide_nick_font_size, {
+    //         start: 1,
+    //         connect: 'lower',
+    //         step: 1,
+    //         range: {
+    //             'min': 0,
+    //             'max': 100
+    //         }
+    //     });
+
+    //     slide_nick_font_size.noUiSlider.on('update', function (values, handle) {
+    //         spVal02.value = parseInt(values[handle]);
+    //         // if(current_data)current_data.noti_sound_volume = spVal02.value;
+    //     });
+    // }
+
+    // // 상금 폰트사이즈 슬라이더
+    // function set_slide_reward_font_size_init() {
+
+    //     slide_reward_font_size = document.getElementById('slide_reward_font_size');
+    //     var spVal02 = document.getElementById('slide_reward_font_size_val');
+
+    //     noUiSlider.create(slide_reward_font_size, {
+    //         start: 1,
+    //         connect: 'lower',
+    //         step: 1,
+    //         range: {
+    //             'min': 0,
+    //             'max': 100
+    //         }
+    //     });
+
+    //     slide_reward_font_size.noUiSlider.on('update', function (values, handle) {
+    //         spVal02.value = parseInt(values[handle]);
+    //         // if(current_data)current_data.noti_sound_volume = spVal02.value;
+    //     });
+    // }
+
+    // // 남은시간 폰트사이즈 슬라이더
+    // function set_slide_time_font_size_init() {
+
+    //     slide_time_font_size = document.getElementById('slide_time_font_size');
+    //     var spVal02 = document.getElementById('slide_time_font_size_val');
+
+    //     noUiSlider.create(slide_time_font_size, {
+    //         start: 1,
+    //         connect: 'lower',
+    //         step: 1,
+    //         range: {
+    //             'min': 0,
+    //             'max': 100
+    //         }
+    //     });
+
+    //     slide_time_font_size.noUiSlider.on('update', function (values, handle) {
+    //         spVal02.value = parseInt(values[handle]);
+    //         // if(current_data)current_data.noti_sound_volume = spVal02.value;
+    //     });
+    // }
+
+
+    </script>
+
+
+</body>
+
+</html>

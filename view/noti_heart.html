@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="title" content="FlexTV">
+  <meta name="author" content="FlexTV">
+  <meta name="description" content="FlexTV">
+  <meta name="keywords" content="FlexTV">
+  <meta property="og:title" content="FlexTV">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+  <title>FlexTV 도우미</title>
+
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/help_ui.css?202511281850">
+
+  <script src="../customjs/global.js?20250305"></script>
+  <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="../js/lodash.min.js?20241223"></script>
+  <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="../js/Sortable.js"></script>
+  <script type="text/javascript" src="../js/clipboard.min.js"></script>
+  <script type="text/javascript" src="../js/nouislider.min.js"></script>
+  <script type="text/javascript" src="../js/spectrum.js"></script>
+  <script type="text/javascript" src="../js/flipclock.js"></script>
+  <script type="text/javascript" src="../js/help_ui.js?20251119"></script>
+  <script type="text/javascript" src="../js/loading-bar.min.js?20100404"></script>
+  <script type="text/javascript" src="../js/eventlistener.js?202508241249"></script>
+
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+
+</head>
+
+<body>
+  <div class="spinner-border  text-success" role="status"
+    style="display: block; position: fixed; top: 50% ;  left: 50%; z-index:11 ">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <div id="wrap">
+    <!-- Container Start -->
+    <div id="container">
+
+      <!-- Snb Start -->
+      <div id="nav-snb">
+        <div id="snb-area">
+          <div class="logo">
+            <a href="#" title="홈 바로가기"><img src="../images/img_help_logo.png?20260106" alt="flextv"></a>
+          </div>
+
+          <div class="snb-user-area">
+            <p class="img" id="user_pic">
+              <!-- <img src="../images/ico_user.png" alt="img-user"></a> -->
+              <img style="width: 34px; height: 34px;" src="../images/ico_user.png" alt="img-user">
+            </p>
+            <p class="nick" id="user_name"></p>
+            <p class="id" id="user_mid"></p>
+          </div>
+
+
+          <!-- snb area start -->
+          <div class="snb-nav-area">
+            <ul>
+              <li><a href="chat.html"><span class="ico1">채팅창</span>채팅창</a></li>
+              <li>
+                <a href="noti.html" class="on"><span class="ico2">알림</span>알림</a>
+                <ul class="snb-dep">
+                  <li><a href="noti.html">후원 알림</a></li>
+                  <li><a href="noti_roulette.html">룰렛 후원</a></li>
+                  <li><a href="noti_honeypot.html">꿀단지 후원</a></li>
+                  <li><a href="noti_heart.html" class="on-dep">하트 후원</a></li>
+                  <!-- <li><a href="noti_luckycard.html">럭키 카드</a></li> -->
+                  <!-- <li><a href="challenge_lex.html">도전 렉스</a></li> -->
+                </ul>
+              </li>
+              <li><a href="noti_m.html"><span class="ico2">알림-모바일</span>알림-모바일</a></li>
+              <li><a href="goal.html"><span class="ico3">목표치</span>목표치</a></li>
+              <li><a href="goal_m.html"><span class="ico3">목표치_모바일</span>목표치_모바일</a></li>
+              <li><a href="gift.html"><span class="ico4">후원자막</span>후원자막</a></li>
+              <!-- <li><a href="gift_video.html"><span class="ico6">영상/음성 후원</span>영상/음성 후원</a></li> -->
+              <li>
+                <a href="noti_luckycard.html"><span class="ico9">게임센터</span>게임센터</a>
+                <ul class="snb-dep">
+                  <li><a href="noti_luckycard.html">럭키카드</a></li>
+                  <!-- <li><a href="luckyrace.html">플렉스 동달</a></li> -->
+                  <!-- <li><a href="horserace.html">럭키레이스</a></li> -->
+                </ul>
+              </li>
+              <li><a href="clock.html"><span class="ico5">시계</span>시계</a></li>
+              <li><a href="excel.html"><span class="ico7">엑셀방송</span>엑셀방송</a></li>
+              <li><a href="joint.html"><span class="ico8">합동방송</span>합동방송</a></li>
+            </ul>
+          </div>
+
+          <!-- 도우미 웹 버전 열기 추가-->
+          <div class="snb-remote-btn" onclick="openWin('remote.html', 'remotePop', 1000, 800);">
+            <span><img src="../images/ico_bell.png" alt="알림"></span>
+            <div>
+              도우미 웹 버전 열기<br />
+              <span>FLEX 라이브 방송 리모컨</span>
+            </div>
+          </div>
+
+          <div class="snb-remote-guide"><a href="../view/remote_guide.html">라이브 방송 리모컨 가이드</a></div>
+        </div>
+        <!-- //snb area end -->
+      </div>
+      <!-- //Snb End -->
+
+      <!-- Content Center Start -->
+      <div id="section-center">
+        <div id="section-center-fix">
+          <!-- Content Start -->
+          <div id="content">
+            <div id="cont-area">
+              <!-- Content View Start -->
+              <div id="cont-view-area">
+
+                <!-- title start -->
+                <div class="help-title">
+                  <h1>하트후원</h1>
+                  <span>시청자가 후원한 하트 개수를 그래프와 퍼센트로 방송화면에 표시할 수 있습니다.</span>
+                  <p class="txt-warn"><i class="fa fa-asterisk" aria-hidden="true"></i> 하트 10,000개 달성 시 그래프는 자동 초기화 되고, 설정된 보상이 자동 지급됩니다.</p>
+                </div>
+                <!-- //title end -->
+
+                <!-- preset start -->
+                <div class="preset-area mb-5">
+                  <h2 class="section-tit">프리셋</h2>
+                  <div class="preset-box">
+                    <div class="preset-list">
+                      <ul class="preset-list-box" id="sortList">
+
+                      </ul>
+
+                      <div class="preset-btn" style="display:none">
+                        <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img
+                              src="../images/ico_preset_plus.png" alt=""></span>프리셋 추가</a>
+                      </div>
+                    </div>
+                    <div class="url-area">
+                      <div class="url-input">
+                        <input class="form-control" type="text" id="urlCopy" value="" readonly>
+                      </div>
+                      <div class="url-btn-box">
+                        <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopy">URL복사</button>
+                        <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                      </div>
+                      <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- //preset end -->
+
+                <!-- preview start -->
+                <div class="preview-area">
+                  <h2 class="preview-tit">미리보기</h2>
+
+                  <!-- heat box start -->
+                  <div class="chat-box heart-box-area">
+                    <!-- <div class="heart-bar-area" style=" visibility: hidden;">
+                      <div class="ldBar label-center ldHeart t-gift pNone" style=" width:100%; height:100%;"
+                        data-value="0" data-stroke-width="4" data-stroke-trail-width="4" data-stroke="#ff0000"
+                        data-min="0" data-max="100">
+                        <span class="pro-title">하트타이틀입니다.</span>
+                      </div>
+
+                    </div> -->
+                  </div>
+                  <!-- //goal box End -->
+
+                  <div class="preview-test-area">
+                    <ul class="text-box">
+                      <li>
+                        <input class="form-control" type="text" id="val_flex" name="" value="100">
+                        <button type="button" class="btn" id="btn_flex">하트</button>
+                        <button type="button" class="btn" id="btn_recommend">추천</button>
+                      </li>
+
+                      <li>
+                        <button type="button" class="btn" id="btn_win_reset">초기화</button>
+                        <button type="button" class="btn" id="btn_win_reload">새로고침</button>
+                      </li>
+                    </ul>
+                  </div>
+
+                </div>
+                <!-- //preview end -->
+
+                <!-- setup start -->
+                <div class="setup-area">
+                  <h2 class="section-tit">알림 설정</h2>
+                  <div class="setup-box">
+
+                    <div class="setup-item-box">
+                      <!-- 투명도-->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">투명도</p>
+                        <div class="setup-item">
+                          <div id="sliderChatOpacity" class="slider-item"></div>
+                          <div class="slider-value">
+                            <input id="opacityVal" class="input-num" readonly><span class="input-unit">%</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 그래프 굵기-->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">그래프 굵기</p>
+                        <div class="setup-item">
+                          <div id="slide_graph_border" class="slider-item"></div>
+                          <div class="slider-value">
+                            <input id="slide_graph_border_val" class="input-num" readonly><span
+                              class="input-unit">픽셀</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="setup-item-box">
+                      <!-- 후원 텍스트 -->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">후원하트 텍스트</p>
+                        <div class="setup-item">
+                          <textarea class="form-control" id="input_text_noti_text" rows="3">후원하트</textarea>
+                        </div>
+                      </div>
+
+                      <!-- 내부 텍스트 -->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">내부 텍스트</p>
+                        <div class="setup-item">
+                          <textarea class="form-control" id="input_text_noti_text_inside"
+                            rows="3">{하트값}{개}({퍼센트})</textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="setup-item-box">
+                      <!-- 텍스트 색 -->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">텍스트 색</p>
+                        <div class="setup-item">
+                          <ul class="chat-detail-color">
+                            <li>
+                              <p class="txt-user">폰트색</p>
+                              <div class="color-picker-area">
+                                <input type='text' value='#ffffff' name='chatColor1' id='color_font' readonly
+                                  class="form-control">
+                              </div>
+                            </li>
+                            <li>
+                              <p class="txt-user">내부폰트색</p>
+                              <div class="color-picker-area">
+                                <input type='text' value='#ffffff' name='chatColor1' id='color_font_inside' readonly
+                                  class="form-control">
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <!-- 그래프 색 -->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">그래프 색</p>
+                        <div class="setup-item">
+
+                          <ul class="chat-detail-color">
+                            <li>
+                              <p class="txt-user">그래프 내부색</p>
+                              <div class="color-picker-area">
+                                <input type='text' value='#ffffff' name='chatColor1' id='colorPicker_gradent_inside'
+                                  readonly class="form-control">
+                              </div>
+                            </li>
+                            <li>
+                              <p class="txt-user">모양 그래프 색</p>
+                              <div class="color-picker-area">
+                                <input type='text' value='#ffffff' name='chatColor1' id='colorPicker_graph_circle'
+                                  readonly class="form-control">
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="setup-item-box">
+                      <!-- 폰트 미리보기-->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">폰트 미리보기</p>
+                        <div class="setup-item">
+                          <p class="font-preview" id="preview">폰트 미리보기 입니다</p>
+                        </div>
+                      </div>
+
+                      <!-- 폰트 선택-->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">폰트 선택</p>
+                        <div class="setup-item">
+                          <!-- 폰트 설정 select-->
+                          <select id="fontFmaily" name="fontFmaily" class="font-family-select">
+                            <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                            <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                            <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                            <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                            <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                            <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                            <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                            <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                            <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                            <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                            <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                            <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                            <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                            <!-- <option value="ff-14" data-thumbnail="../images/img_font_14.png">만세체</option> -->
+                            <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                            <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                            <!-- <option value="ff-17" data-thumbnail="../images/img_font_17.png">민국체</option> -->
+                            <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                            <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                            <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                            <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                            <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                            <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                            <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                            <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                            <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                            <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                            <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                            <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                            <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                            <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                            <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                            <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                            <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                            <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                            <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                            <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                            <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                            <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                            <!-- <option value="ff-40" data-thumbnail="../images/img_font_40.png">독립체</option> -->
+                            <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+                          </select>
+
+                          <div class="font-view-select">
+                            <button class="btn-select" value=""></button>
+                            <div class="font-view-area">
+                              <ul id="font-view-list"></ul>
+                            </div>
+                          </div>
+
+                          <div class="custom-control custom-control-inline custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="fontBold">
+                            <label class="custom-control-label" for="fontBold">폰트 굵게 표시</label>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <!-- 폰트 크기-->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">폰트 크기</p>
+                        <div class="setup-item">
+                          <div id="sliderFontSize" class="slider-item"></div>
+                          <div class="slider-value">
+                            <input id="fontSizeVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 폰트 외곽선-->
+                      <div class="setup-item-list">
+                        <p class="setup-txt">폰트 외곽선</p>
+                        <div class="setup-item">
+                          <div id="sliderFontBorder" class="slider-item"></div>
+                          <div class="slider-value">
+                            <input id="fontBorderVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                          </div>
+                          <div class="color-picker-area">
+                            <input type='text' value='#000000' name='fontStrokeColor' id='fontStrokeColor'
+                              class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <!-- //setup end -->
+
+                <div class="setup-btn-area">
+                  <div class="setup-btn">
+                    <div class="btn-top-area">
+                      <a href="#" class="btn-top"><img src="../images/ico_top_arrow.png"></a>
+                    </div>
+                    <div class="d-flex justify-content-center align-content-center">
+                      <button type="button" id="btn_save" class="btn mr-3">설정 저장</button>
+                      <button type="button" id="btn_reset" class="btn type2">설정 초기화</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <!-- //Content View End -->
+
+            </div>
+            <!-- //cont-area End -->
+          </div>
+          <!-- //Content End -->
+
+        </div>
+        <!-- //section-center-fix End -->
+      </div>
+      <!-- //section-center End -->
+
+    </div>
+    <!-- //Container End -->
+
+
+    <!-- Layer popup : setupCompleted Start -->
+    <div class="modal fade" id="setupCompleted" tabindex="-1" aria-labelledby="setupCompleted" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="setupCompleted">설정 저장 완료</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            저장되었습니다.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- //Layer popup : setupCompleted End -->
+
+    <div class="modal fade" id="setupCompleted3" tabindex="-1" aria-labelledby="setupCompleted3" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="setupCompleted3">초기화</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="text-align: center;">
+            현재 표시된 후원내용이 초기화 됩니다.<br>
+            초기화 하시겠습니까?
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="btn_reset_ok3" class="btn btn-secondary" data-dismiss="modal">확인</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../customjs/preset.js?2412171239"></script>
+  <script src="../customjs/heartLoadingBar.js?202511281509"></script>
+  <script src="../customjs/heart.js?202512291902"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>FlexTV 도우미</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../css/help_ui.css?202506221531">
+
+    <script src="../customjs/global.js?20250305"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+    <!-- <script type="text/javascript" src="../js/Sortable.js"></script> -->
+    <script type="text/javascript" src="../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../js/spectrum.js"></script>
+    <script type="text/javascript" src="../js/lodash.min.js?20241223"></script>
+    <!-- <script type="text/javascript" src="../js/flipclock.js"></script> -->
+    <!-- <script type="text/javascript" src="../js/help_ui.js?20100404"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js" integrity="sha512-uElffqRAo44n9cqo42itgRMY0L0zNZWEj3RGTQwyQsITiz4CB6rALOu1/S4O5iy/vFTMNs8gmTpDXB8mfQpjOg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@33.2.3/dist/ag-grid-community.min.js"></script>
+</head>
+
+<body>
+
+    <div class="wrap-remote">
+        <div class="remote-alarm-area">
+
+            <div class="title-bar">
+                <ul class="tit-tab">
+                    <!-- <li><a href="javascript:;" data-tab-id="tab1" onclick="showTab('tab1')">후원알림</a></li> -->
+                    <!-- <li><a href="javascript:;" id="new-alarm-challengelex" class="on" data-tab-id="challengelex" onclick="showTab('challengelex')">도전렉스</a></li> -->
+                    <li><a href="javascript:;" id="new-alarm-vspon" class="on" data-tab-id="tab1" onclick="showTab('tab1')">영상/음성</a></li>
+                    <li><a href="javascript:;" id="new-alarm-luckycard" class="" data-tab-id="tab2" onclick="showTab('tab2')">럭키카드</a></li>
+                    <li><a href="javascript:;" id="new-excel-sponsor" class="" data-tab-id="excelsponsor" onclick="showTab('excelsponsor')" style="display:none">엑셀 시그</a></li>
+                    <!-- <li><a href="javascript:;" id="new-alarm-luckycard" class="" data-tab-id="luckyrace" onclick="showTab('luckyrace')">플렉스 동달</a></li> -->
+                    <!-- <li><a href="javascript:;" id="new-alarm-luckycard" class="" data-tab-id="horserace" onclick="showTab('horserace')">럭키레이스</a></li> -->
+                </ul>
+                <div class="ico-setting">
+                    <button type="button" class="btn trash hide" data-bs-toggle="modal" data-bs-target="#alarmDeletePopup" onclick="onSettingDeletePopup()"><i class="trash"></i></button>
+                    <button type="button" class="btn" id="btnSetting" onclick="onSettingToggle()"><i class="setting"></i></button>
+                    <button type="button" class="btn question"  data-bs-toggle="modal" data-bs-target="#alarmGuidePopup" onclick="onGuideToggle()"><i class="question">&#63;</i></button>
+                </div>
+
+                <!-- bar setting area -->
+                <div class="bar-setting-area">
+                    <div class="inner">
+                        <p class="inner-title">설정<span class="setting-close" onclick="onSettingClose()">&times;</span></p>
+                        <p class="inner-subject">허용설정</p>
+
+                        <ul>
+                          <!-- <li>
+                                <span class="setting-tit">도전 렉스 후원 허용</span>
+                                <div class="chk-switch-box">
+                                    <input type="checkbox" id="settingChallengeLexYn" name="settingChallengeLexYn" class="switch-input">
+                                    <label for="settingChallengeLexYn" class="switch-label">
+                                        <span class="marble"></span>
+                                        <span class="on">ON</span>
+                                        <span class="off">OFF</span>
+                                    </label>
+                                </div>
+                            </li> -->
+                            <li>
+                                <span class="setting-tit">영상 후원 허용</span>
+                                <div class="chk-switch-box">
+                                    <input type="checkbox" id="settingVideoYn" name="settingVideoYn" class="switch-input">
+                                    <label for="settingVideoYn" class="switch-label">
+                                        <span class="marble"></span>
+                                        <span class="on">ON</span>
+                                        <span class="off">OFF</span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="setting-tit">음성 후원 허용</span>
+                                <div class="chk-switch-box">
+                                    <input type="checkbox" id="settingAudioYn" name="settingAudioYn" class="switch-input">
+                                    <label for="settingAudioYn" class="switch-label">
+                                        <span class="marble"></span>
+                                        <span class="on">ON</span>
+                                        <span class="off">OFF</span>
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="list-alarm challengelex"  id="challengelex">
+              <!-- 도전렉스 tab -->
+              <div class="tab-btn-area">
+                <div class="tab-btn-container">
+                  <button class="btn" onclick="onCreateChallengeLex()">등록하기</button>
+                  <button class="btn ico-button" onclick="refreshChallengeLex()"><i class="ico-reload"></i></button>
+                </div>
+              </div>
+
+              <ul class="nav nav-tabs">
+                <li class="nav-item" id="progressing" onclick="showChallengeLexTab(this.id)">
+                  <a class="nav-link active" data-toggle="tab" href="#">진행</a>
+                </li>
+                <li class="nav-item" id="pending" onclick="showChallengeLexTab(this.id)">
+                  <a class="nav-link" data-toggle="tab" href="#">대기</a>
+                </li>
+                <li class="nav-item" id="completed" onclick="showChallengeLexTab(this.id)">
+                  <a class="nav-link" data-toggle="tab" href="#">결과</a>
+                </li>
+              </ul>
+
+              <!-- 도전 렉스 탭 내용 -->
+              <div class="tab-content" id="ChallengelexTabContent">
+                <div class="tab-pane fade show active" role="progressing">
+                  <div class="tab-option">
+                    <div class="status">
+                      진행 미션
+                      <span class="count"></span>
+                    </div>
+                    <div class="sort" data-sort="desc" onclick="onToggleSort()">
+                      <i class="bi sort-desc"></i>
+                    </div>
+                  </div>
+                  <!-- 리스트 내용 부분 -->
+                  <div class="tab-body"></div>
+                </div>
+                <div class="tab-pane fade show" role="pending">
+                  <div class="tab-option">
+                    <div class="status">
+                      대기 미션
+                      <span class="count"></span>
+                    </div>
+                    <div class="sort" data-sort="desc" onclick="onToggleSort()">
+                      <i class="bi sort-desc"></i>
+                    </div>
+                  </div>
+                  <!-- 리스트 내용 부분 -->
+                  <div class="tab-body"></div>
+                  <!-- 페이징 -->
+                  <div class="tab-paging"></div>
+                </div>
+                <div class="tab-pane fade show" role="completed">
+                  <div class="tab-option">
+                    <div class="status">
+                      완료 미션
+                      <span class="count"></span>
+                    </div>
+                    <div class="sort" data-sort="desc" onclick="onToggleSort()">
+                      <i class="bi sort-desc"></i>
+                    </div>
+                  </div>
+                  <!-- 리스트 내용 부분 -->
+                  <div class="tab-body"></div>
+                  <!-- 페이징 -->
+                  <div class="tab-paging"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- tab item 2 -->
+            <div class="list-alarm active donation"  id="tab1">
+            </div>
+
+            <!-- tab item 3 -->
+            <div class="list-alarm donation luckycard"  id="tab2">
+
+                <div class="alarm-head">
+                    <span>닉네임(ID)</span>
+                    <span>개수</span>
+                    <span>남은시간</span>
+                    <span>카드선택</span>
+                </div>
+
+                <div class="list-alarm-area" id="luckyCardGameList">
+                    <!-- item 1 -->
+                    <!-- <div class="alarm-box">
+                        <div class="nick">
+                            <span>뿌부부부부붕</span>
+                            <p>(flex01)</p>
+                            </div>
+                        <div class="count">
+                            <span>100,000</span>
+                        </div>
+                        <div class="time">
+                            <p>15:22:20</p>
+                        </div>
+                        <div class="card-select">
+
+                            <button type="button" class="btn" onclick="openCardList(this)">선택</button>
+                            <div id="remoteCardList-1" class="card-area" data-card-value="0"></div>
+                        </div>
+                    </div> -->
+
+                    <!-- item 2 -->
+                    <!-- <div class="alarm-box">
+                        <div class="nick">
+                            <span>뿌부부부부붕</span>
+                            <p>(flex01)</p>
+                            </div>
+                        <div class="count">
+                            <span>100,000</span>
+                        </div>
+                        <div class="time">
+                            <p>15:22:20</p>
+                        </div>
+                        <div class="card-select">
+
+                            <button type="button" class="btn" onclick="openCardList(this)">선택</button>
+                            <div id="remoteCardList-2" class="card-area" data-card-value="0"></div>
+
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="alarm-box none" style="display:block;">
+                        후원 알림이 없습니다.
+                    </div> -->
+
+                </div>
+            </div>
+
+            <!-- tab item: excel sponsor -->
+            <div class="list-alarm excelsponsor" id="excelsponsor">
+              <div class="mb-2 d-flex justify-content-between">
+                <div class="row ml-2">
+                  <!-- <button class="btn btn-normal btn-sm mr-2" onclick="test()">
+                    방송종료
+                  </button> -->
+                </div>
+                <div class="row w-100">
+                  <div class="col-7 d-flex justify-content-start">
+                    <!-- <button class="btn btn-sm btn-sponsor-stop mr-2" data-toggle="popover"  data-placement="top">
+                      x2 이벤트
+                    </button>
+                    <button class="btn btn-sm btn-sponsor-stop mr-2" data-toggle="popover"  data-placement="top">
+                      x3 이벤트
+                    </button> -->
+                    <button class="btn btn-normal btn-sm mr-2 btn-filter" data-filter="false" onclick="setFilterOnlySponsor(this)">
+                      <i class="fa fa-filter" aria-hidden="true"></i>
+                      엑셀 후원만 보기
+                    </button>
+                    <button class="btn btn-normal btn-sm mr-2 btn-filter" data-filter="false" onclick="setFilterOnlyNotEnded(this)">
+                      <i class="fa fa-filter" aria-hidden="true"></i>
+                      진행 & 대기 중인 후원만 보기
+                    </button>
+                    <button class="btn btn-normal btn-sm mr-5" onclick="clearFilters()">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      필터 초기화
+                    </button>
+                  </div>
+
+                  <div class="col-5 d-flex justify-content-end">
+                    <!-- 일시 정지 상태 data-status="pause" -->
+                    <button class="btn btn-accent btn-sm mr-2" data-status="" onclick="setPause(event)">
+                      <i class="fa fa-pause" aria-hidden="true"></i>
+                      <label>일시정지</label>
+                    </button>
+                    <button class="btn btn-normal btn-sm mr-2" onclick="startSig()">
+                      <i class="fa fa-play" aria-hidden="true"></i>
+                      진행상태로 변경
+                    </button>
+                    <button class="btn btn-normal btn-sm mr-2" onclick="reload()">
+                      <i class="fa fa-refresh" aria-hidden="true"></i>
+                      갱신
+                    </button>
+                  </div>
+                </div>
+              </div>
+                <div id="myGrid" style="height: calc(100vh - 125px)"></div>
+            </div>
+
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <!-- tab items: lucky race -->
+            <!-- <div class="list-alarm type-game" id="luckyrace">
+                < !-- <p class="inner-subject mb-1" style="position: relative;" style="display:none;">
+                  게임 리스트
+                  <span style="position: absolute; top:2px; right:0; font-size: 0.875rem; " id="numOfTicket">수량: 0</span>
+                </p> -- >
+
+                <div class="alarm-head">
+                    <span>닉네임(ID)</span>
+                    <span>후원 렉스 금액</span>
+                    <span>당첨 범위</span>
+                    <span>예측 마감 시간</span>
+                </div>
+
+                <div class="list-alarm-area">
+                    <div class="alarm-box">
+                        <div>
+                            <span id="nickName">--</span>
+                        </div>
+                        <div>
+                            <span id="rexMoney" >--</span>
+                        </div>
+                        <div>
+                            <span id="winningRange">3등</span>
+                        </div>
+                        <div>
+                            <span id="betStaySec">0:00</span>
+                        </div>
+                        <div class="game-race-btn"  id="stt01">
+                            <button type="button" class="btn"   id="stt01-1" onclick="onGameCreate()" >게임 생성</button>
+                        </div>
+                        <div class="game-race-btn"  id="stt02" style="display: none;">
+                            <button type="button" class="btn b-1" onclick="onGameCancel()" >게임 취소</button>
+                            <button type="button" class="btn" >진행 중</button>
+                        </div>
+                        <div class="game-race-btn"  id="stt03" style="display: none;">
+                            <button type="button" class="btn b-1" onclick="onGameReplay()"  id="stt03-1">게임 종료</button>
+                            <button type="button" class="btn" onclick="onShowResult()" >결과 보기</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                < !-- rucky race list -- >
+                <div class="list"  id="playerList" style="display:none;" >
+                    <p class="inner-subject mb-1" style="font-size:16px;" id="betInfoMember" >참여자 리스트</p>
+
+                    <div class="alarm-head">
+                        <span>ID</span>
+                        <span>닉네임</span>
+                        <span>예측 꿀 금액</span>
+                        <span>예측 동물</span>
+                        <span>예측 결과</span>
+                        <span>획득 꿀</span>
+                    </div>
+                    <div id="playerList-body">
+                      < !-- <div class="list-alarm-area">
+                          <div class="alarm-box">
+                              <div>
+                                  <span>123aiiwbq</span>
+                              </div>
+                              <div>
+                                  <span>뿌부붕뿌부부웅부</span>
+                              </div>
+                              <div>
+                                  <span>60,000</span>
+                              </div>
+                              <div>
+                                  <span class="list-txt-point">곰</span>
+                              </div>
+                              <div>
+                                  <span class="hide">예측 실패</span>
+                                  <span class="list-txt-point">2등 당첨</span>
+                              </div>
+                              <div>
+                                  <span class="hide">예측 실패</span>
+                                  <span class="list-txt-point">+100,000</span>
+                              </div>
+                          </div>
+                      </div> -- >
+                    </div>
+                </div>
+            </div> -->
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <!-- tab items: lucky race -->
+            <!-- <div class="list-alarm type-game" id="horserace">
+                < !-- <p class="inner-subject mb-1" style="position: relative;">
+                  게임 리스트
+                  <span style="position: absolute; top:2px; right:0; font-size: 0.875rem; " id="numOfTicket_horserace">수량: 0</span>
+                </p> -- >
+
+                <div class="alarm-head">
+                    <span>닉네임(ID)</span>
+                    <span>후원 렉스 금액</span>
+                    <span>당첨 범위</span>
+                    <span>예측 마감 시간</span>
+                </div>
+
+                <div class="list-alarm-area">
+                    <div class="alarm-box">
+                        <div>
+                            <span id="nickName_horserace">--</span>
+                        </div>
+                        <div>
+                            <span id="rexMoney_horserace" >--</span>
+                        </div>
+                        <div>
+                            <span id="winningRange_horserace">3등</span>
+                        </div>
+                        <div>
+                            <span id="betStaySec_horserace">0:00</span>
+                        </div>
+                        <div class="game-race-btn"  id="stt01_horserace"  style="display:none;">
+                            <button type="button" class="btn"   id="stt01-1_horserace" onclick="onGameCreate_horserace()">게임 생성</button>
+                        </div>
+                        <div class="game-race-btn"  id="stt02_horserace" style="display: none;">
+                            <button type="button" class="btn b-1" onclick="onGameCancel_horserace()" >게임 취소</button>
+                            <button type="button" class="btn" >진행 중</button>
+                        </div>
+                        <div class="game-race-btn"  id="stt03_horserace" style="display: none;">
+                            <button type="button" class="btn b-1" onclick="onGameReplay_horserace()"  id="stt03-1_horserace">게임 종료</button>
+                            <button type="button" class="btn" onclick="onShowResult_horserace()" >결과 보기</button>
+                        </div>
+                    </div>
+                </div>
+
+                < !-- rucky race list -- >
+                <div class="list"  id="playerList_horserace" style="display:none;" >
+                    <p class="inner-subject mb-1" id="betInfoMember_horserace" style="font-size:16px;">참여자 리스트</p>
+
+                    <div class="alarm-head">
+                        <span>ID</span>
+                        <span>닉네임</span>
+                        <span>예측 꿀 금액</span>
+                        <span>예측 경마</span>
+                        <span>예측 결과</span>
+                        <span>획득 꿀</span>
+                    </div>
+                    <div id="playerList-body_horserace">
+                      < !-- <div class="list-alarm-area">
+                          <div class="alarm-box">
+                              <div>
+                                  <span>123aiiwbq</span>
+                              </div>
+                              <div>
+                                  <span>뿌부붕뿌부부웅부</span>
+                              </div>
+                              <div>
+                                  <span>60,000</span>
+                              </div>
+                              <div>
+                                  <span class="list-txt-point">곰</span>
+                              </div>
+                              <div>
+                                  <span class="hide">예측 실패</span>
+                                  <span class="list-txt-point">2등 당첨</span>
+                              </div>
+                              <div>
+                                  <span class="hide">예측 실패</span>
+                                  <span class="list-txt-point">+100,000</span>
+                              </div>
+                          </div>
+                      </div> -- >
+                    </div>
+                </div>
+            </div> -->
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <div class="remote-goto-top" onclick="onScrollToTop()">
+                <a href="#" class="btn-top"><img src="../images/ico_arrow_top.png"></a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Layer popup : 도전렉스 시작-->
+    <div class="modal fade" id="confirmStartMisssionPopup" tabindex="-1" aria-labelledby="confirmStartMisssionPopupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">도전렉스</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="mainmsg"></p>
+                    <!-- <p>미션 도전을 시작하시겠습니까?</p> -->
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn" data-dismiss="modal" onclick="callbackRouteApi()">예</button>
+                    <button type="button" class="btn btn-type2" data-dismiss="modal">아니오</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Layer popup : 도전렉스 End -->
+
+  <!-- Layer popup : BJ 도전렉스 등록 Start -->
+    <div class="modal fade" id="createChallengeLexPopup" tabindex="-1" aria-labelledby="createChallengeLexPopupLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title bold">도전렉스 생성하기</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="mission-area">
+              <p>미션내용</p>
+              <div class="mission">
+                <div class="inputarea">
+                  <div class="input-group">
+                    <input type="text" minlength="4" maxlength="20" class="form-control" placeholder="내용을 입력해주세요(최소 4자, 최대 20자)" name="mission">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="limit-time-area">
+              <p>제한 시간<span>(최대 10일)</span></p>
+              <div class="limit-time">
+                <div class="input-group">
+                  <input type="number" max="10" oninput="onNumberInputOnly(this)" class="form-control" placeholder="00" name="extends-day">
+                  <span class="input-group-text" id="extends-day">일</span>
+                </div>
+                <div class="input-group">
+                  <input type="number" max="23" oninput="onNumberInputOnly(this)" class="form-control" placeholder="00" name="extends-hours">
+                  <span class="input-group-text" id="extends-hours">시간</span>
+                </div>
+                <div class="input-group">
+                  <input type="number" max="59" oninput="onNumberInputOnly(this)" class="form-control" placeholder="00" name="extends-minutes">
+                  <span class="input-group-text" id="extends-minutes">분</span>
+                </div>
+              </div>
+            </div>
+            <!-- 유의사항 -->
+            <div class="agree">
+              <div class="agress-title-area">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" onchange="onCheckAgree(event)" value="" id="missionAgree">
+                  <label class="form-check-label" for="missionAgree">
+                    도전 렉스 유의사항을 확인 및 동의 합니다.
+                  </label>
+                </div>
+                <div><div class="agree-toggle agree-toggle-collapse" data-toggle="expand" onclick="onToggleArea(event, '#createChallengeLexPopup .modal-body .agree-detail')"></div></div>
+              </div>
+              <ul class="agree-detail">
+                <li>미션 결과는 BJ가 결정하며, 유저는 ‘성공’만 선택할 수 있습니다.</li>
+                <li>도전렉스는 BJ와 유저의 신뢰를 전제하에 진행되기에 어떤 상황에도 미션 결과를 번복할 수 없습니다.</li>
+                <li>미션 요청 후 1시간 경과 시 자동 취소되며 유저가 직접 취소할 수 없습니다.</li>
+                <li>미션 제한시간 경과 시 자동으로 미션은 실패 처리됩니다.</li>
+                <li>BJ는 미션 제한시간을 최대 1일까지 1회 연장할 수 있습니다.</li>
+                <li>미션 성공 시 BJ에게 모금된 상금이 전달됩니다.</li>
+                <li>미션 취소나 실패 시 상금은 유저에게 반환됩니다.</li>
+                <li>대기/진행 중인 미션에 상금을 추가 후원할 수 있습니다.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" disabled="true" class="btn" onclick="callCreateChallengeLexApiHandler()">등록하기</button>
+            <button type="button" class="btn btn-type2" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- //Layer popup : BJ 도전렉스 등록 End -->
+
+    <!-- Layer popup : 연장하기 Start -->
+    <div class="modal fade" id="extendsPopup" tabindex="-1" aria-labelledby="extendsPopupLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">도전렉스 연장하기</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>연장할 시간을 입력해 주세요</p>
+            <div class="inputarea">
+              <div class="input-group">
+                <input type="number" max="1" oninput="onNumberInputOnly(this)" class="form-control" placeholder="00" name="extends-day">
+                <span class="input-group-text" id="extends-day">일</span>
+              </div>
+              <div class="input-group">
+                <input type="number" max="23" oninput="onNumberInputOnly(this)" class="form-control" placeholder="00" name="extends-hours">
+                <span class="input-group-text" id="extends-hours">시간</span>
+              </div>
+              <div class="input-group">
+                <input type="number" max="59" oninput="onNumberInputOnly(this)" class="form-control" placeholder="00" name="extends-minutes">
+                <span class="input-group-text" id="extends-minutes">분</span>
+              </div>
+              <input type="hidden" name="mission-id">
+            </div>
+
+            <!-- 유의사항 -->
+            <div class="alert alert-secondary" role="alert">
+              <p class="bold"><유의 사항></p>
+              <p>
+                <ul>
+                  <li>제한 시간은 1회만 가능 합니다.</li>
+                </ul>
+              </p>
+            </div>
+          </div>
+
+          <div class="modal-footer d-flex justify-content-between">
+            <button type="button" class="btn" data-dismiss="modal" onclick="callExtendsTimeApiHandler()">연장하기</button>
+            <button type="button" class="btn btn-type2" data-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- //Layer popup : 연장하기 End -->
+
+    <!-- Layer popup : 후원리스트 Start -->
+    <div class="modal fade" id="sponsorListPopup" tabindex="-1" aria-labelledby="sponsorListPopupLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">후원목록</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="mission"></p>
+            <div class="mission-detail">
+              <!-- 주최자  -->
+              <table>
+                <colgroup>
+                  <col width="50%"/>
+                  <col width="50%"/>
+                </colgroup>
+                <!-- <thead>
+                  <td>주최자</td>
+                  <td>전체 모금렉스</td>
+                </thead> -->
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <!-- 후원자 리스트 -->
+            <div class="sponsor-list">
+              <!-- 후원한 유저 -->
+              <table>
+                <colgroup>
+                  <col width="50%"/>
+                  <col width="50%"/>
+                </colgroup>
+                <thead>
+                  <td>후원한 유저</td>
+                  <td>렉스</td>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+              <!-- spinner -->
+              <div class="spinner-area">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+
+              <!-- 페이징 -->
+              <div class="paging-area">
+                <div class="tab-paging"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-type2" data-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- //Layer popup : 후원리스트 End -->
+
+    <!-- Layer popup : 이벤트 삭제 Start -->
+    <div class="modal fade" id="alarmDeletePopup" tabindex="-1" aria-labelledby="alarmDeletePopupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">이벤트 삭제</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>읽지 않은 이벤트를 제외한 모든 이벤트 리스트는 삭제됩니다.</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn" data-dismiss="modal" onclick="alarmDeleteConfirm()">예</button>
+                    <button type="button" class="btn btn-type2" data-dismiss="modal">아니오</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Layer popup : 이벤트 삭제 End -->
+
+      <!-- Layer popup : 가이드 팝업 Start -->
+    <div class="modal fade" id="alarmGuidePopup" tabindex="-1" aria-labelledby="alarmGuidePopupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="onGuidePopupClose()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span><img src="../images/remote_guide_6.png" alt="가이드"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Layer popup : 가이드 팝업 End -->
+
+ <!-- Layer popup : 공통 알림-->
+    <div class="modal fade" id="errorAlarmPopup" tabindex="-1" aria-labelledby="errorAlarmPopupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header error">
+                    <h5 class="modal-title">
+                      <div class="error-title">
+                        <img src="../images/ico-error.svg" width="24px" height="24px"/>
+                        오류
+                      </div>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-type2" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Layer popup : 공통 알림 End -->
+
+
+    <!-- Layer popup : 공통 알림-->
+    <div class="modal fade" id="commonAlarmPopup" tabindex="-1" aria-labelledby="commonAlarmPopupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header info">
+                    <h5 class="modal-title">
+                      <div class="info-title">
+                        <img src="../images/ico-info.svg" width="24px" height="24px"/>
+                        알림
+                      </div>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-type2" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //Layer popup : 공통 알림 End -->
+
+
+<script src="../customjs/remote_v2.js?202603251147"></script>
+<script src="../customjs/remote_excel.js?202603251147"></script>
+<script src="../customjs/remote_luckyrace.js?20260313"></script>
+<script src="../customjs/remote_horserace.js?20260527"></script>
+
+<script>
+
+</script>
+
+</body>
+
+</html>
+

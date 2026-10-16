@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="title" content="FlexTV">
+<meta name="author" content="FlexTV">
+<meta name="description" content="FlexTV">
+<meta name="keywords" content="FlexTV">
+<meta property="og:title" content="FlexTV">
+<meta property="og:type" content="website">
+<meta property="og:url" content="">
+<meta property="og:image" content="">
+
+<link rel="shortcut icon" href="" type="image/x-icon">
+<title>FlexTV 방송도우미</title>
+
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/help_ui.css?202508142035">
+
+<script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="../js/Sortable.js"></script>
+<script type="text/javascript" src="../js/clipboard.min.js"></script>
+<script type="text/javascript" src="../js/nouislider.min.js"></script>
+<script type="text/javascript" src="../js/spectrum.js"></script>
+<script type="text/javascript" src="../js/help_ui.js?20100404"></script>
+<script type="text/javascript" src="../js/loading-bar.min.js?20100404"></script>
+
+<script src="../customjs/global.js?20250305"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js" integrity="sha512-uElffqRAo44n9cqo42itgRMY0L0zNZWEj3RGTQwyQsITiz4CB6rALOu1/S4O5iy/vFTMNs8gmTpDXB8mfQpjOg==" crossorigin="anonymous"></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+</head>
+<body style="background-color:rgba(240, 6, 6, 0)">
+<div id="popWinBox">
+	<!-- 콘텐츠 삽입 Start -->
+
+	<!-- 목표치 -->
+	<!-- goal box start -->
+	<div class="chat-box goal-box-area" style="background-color:rgba(240, 6, 6, 0)">
+		<div class="goal-bar-area "  style=" visibility: hidden;">
+			<div class="goal-box" style="height:40px">
+				<p class="goal-tit">오늘의 후원 목표치</p>
+				<div class="goal-bar">
+					<div class="goal-inner animated" style="width: 75%;"></div>
+				</div>
+				<div class="txt start goal_start"><span class="value">0</span class="num"> 개</span></div>
+				<div class="txt end goal_end"><span class="value">200</span class="num"> 개</span></div>
+				<div class="inner-txt">50개 (25%)</div>
+			</div>
+
+
+           <!-- circle -->
+		   <div
+		   class="ldBar label-center ldCircle  t-gift"
+		   style=" width:100%; height:100%;"
+		   data-value="0"
+		   data-stroke-width="4"
+		   data-stroke-trail-width="4"
+		   data-stroke="#ff0000"
+		   data-min="0"
+		   data-max="100"
+		   >
+			   <span class="pro-title" ></span>
+		   </div>
+
+
+
+
+
+		   <!-- heart -->
+		   <div
+		   class="ldBar label-center ldHeart t-gift"
+		   style=" width:100%; height:100%;"
+		   data-value="0"
+		   data-stroke-width="4"
+		   data-stroke-trail-width="4"
+		   data-stroke="#ff0000"
+		   data-min="0"
+		   data-max="100"
+		   >
+		   <span class="pro-title"></span>
+		   </div>
+
+
+
+		   <!-- star -->
+		   <div
+		   class="ldBar label-center ldStar t-gift"
+		   style="width:100%; height:100%;"
+		   data-value="0"
+		   data-stroke-width="2"
+		   data-stroke-trail-width="2"
+		   data-stroke="#ff0000"
+		   data-min="0"
+		   data-max="100"
+		   >
+		   <span class="pro-title"></span>
+		   </div>
+
+
+
+			 <!-- fan -->
+			 <div
+			 class="ldBar label-center ldFan t-gift"
+			 style=" width:70%; height:70%; "
+			 data-value="0"
+			 data-stroke-width="4"
+			 data-stroke-trail-width="4"
+			 data-stroke="#ff0000"
+			 data-min="0"
+			 data-max="100"
+			 >
+			 <span class="pro-title"></span>
+			 </div>
+
+
+
+
+
+
+
+
+
+		</div>
+	</div>
+	<!-- //goal box End -->
+
+	<!-- //콘텐츠 삽입 End -->
+</div>
+
+<script src="../win_target.js?202512291902"></script>
+</body>
+</html>

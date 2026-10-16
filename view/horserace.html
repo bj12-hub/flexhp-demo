@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>FlexTV 도우미</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- <link rel="stylesheet" href="../css/help_ui.css"> -->
+    <link rel="stylesheet" href="../css/help_ui.css?202506221531">
+
+    <script src="../customjs/global.js?20250305"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../js/Sortable.js"></script>
+    <script type="text/javascript" src="../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../js/spectrum.js"></script>
+    <script type="text/javascript" src="../js/flipclock.js"></script>
+    <script type="text/javascript" src="../js/help_ui.js?2412171239"></script>
+
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+
+    <style>
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- <div class="spinner-border  text-success" role="status" style="display: block; position: fixed; top: 50% ;  left: 50%; z-index:11 ">
+        <span class="sr-only">Loading...</span>
+    </div> -->
+
+    <div id="wrap">
+        <!-- Container Start -->
+        <div id="container">
+
+           <!-- Snb Start -->
+            <div id="nav-snb">
+                <div id="snb-area">
+                    <div class="logo">
+                        <a href="#" title="홈 바로가기"><img src="../images/img_help_logo.png?20260106" alt="flextv"></a>
+                    </div>
+
+                    <div class="snb-user-area">
+                        <p class="img" id="user_pic">
+                            <!-- <img src="../images/ico_user.png" alt="img-user"></a> -->
+                            <img style="width: 34px; height: 34px;" src="../images/ico_user.png" alt="img-user">
+                        </p>
+                        <p class="nick" id="user_name"></p>
+                        <p class="id" id="user_mid"></p>
+                    </div>
+
+
+                    <!-- snb area start -->
+                    <div class="snb-nav-area">
+                        <ul>
+                            <li><a href="chat.html"><span class="ico1">채팅창</span>채팅창</a></li>
+                            <li>
+                                <a href="noti.html"><span class="ico2">알림</span>알림</a>
+                                <ul class="snb-dep">
+                                    <li><a href="noti.html">후원 알림</a></li>
+                                    <li><a href="noti_roulette.html">룰렛 후원</a></li>
+                                    <li><a href="noti_honeypot.html">꿀단지 후원</a></li>
+                                    <li><a href="noti_heart.html">하트 후원</a></li>
+                                    <!-- <li><a href="noti_luckycard.html" class="on-dep">럭키 카드</a></li> -->
+                                    <!-- <li><a href="challenge_lex.html">도전 렉스</a></li> -->
+                                </ul>
+                            </li>
+                            <li><a href="noti_m.html"><span class="ico2">알림-모바일</span>알림-모바일</a></li>
+                            <li><a href="goal.html"><span class="ico3">목표치</span>목표치</a></li>
+                            <li><a href="goal_m.html"><span class="ico3">목표치_모바일</span>목표치_모바일</a></li>
+                            <li><a href="gift.html"><span class="ico4">후원자막</span>후원자막</a></li>
+                            <!-- <li><a href="gift_video.html"><span class="ico6">영상/음성 후원</span>영상/음성 후원</a></li> -->
+                            <li>
+                                <a href="noti_luckycard.html" class="on"><span class="ico9">게임센터</span>게임센터</a>
+                                <ul class="snb-dep">
+                                    <li><a href="noti_luckycard.html">럭키카드</a></li>
+                                    <!-- <li><a href="luckyrace.html">플렉스 동달</a></li> -->
+                                    <!-- <li><a href="horserace.html"  class="on-dep">럭키레이스</a></li> -->
+                                </ul>
+                            </li>
+                            <li><a href="clock.html"><span class="ico5">시계</span>시계</a></li>
+                            <li><a href="excel.html"><span class="ico7">엑셀방송</span>엑셀방송</a></li>
+                            <li><a href="joint.html"><span class="ico8">합동방송</span>합동방송</a></li>
+                        </ul>
+                    </div>
+                    <!-- 도우미 웹 버전 열기 추가-->
+                    <div class="snb-remote-btn" onclick="openWin('remote.html', 'remotePop', 1000, 800);">
+                        <span><img src="../images/ico_bell.png" alt="알림"></span>
+                        <div>
+                            도우미 웹 버전 열기<br/>
+                            <span>FLEX 라이브 방송 리모컨</span>
+                        </div>
+                    </div>
+                    <div class="snb-remote-guide"><a href="../view/remote_guide.html">라이브 방송 리모컨 가이드</a></div>
+                    </div>
+                  <!-- //snb area end -->
+                </div>
+            <!-- //Snb End -->
+
+            <!-- Content Center Start -->
+            <div id="section-center">
+                <div id="section-center-fix">
+
+                    <!-- Content Start -->
+                    <div id="content">
+                        <div id="cont-area">
+                            <!-- Content View Start -->
+                            <div id="cont-view-area">
+
+                                <!-- title start -->
+                                <div class="help-title">
+                                    <h1>게임센터</h1>
+                                    <span>시청자와 함께 즐기는 게임</span> <br>
+                                    <span style="color:#E59C4D; font-size:0.875rem;"">* 방송 송출 프로그램에는 프리셋 URL을 하나만 등록해 주세요. 별도의 브라우저 창을 띄울 경우 게임 오류가 발생할 수 있습니다.</span>
+                                </div>
+                                <!-- //title end -->
+
+                                <!-- preset start -->
+                                <div class="preset-area mb-5">
+                                    <h2 class="section-tit">프리셋</h2>
+                                    <div class="preset-box">
+                                        <div class="preset-list" style="display:none">
+                                            <ul class="preset-list-box" id="sortList">
+                                                <!-- <li class="selected">
+                                                    <a href="#" class="preset-txt">프리셋</a>
+                                                    <a href="#" class="preset-modify">수정</a>
+                                                    <a href="#" class="preset-delete">삭제</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="preset-txt">프리셋프리셋프리셋프리셋</a>
+                                                    <a href="#" class="preset-modify">수정</a>
+                                                    <a href="#" class="preset-delete">삭제</a>
+                                                </li> -->
+                                            </ul>
+
+                                            <div class="preset-btn" style="display:none">
+                                                <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img src="../images/ico_preset_plus.png" alt=""></span>프리셋 추가</a>
+                                            </div>
+                                        </div>
+                                        <div class="url-area">
+                                            <div class="url-input">
+                                                <input class="form-control" type="text" id="urlCopy" value="" readonly>
+                                            </div>
+                                            <div class="url-btn-box">
+                                                <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopy">URL복사</button>
+                                                <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                                            </div>
+                                            <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- //preset end -->
+
+                                <!-- setup start -->
+                                <div class="setup-area mb-5">
+                                    <h2 class="section-tit">게임 설정</h2>
+                                    <div class="setup-box">
+
+                                        <div class="setup-item-box">
+                                            <!-- 동물 달리기 활성화 -->
+                                            <div class="setup-item-list" style="padding-bottom:1.5rem">
+                                                <p class="setup-txt">럭키레이스 활성화</p>
+                                                <div class="setup-item">
+                                                    <div class="chk-switch-box d-inline-block switch-raceYn-chk">
+                                                        <input type="checkbox" id="chGameRaceYn" name="chGameRaceYn" class="switch-input" >
+                                                        <label for="chGameRaceYn" class="switch-label">
+                                                            <span class="marble"></span>
+                                                            <span class="on">ON</span>
+                                                            <span class="off">OFF</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 게임 모드 -->
+                                        <div class="setup-item-box">
+                                            <div class="setup-item-list" style="padding-bottom:1.75rem">
+                                                <p class="setup-txt filter-level">
+                                                    게임모드 선택
+                                                    <span class="ico-tooltip ml-1"><img src="../images/ico_question.png" alt="안내"></span>
+                                                    <span class="tooltip-area">
+                                                        <span class="arrow-up"></span>
+                                                        <span class="tooltip-txt mb-0">One Pick</span>
+                                                        <span class="tooltip-list">
+                                                        <span>- 선택한 말이 1~3위인 경우 상금 획득</span>
+                                                    </span>
+                                                    <span class="tooltip-txt mb-0 mt-1">Double Pick</span>
+                                                        <span class="tooltip-list">
+                                                        <span>- 선택한 두 말이 1,2위인 경우 상금 획득</span>
+                                                        <span>- 선택한 두 말이 TOP3 경우 상금 획득</span>
+                                                        <span>- 선택한 말 중 한마리만 TOP3 인 경우</span>
+                                                        </span>
+                                                    </span>
+                                                </p>
+                                                <div class="setup-item">
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioGameMode1" name="radioGameMode" class="custom-control-input" value="single" checked="checked">
+                                                        <label class="custom-control-label" for="radioGameMode1">One Pick</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioGameMode2" name="radioGameMode" class="custom-control-input" value="double">
+                                                        <label class="custom-control-label" for="radioGameMode2">Double Pick</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="setup-item-box" style="display: none;">
+                                            <!-- 게임 방식 -->
+                                            <div class="setup-item-list" style="padding-bottom:1.75rem">
+                                                <p class="setup-txt">게임방식</p>
+                                                <div class="setup-item">
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioGameType1" name="radioGameType" class="custom-control-input" value="호스트">
+                                                        <label class="custom-control-label" for="radioGameType1">호스트</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioGameType2" name="radioGameType" class="custom-control-input" value="공식방송">
+                                                        <label class="custom-control-label" for="radioGameType2">공식방송</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="setup-item-box" >
+                                            <!-- 최소 베팅 금액 -->
+                                            <div class="setup-item-list" style="display: none;">
+                                                <p class="setup-txt filter-level">
+                                                    경마게임 오픈 렉스
+                                                    <span class="ico-tooltip ml-1"><img src="../images/ico_question.png" alt="안내"></span>
+                                                    <span class="tooltip-area">
+                                                        <span class="arrow-up"></span>
+                                                        <span class="tooltip-txt mb-0">최소 100렉스부터 설정 가능합니다.</span>
+                                                    </span>
+                                                </p>
+                                                <div class="setup-item">
+                                                    <input type="text" class="form-control w-25 text-right d-inline-block" id="horse_race_open_rex" value = "500"> <span class="text-white ml-2">렉스</span>
+                                                    <!-- <p class="setup-txt-warn"><img src="../images/ico_warn.png" alt="경고">최소 후원 렉스인 100 렉스 이상 입력해주세요.<br>더 적은 금액으로 입력할 경우, 후원페이지에는 기본 설정 금액으로 표시됩니다.</p> -->
+                                                </div>
+                                            </div>
+
+                                            <!-- 베팅 마감 시간 -->
+                                            <div class="setup-item-list">
+                                                <p class="setup-txt filter-level">
+                                                    예측 마감 시간
+                                                    <span class="ico-tooltip ml-1"><img src="../images/ico_question.png" alt="안내"></span>
+                                                    <span class="tooltip-area">
+                                                        <span class="arrow-up"></span>
+                                                        <span class="tooltip-txt mb-0">게임 생성 이후 예측 마감 시간이 지나면, 참여자는 추가 예측을 할 수 없으며, 게임이 자동으로 진행됩니다.</span>
+                                                    </span>
+                                                </p>
+                                                            <!-- checked="checked" disabled="disabled" -->
+                                                <div class="setup-item">
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioEndTime1" name="radioEndTime" class="custom-control-input" value="3">
+                                                        <label class="custom-control-label" for="radioEndTime1">1분 30초</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioEndTime2" name="radioEndTime" class="custom-control-input" value="5">
+                                                        <label class="custom-control-label" for="radioEndTime2">5분</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioEndTime3" name="radioEndTime" class="custom-control-input" value="10">
+                                                        <label class="custom-control-label" for="radioEndTime3">10분</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioEndTime4" name="radioEndTime" class="custom-control-input" value="15">
+                                                        <label class="custom-control-label" for="radioEndTime4">15분</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioEndTime5" name="radioEndTime" class="custom-control-input" value="30" >
+                                                        <label class="custom-control-label" for="radioEndTime5">30분</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioEndTime6" name="radioEndTime" class="custom-control-input" value="60" >
+                                                        <label class="custom-control-label" for="radioEndTime6">60분</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 당첨 범위 -->
+                                            <div class="setup-item-list" style="display: none;">
+                                                <p class="setup-txt filter-level">
+                                                    당첨 범위
+                                                    <span class="ico-tooltip ml-1"><img src="../images/ico_question.png" alt="안내"></span>
+                                                    <span class="tooltip-area">
+                                                        <span class="arrow-up"></span>
+                                                        <span class="tooltip-txt mb-0">참여자가 선택한 말이 설정한 당첨 범위에 속하는 경우 상금을 획득합니다. </span>
+                                                    </span>
+                                                </p>
+                                                <div class="setup-item">
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioRange1" name="radioWinningRange" class="custom-control-input" value="1">
+                                                        <label class="custom-control-label" for="radioRange1">1등</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioRange2" name="radioWinningRange" class="custom-control-input" value="2">
+                                                        <label class="custom-control-label" for="radioRange2">2등</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="radioRange3" name="radioWinningRange" class="custom-control-input" value="3">
+                                                        <label class="custom-control-label" for="radioRange3">3등</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 게임 볼륨 -->
+                                            <div class="setup-item-list" style="display: none;">
+                                                <p class="setup-txt">게임 볼륨 설정</p>
+                                                <div class="setup-item">
+                                                    <div id="sliderGameVolume" class="slider-item"></div>
+                                                    <div class="slider-value">
+                                                        <input id="gameVolume" class="input-num" readonly><span class="input-unit">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- 트랙 설정 -->
+                                            <div class="setup-item-list" style="display: none;">
+                                                <p class="setup-txt">트랙 설정</p>
+                                                <div class="setup-item">
+                                                    <div class="item-theme-box type-noti">
+                                                        <label class="theme-rdo mr-4">
+                                                            <input type="radio" id="notiType1" name="trackType" value="type1" checked="checked" class="rdo">
+                                                            <span class="img-box"><img src="../images/img_noti_type1.jpg" alt="theme1"></span>
+                                                        </label>
+                                                        <label class="theme-rdo">
+                                                            <input type="radio" id="notiType1" name="trackType" value="type2" class="rdo">
+                                                            <span class="img-box"><img src="../images/img_noti_type1.jpg" alt="theme1"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div style="padding:2rem; border:1px solid #1E2331; border-radius: 0.5rem; margin-top:1.25rem">
+                                                <p style="color:#fff">*OBS  / PRISM</p>
+                                                <span style="color:#E59C4D; font-size:0.875rem;"">브라우저 소스 속성값을 너비 1920, 높이 1080으로 설정해주세요.</span>
+
+                                                <p style="color:#fff">* Xsplit</p>
+                                                <span style="color:#E59C4D; font-size:0.875rem;">Add Source - Webpage - URL - Setting에서 Display 영역의 Custom 값을 너비 1920, 높이 1080으로 설정해주세요.</span>
+                                                </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- //setup end -->
+
+                                <div class="setup-btn-area">
+                                    <div class="setup-btn">
+                                        <div class="btn-top-area">
+                                            <a href="#" class="btn-top"><img src="../images/ico_top_arrow.png"></a>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-content-center">
+                                            <button type="button" id="btn_save" class="btn mr-3">게임 설정 저장</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- //Content View End -->
+
+                        </div>
+                        <!-- //cont-area End -->
+                    </div>
+                    <!-- //Content End -->
+
+                </div>
+                <!-- //section-center-fix End -->
+            </div>
+            <!-- //section-center End -->
+
+        </div>
+        <!-- //Container End -->
+
+
+          <!-- Layer popup : setupCompleted Start -->
+          <div class="modal fade" id="setupCompleted" tabindex="-1" aria-labelledby="setupCompleted" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setupCompleted">설정 저장 완료</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+                    </div>
+                    <div class="modal-body">
+                        저장되었습니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Layer popup : setupCompleted End -->
+
+
+    </div>
+    <script src="../customjs/preset.js?260123"></script>
+    <script src="../customjs/horserace.js?260309"></script>
+
+    <script>
+
+    // jQuery(document).ready(function() {
+    //     fnGameVolume();
+
+    // });
+
+
+    // slider 영상 볼륨
+    // function fnGameVolume() {
+    //     var gameVolume = document.getElementById('sliderGameVolume');
+    //     var gameVolumeVal = document.getElementById('gameVolume');
+
+    //     if (!gameVolume) return;
+
+    //     noUiSlider.create(gameVolume, {
+    //         start: 50,
+    //         connect: 'lower',
+    //         step: 1,
+    //         range: {
+    //             'min': 0,
+    //             'max': 100
+    //         }
+    //     });
+
+    //     gameVolume.noUiSlider.on('update', function(values, handle) {
+    //         gameVolumeVal.value = parseInt(values[handle]);
+    //         // prev_handle_volume(volVal.value)
+    //     });
+
+    //     gameVolumeVal.addEventListener('change', function() {
+    //         gameVolume.noUiSlider.set(this.value);
+    //     });
+    // }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--
+	NOTES:
+	1. All tokens are represented by '$' sign in the template.
+	2. You can write your code only wherever mentioned.
+	3. All occurrences of existing tokens will be replaced by their appropriate values.
+	4. Blank lines will be removed automatically.
+	5. Remove unnecessary comments before creating your template.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="authoring-tool" content="Adobe_Animate_CC" />
+    <title>ani_luckybox</title>
+    <!-- write your code here -->
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="ani_luckybox.js?202506221425"></script>
+    <script>
+      // Global Scripts
+      var g_selectCardNum = 0;
+      var g_isSuccess;
+      var g_successNum = 0;
+      var g_winLex;
+      var g_loseLex;
+      var g_this;
+      var g_arrSounds = [];
+      var soundSrc = "sounds/";
+      var g_isSoundSupported = false;
+      var g_soundVolume = 80;
+      var g_url_socket = "";
+      var g_url_api = "";
+      var g_redirect_url = null;
+      var mc_ani_card;
+      var g_arr_ani_cue = [];
+      var g_obj = {};
+      var g_reqkey;
+      var g_myKey;
+      /*
+var aniObj = {}
+aniObj.numOfCard = numOfCard;
+aniObj.selectCard = selectCard;
+aniObj.isSuccess = isSuccess;
+aniObj.successIndex = successIndex;
+aniObj.winLex = winLex;
+aniObj.loseLex = loseLex;
+g_arr_ani_cue.push(aniObj);
+*/
+      function g_endAniSelectCard() {
+        mc_ani_card.play();
+      }
+      function g_endAniSuccess() {
+        g_this.gotoAndPlay("re");
+      }
+      function g_endAniFail() {
+        mc_ani_card.play();
+      }
+      function g_setLuckycardAniend() {
+        var param = {};
+        param.page = g_myKey;
+        param.toPreset = "info";
+        param.data = {};
+        param.data.type = "luckycardaniend";
+        param.data.reqkey = g_reqkey;
+        console.log("set_luckycardaniend :", param);
+        axios
+          .post(g_url_api + "/event/messagetransfer", param)
+          .then(function (response) {
+            console.log("response :", response);
+          })
+          .catch(function (error) {})
+          .then(function () {
+            // always executed
+          });
+      }
+      function g_playSound(num) {
+        if (!g_isSoundSupported) return;
+        var snd = g_arrSounds[num];
+        snd.stop();
+        snd.setVolume(g_soundVolume);
+        snd.play();
+        console.log("g_playSound", snd);
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.2.1/buzz.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+    ></script>
+    <script src="../demo/mock.js"></script>
+    <script>
+      var canvas,
+        stage,
+        exportRoot,
+        anim_container,
+        dom_overlay_container,
+        fnStartAnimation;
+      function init() {
+        canvas = document.getElementById("canvas");
+        anim_container = document.getElementById("animation_container");
+        dom_overlay_container = document.getElementById(
+          "dom_overlay_container"
+        );
+        var comp = AdobeAn.getComposition("B7470E98898EE74780997F467E2A80B9");
+        var lib = comp.getLibrary();
+        var loader = new createjs.LoadQueue(false);
+        loader.addEventListener("fileload", function (evt) {
+          handleFileLoad(evt, comp);
+        });
+        loader.addEventListener("complete", function (evt) {
+          handleComplete(evt, comp);
+        });
+        var lib = comp.getLibrary();
+        loader.loadManifest(lib.properties.manifest);
+      }
+      function handleFileLoad(evt, comp) {
+        var images = comp.getImages();
+        if (evt && evt.item.type == "image") {
+          images[evt.item.id] = evt.result;
+        }
+      }
+      function handleComplete(evt, comp) {
+        //This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+        var lib = comp.getLibrary();
+        var ss = comp.getSpriteSheet();
+        var queue = evt.target;
+        var ssMetadata = lib.ssMetadata;
+        for (i = 0; i < ssMetadata.length; i++) {
+          ss[ssMetadata[i].name] = new createjs.SpriteSheet({
+            images: [queue.getResult(ssMetadata[i].name)],
+            frames: ssMetadata[i].frames,
+          });
+        }
+        exportRoot = new lib.ani_luckybox();
+        stage = new lib.Stage(canvas);
+        //Registers the "tick" event listener.
+        fnStartAnimation = function () {
+          stage.addChild(exportRoot);
+          createjs.Ticker.framerate = lib.properties.fps;
+          createjs.Ticker.addEventListener("tick", stage);
+        };
+        //Code to support hidpi screens and responsive scaling.
+        AdobeAn.makeResponsive(false, "both", false, 1, [
+          canvas,
+          anim_container,
+          dom_overlay_container,
+        ]);
+        AdobeAn.compositionLoaded(lib.properties.id);
+        fnStartAnimation();
+      }
+    </script>
+    <!-- write your code here -->
+  </head>
+  <body onload="init();" style="margin: 0px">
+    <div
+      id="animation_container"
+      style="background-color: rgba(37, 37, 37, 0); width: 640px; height: 360px"
+    >
+      <canvas
+        id="canvas"
+        width="640"
+        height="360"
+        style="
+          position: absolute;
+          display: block;
+          background-color: rgba(37, 37, 37, 0);
+        "
+      ></canvas>
+      <div
+        id="dom_overlay_container"
+        style="
+          pointer-events: none;
+          overflow: hidden;
+          width: 640px;
+          height: 360px;
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          display: block;
+        "
+      ></div>
+    </div>
+  </body>
+</html>
