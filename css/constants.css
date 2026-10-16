@@ -1,0 +1,14 @@
+:root {
+  --color-foreground: #171A1C;
+  --color-foreground-secondary: #5B626B;
+  --color-accent: #FF024A;
+  --color-accent-hover: #d1003b;
+  --color-accent-secondary: #FFC7CB;
+  --color-accent-secondary-hover: #ca999c;
+  --color_warn: #E59C4D;
+  --color-background-secondary: #E6E8EA;
+  --color-background-secondary-hover: #c9c9c9;
+  --border-color: #DBDEE1;
+  --table-header-background: #F7F7F8;
+  --font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', helvetica, 'Apple SD Gothic Neo', helvetica, sans-serif;
+}

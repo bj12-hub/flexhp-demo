@@ -1,0 +1,456 @@
+/* 팀 css*/
+.team-container {
+  color: #fff;
+  width: auto;
+  margin: 10px;
+  text-align: center;
+  /* padding: 20px; */
+  /* border: 3px solid #444; */
+  /* border-radius: 12px; */
+  overflow: hidden;
+}
+
+.team-title {
+  font-size: 28px;
+  /* font-weight: bold; */
+  color: #ffdddd;
+  text-shadow: 2px 2px 2px #000;
+  margin-bottom: 20px;
+}
+
+.excel-team-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* position: relative; */
+  /* background: #111; */
+  border: 0px;
+}
+
+
+/* team-theme-a start ***********************************************/
+
+.excel-team-area table th,
+.excel-team-area table tbody td {
+  vertical-align: middle;
+}
+
+/* td width*/
+.excel-team-area tbody td.team-header-rate,
+.excel-team-area tbody td.team-header-amount {
+  width: 20%;
+}
+
+
+/* TEAM THEME-A============================================= */
+.excel-team-area table.theme-team-a {
+  width: 100%;
+  border: 2px solid #005F8F;
+}
+
+.excel-team-area table.theme-team-a th  {
+  text-align: center;
+  background-color: #008ED6;
+  border-right: 2px solid #005F8F;
+  border-left: 2px solid #005F8F;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+/* team header*/
+.excel-team-area table.theme-team-a tbody tr.team-header  {
+  text-align: center;
+  background-color: #43C0FF;
+  border-right: 2px solid #005F8F;
+  border-left: 2px solid #005F8F;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+}
+.excel-team-area table.theme-team-a tbody tr.team-header td {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+}
+.excel-team-area table.theme-team-a tbody tr.team-header td.team-header-ranking{
+  text-align: center;
+  border-right: 2px solid #005F8F;
+}
+.excel-team-area table.theme-team-a tbody tr.team-header td.team-header-name  {
+  text-align: left;
+  border-right: 2px solid #005F8F;
+}
+.excel-team-area table.theme-team-a tbody tr.team-header td.team-header-amount  {
+  text-align: right;
+  border-right: 2px solid #005F8F;
+}
+.excel-team-area table.theme-team-a tbody tr.team-header td.team-header-rate {
+  text-align: right;
+}
+/* team member*/
+.excel-team-area table.theme-team-a tbody tr.team-member  {
+  text-align: center;
+  background-color: #ffffff;
+  font-size: 16px;
+  color: black;
+  border: 1px dashed #c5c5c5;
+}
+.excel-team-area table.theme-team-a tbody tr.team-member td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.excel-team-area table.theme-team-a tbody tr.team-member td.team-member-ranking,
+.excel-team-area table.theme-team-a tbody tr.team-member td.team-member-name  {
+  border-right: 2px solid #005F8F;
+}
+.excel-team-area table.theme-team-a tbody tr.team-member td.team-member-amount  {
+  text-align: right;
+  border-right: 2px solid #005F8F;
+}
+.excel-team-area table.theme-team-a tbody tr.team-member td.team-member-rate {
+  text-align: right;
+}
+
+/* TEAM THEME-B============================================= */
+.excel-team-area table.theme-team-b {
+  width: 100%;
+  border: 2px solid #570DAB;
+}
+
+.excel-team-area table.theme-team-b th  {
+  text-align: center;
+  background-color: #570DAB;
+  border-right: 2px solid #570DAB;
+  border-left: 2px solid #570DAB;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.excel-team-area table.theme-team-b th.team-th-bj{
+  border-right: 2px solid white;
+}
+
+.excel-team-area table.theme-team-b th.team-th-lex{
+  border-right: 2px solid white;
+}
+
+/* team header*/
+.excel-team-area table.theme-team-b tbody tr.team-header  {
+  text-align: center;
+  background-color: #B07AFF;
+  border-right: 2px solid #570DAB;
+  border-left: 2px solid #570DAB;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+}
+.excel-team-area table.theme-team-b tbody tr.team-header td {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+}
+.excel-team-area table.theme-team-b tbody tr.team-header td.team-header-ranking{
+  text-align: center;
+  border-right: 2px solid #570DAB;
+}
+.excel-team-area table.theme-team-b tbody tr.team-header td.team-header-name  {
+  text-align: left;
+  border-right: 2px solid #570DAB;
+}
+.excel-team-area table.theme-team-b tbody tr.team-header td.team-header-amount  {
+  text-align: right;
+  border-right: 2px solid #570DAB;
+}
+.excel-team-area table.theme-team-b tbody tr.team-header td.team-header-rate {
+  text-align: right;
+}
+/* team member*/
+.excel-team-area table.theme-team-b tbody tr.team-member  {
+  text-align: center;
+  background-color: #ffffff;
+  font-size: 16px;
+  color: black;
+  border: 1px dashed #c5c5c5;
+}
+.excel-team-area table.theme-team-b tbody tr.team-member td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.excel-team-area table.theme-team-b tbody tr.team-member td.team-member-ranking,
+.excel-team-area table.theme-team-b tbody tr.team-member td.team-member-name  {
+  border-right: 2px solid #570DAB;
+}
+.excel-team-area table.theme-team-b tbody tr.team-member td.team-member-amount  {
+  text-align: right;
+  border-right: 2px solid #570DAB;
+}
+.excel-team-area table.theme-team-b tbody tr.team-member td.team-member-rate {
+  text-align: right;
+}
+
+
+
+/* TEAM THEME-C============================================= */
+.excel-team-area table.theme-team-c {
+  width: 100%;
+  border: 2px solid #006900;
+}
+
+.excel-team-area table.theme-team-c th  {
+  text-align: center;
+  background-color: #008915;
+  border-right: 2px solid #006900;
+  border-left: 2px solid #006900;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.excel-team-area table.theme-team-c th.team-th-bj{
+  border-right: 2px solid white;
+}
+
+.excel-team-area table.theme-team-c th.team-th-lex{
+  border-right: 2px solid white;
+}
+
+/* team header*/
+.excel-team-area table.theme-team-c tbody tr.team-header  {
+  text-align: center;
+  background-color: #00BC3A;
+  border-right: 2px solid #006900;
+  border-left: 2px solid #006900;
+  font-weight: 700;
+  font-size: 16px;
+  color: #ffffff;
+}
+.excel-team-area table.theme-team-c tbody tr.team-header td {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
+}
+.excel-team-area table.theme-team-c tbody tr.team-header td.team-header-ranking{
+  text-align: center;
+  border-right: 2px solid #006900;
+}
+.excel-team-area table.theme-team-c tbody tr.team-header td.team-header-name  {
+  text-align: left;
+  border-right: 2px solid #006900;
+}
+.excel-team-area table.theme-team-c tbody tr.team-header td.team-header-amount  {
+  text-align: right;
+  border-right: 2px solid #006900;
+}
+.excel-team-area table.theme-team-c tbody tr.team-header td.team-header-rate {
+  text-align: right;
+}
+/* team member*/
+.excel-team-area table.theme-team-c tbody tr.team-member  {
+  text-align: center;
+  background-color: #ffffff;
+  font-size: 16px;
+  color: black;
+  border: 1px dashed #c5c5c5;
+}
+.excel-team-area table.theme-team-c tbody tr.team-member td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.excel-team-area table.theme-team-c tbody tr.team-member td.team-member-ranking,
+.excel-team-area table.theme-team-c tbody tr.team-member td.team-member-name  {
+  border-right: 2px solid #006900;
+}
+.excel-team-area table.theme-team-c tbody tr.team-member td.team-member-amount  {
+  text-align: right;
+  border-right: 2px solid #006900;
+}
+.excel-team-area table.theme-team-c tbody tr.team-member td.team-member-rate {
+  text-align: right;
+}
+
+
+/* team-theme-a end  ***********************************************/
+
+/* preset page 스타일 */
+.battle-container {
+  color: #fff;
+  width: auto;
+  margin: 10px;
+  text-align: center;
+  padding: 20px;
+  border: 3px solid #444;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #000, #333);
+}
+.battle-title {
+  font-size: 28px;
+  /* font-weight: bold; */
+  color: #ffdddd;
+  text-shadow: 2px 2px 2px #000;
+  margin-bottom: 20px;
+}
+.differencescores-area {
+  position: relative;
+  bottom: 36px;
+  color: gold;
+  z-index: 1000;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  width: 100%;
+  left: 0px;
+}
+.vs-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  background: #111;
+  border: 2px solid gold;
+  padding: 15px;
+  border-radius: 10px;
+}
+.team {
+  width: 50%;
+  text-align: center;
+}
+.team .score {
+  font-size: 23px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+    1px 1px 0 black;
+  position: absolute;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.team .names {
+  font-size: 16px;
+  margin-top: 5px;
+}
+.battle-container .center {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  background-color: #00000000;
+}
+.battle-container .center-multi {
+  position: relative;
+  left: -14px;
+  width: 0px;
+  max-width: 40px;
+  text-align: center;
+  background-color: #00000000;
+}
+.shield {
+  position: relative;
+  top: -9px;
+  background: #00000066;
+  border: 3px solid #aaa;
+  border-radius: 30px;
+  padding: 7px 15px 5px 15px;
+  width: 110px;
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: normal;
+}
+
+.shield-multi {
+  border: 0px solid #aaa;
+  border-radius: 0px;
+  width: 100%;
+  height: fit-content;
+  margin: 0 auto;
+}
+
+.shield-multi-vs {
+  position: relative;
+  top: 27px;
+  padding: 0px;
+  border: 0px solid #aaa;
+  background-color: #0000;
+  border-radius: 50%;
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
+}
+
+.shield .timer {
+  font-size: 1.0rem;
+  font-weight: bold;
+  color: #00ffcc;
+  text-shadow: 1px 1px 4px #000;
+}
+
+.shield-multi .timer {
+  font-size: 1.5rem;
+}
+
+.shield .vs {
+  font-size: 1.1rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #ff0066, #ffcc00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: pulse 1.8s linear infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.gauge-bar-left,
+.gauge-bar {
+  display: flex;
+  height: 30px;
+  margin-top: 10px;
+  background: #444;
+  border-radius: 4px;
+  position: relative;
+}
+.gauge-fill-left {
+  height: 100%;
+  background: linear-gradient(to bottom, #ff0000, #ff00005f);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.gauge-fill-right {
+  height: 100%;
+  background: linear-gradient(to bottom, #0475ff, #0000bb5f);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.gauge-bar-right {
+  justify-content: end;
+}

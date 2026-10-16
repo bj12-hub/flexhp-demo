@@ -1,0 +1,1499 @@
+.modal-dialog .modal-content {
+  font-family: var(--font-family);
+}
+
+/* 도전 렉스 */
+.list-alarm.challengelex.active {
+    display:block;
+    padding:20px 20px 20px 10px;
+    /* height:calc(100% - 80px) */
+}
+/* 진행 중 카드 */
+.challengelex .card-li .card-txt.alert {
+    display:inline-block;
+    text-align:left;
+    padding-left: 20px;
+    padding-top: 20px;
+    background-color:#0000;
+
+    border: 1.9px solid #FF024A;
+    border-radius: 25px;
+    min-width: 192px !important;
+    max-width: 192px !important;
+    width: 192zpx !important;
+    height: 120px;
+    box-shadow: 3px 1px 20px 0px #FF024A3D;
+    -webkit-box-shadow: 3px 1px 20px 0px #FF024A3D;
+    -moz-box-shadow: 3px 1px 20px 0px #FF024A3D;
+
+    /* min-width: 193px !important;
+    max-width: 193px !important;
+    width: 193zpx !important;
+    height: 120px;
+    background-image: url(../images/outline_border_red.svg);
+    background-repeat: no-repeat;
+    background-position: top; */
+
+}
+/* 중간 공간을 띄운후 불은색 라인*/
+.challengelex .card-li .card-txt.alert::before {
+    content: '';
+    width: 180.173px;
+    height: 110.114px;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    border: 5px solid #FF024A;
+    border-top: 4px solid #FF024A;
+    border-bottom: 4px solid #FF024A;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 0px 11px 4px #FF024A4F;
+    -webkit-box-shadow: 0px 0px 11px 4px #FF024A4F;
+    -moz-box-shadow: 0px 0px 11px 4px #FF024A4F;
+
+    /* top: 4px;
+    left: 6px;
+    background-image: url(../images/inline_border_red.svg);
+    background-repeat: no-repeat;
+    background-position: top; */
+}
+
+/* 상단 타이틀 */
+.challengelex .card-li .card-txt.alert::after {
+  content: var(--content, "");
+
+  position: absolute;
+  left: 21%;
+  right: 21%;
+  top: -10px;
+  width: 110.385px;
+  height: 27.85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 18px;
+  background: #FF024A;
+  border-radius: 13px;
+  /* background-image: url(../images/card_title_bg_red.svg);
+  background-repeat: no-repeat;
+  background-position: top; */
+
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.87rem;
+  line-height: 18px;
+}
+
+.challengelex .card-li .card-txt.alert p {
+    display:block;
+}
+.challengelex .card-li .card-txt.alert p span {
+    font-size:14px;
+}
+.challengelex .card-li .card-txt.alert .word.inner-time {
+    display:-ms-inline-grid;
+    justify-content: end;
+    align-items: center;
+    position: absolute;
+    bottom: 10px;
+    right: 24px;
+    /* width:320px; */
+}
+.challengelex .card-li .card-txt.alert .word.inner-time .time{
+    display:flex;
+    justify-content: end;
+    align-items: center;
+    border-radius:4px;
+}
+
+.challengelex .card-li .card-txt.alert .nick-status {
+  display: flex;
+  justify-content: space-between;
+}
+/* 진행 중 */
+.challengelex .card-li .card-txt.alert p span.status {
+  display: inline-flex;
+  justify-content: center;
+  align-items: end;
+  background-color: white;
+  border: 1px solid #FF0000;
+  color: #FF0000;
+  font-size: 0.76em;
+  border-radius: 20px;
+  min-width: 55px;
+}
+
+/* 성공*/
+.challengelex .card-li .card-txt p.ani-img {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  bottom: -5px;
+}
+
+.challengelex .card-li .card-txt p.ani-img img {
+  width: 87px;
+  height: 79.949px;
+}
+.challengelex .card-li .card-txt.alert.success p span.status {
+  display: inline-flex;
+  justify-content: center;
+  align-items: end;
+  background-color: red;
+  border: 1px solid #FF0000;
+  color: #FFFFFF;
+  font-size: 0.76em;
+  border-radius: 20px;
+  min-width: 55px;
+}
+
+
+.challengelex .card-li .card-txt.alert.success {
+    display:inline-block;
+    text-align:left;
+    padding-left: 20px;
+    padding-top: 20px;
+
+
+    border: 1.9px solid #944DFF;
+    border-radius: 25px;
+    min-width: 192px !important;
+    max-width: 192px !important;
+    width: 192zpx !important;
+    height: 120px;
+    box-shadow: 3px 1px 20px 0px #944DFF3D;
+    -webkit-box-shadow: 3px 1px 20px 0px #944DFF3D;
+    -moz-box-shadow: 3px 1px 20px 0px #944DFF3D;
+}
+.challengelex .card-li .card-txt.alert.success::before{
+    content: '';
+    width: 180.173px;
+    height: 110.114px;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+
+    border: 5px solid #944DFF;
+    border-top: 4px solid #944DFF;
+    border-bottom: 4px solid #944DFF;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 0px 11px 4px #944DFF4F;
+    -webkit-box-shadow: 0px 0px 11px 4px #944DFF4F;
+    -moz-box-shadow: 0px 0px 11px 4px #944DFF4F;
+}
+.challengelex .card-li .card-txt.success::after{
+  content: var(--content, "");
+  position: absolute;
+
+  left: 21%;
+  right: 21%;
+  top: -10px;
+  width: 110.385px;
+  height: 27.85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 18px;
+  background: #944DFF;
+  border-radius: 13px;
+}
+
+/* 실패 취소 */
+.challengelex .card-li .card-txt.alert.failure,
+.challengelex .card-li .card-txt.alert.cancel {
+    display:inline-block;
+    text-align:left;
+    padding-left: 20px;
+    padding-top: 20px;
+    background-color:#0000;
+
+    border: 1.9px solid #8C949B;
+    border-radius: 25px;
+    min-width: 192px !important;
+    max-width: 192px !important;
+    width: 192zpx !important;
+    height: 120px;
+    box-shadow: 3px 1px 20px 0px #8C949B3D;
+    -webkit-box-shadow: 3px 1px 20px 0px #8C949B3D;
+    -moz-box-shadow: 3px 1px 20px 0px #8C949B3D;
+}
+.challengelex .card-li .card-txt.alert.failure::before,
+.challengelex .card-li .card-txt.alert.cancel::before{
+    content: '';
+    width: 180.173px;
+    height: 110.114px;
+    position: absolute;
+    top: 4px;
+    left: 5px;
+    border: 5px solid #8C949B;
+    border-top: 4px solid #8C949B;
+    border-bottom: 4px solid #8C949B;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 0px 11px 4px #8C949B4F;
+    -webkit-box-shadow: 0px 0px 11px 4px #8C949B4F;
+    -moz-box-shadow: 0px 0px 11px 4px #8C949B4F;
+}
+.challengelex .card-li .card-txt.failure::after,
+.challengelex .card-li .card-txt.cancel::after{
+  content: var(--content, "");
+  position: absolute;
+
+  left: 21%;
+  right: 21%;
+  top: -10px;
+  width: 110.385px;
+  height: 27.85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 18px;
+  background: #8C949B;
+  border-radius: 13px;
+}
+
+
+.challengelex .card-li .card-txt.success.success-ani {
+  -webkit-animation: successImage 3s ease-in-out;
+  animation: successImage 3s ease-in-out;
+}
+
+@-webkit-keyframes successImage {
+    0% { transform: scale(1); }
+    12.5% { transform: scale(1.03); }
+    25% { transform: scale(1); }
+    37.5% { transform: scale(1.05); }
+    50% { transform: scale(1); }
+    62.5% { transform: scale(1.05); }
+    75% { transform: scale(1); }
+    87.5% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+@keyframes successImage {
+    0% { transform: scale(1); }
+    12.5% { transform: scale(1.03); }
+    25% { transform: scale(1); }
+    37.5% { transform: scale(1.05); }
+    50% { transform: scale(1); }
+    62.5% { transform: scale(1.05); }
+    75% { transform: scale(1); }
+    87.5% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.challengelex .card-li .card-txt.cancel-ani,
+.challengelex .card-li .card-txt.failure-ani {
+  -webkit-animation: failureImage 3s ease-in-out;
+  animation: failureImage 3s ease-in-out;
+}
+
+@-webkit-keyframes failureImage {
+  0% { transform: rotate(0deg); }
+  12.5% { transform: rotate(5deg); }
+  37.5% { transform: rotate(-5deg); }
+  62.5% { transform: rotate(5deg); }
+  87.5%{ transform: rotate(-5deg); }
+  100%{ transform: rotate(0deg); }
+}
+@keyframes failureImage {
+  0% { transform: rotate(0deg); }
+  12.5% { transform: rotate(5deg); }
+  37.5% { transform: rotate(-5deg); }
+  62.5% { transform: rotate(5deg); }
+  87.5%{ transform: rotate(-5deg); }
+  100%{ transform: rotate(0deg); }
+}
+
+/* 미션 */
+.challengelex .card-li .card-txt.alert .mission {
+  padding-top: 10px;
+  position: absolute;
+  word-break: auto-phrase;
+}
+
+/* 상금 */
+.challengelex .card-li .card-txt.alert .icon-reward .reward-title {
+  color: #171A1C;
+  margin-right:5px;
+  /* Detail/3B */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 12px; /* 109.091% */
+  letter-spacing: 0.25px;
+}
+
+.challengelex .card-li .card-txt.alert .icon-reward {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.challengelex .card-li .card-txt.alert .ico_lex {
+  width: 18px;
+  height: 18px;
+  background-color: #000;
+  border-radius: 16px;
+  padding: 0px;
+  margin-right: 5px;
+}
+
+/* 도전렉스 송출 화면 설정 */
+#popWinBox .chat-box .chat-list-area.challengelex.lc-card{
+    width:auto;
+    height:auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding:0;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* 리모컨 탭 */
+.list-alarm.challengelex .nav-tabs .nav-link {
+  border: 1px solid transparent;
+  color: #aaaaaa;
+}
+
+.list-alarm.challengelex .nav-tabs .nav-link.active {
+  margin-left: -1px;
+  color: #ffffff;
+  font-weight: 900;
+  background-color: #00000000;
+  /* border-color: #dee2e600 #dee2e600 #ff0000; */
+  border-bottom: 0.15rem solid #1faaa5;
+}
+
+.list-alarm .tab-content {
+  color: #ffffff;
+  height:100%;
+}
+
+.tab-btn-area {
+  display: flex;
+  justify-content: end;
+
+}
+
+.tab-btn-area .tab-btn-container{
+  display: block;
+  position: absolute;
+  top: 78px;
+  width: 50%;
+  text-align: end;
+}
+
+
+.tab-btn-area .tab-btn-container .btn {
+    text-align:center;
+    padding:0;
+    background-color:#fff;
+    color: #000;
+    font-size: 0.8rem;
+    height: 25px;
+    padding: 0 7px;
+    margin-left: 7px;
+}
+.tab-btn-area .tab-btn-container .btn i {
+    display:flex;
+    width:28px;
+    height:25px;
+    background-size:12px;
+    background-position:center;
+    background-repeat:no-repeat;
+}
+.tab-btn-area .tab-btn-container .btn i.refresh {
+    background-image:url(../images/ico_remote_replay.svg);
+}
+
+.tab-btn-area .tab-btn-container .btn i.ico-reload {
+    background-image:url(../images/ico_remote_replay.svg);
+    background-size: 16px;
+    filter: invert(0%) sepia(0%) saturate(1352%) hue-rotate(87deg) brightness(0%) contrast(119%);
+}
+
+/* 리모컨 도전렉스 리스트*/
+.tab-content .tab-pane {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 100%
+}
+
+/* ::-webkit-scrollbar {
+    width: 10px;
+    height: 20px;
+}
+ */
+/* .tab-content .tab-pane .tab-body {
+  height: calc(100% - 180px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.724) white;
+} */
+/* paging이 존재하는 tbody 사이즈 지정 */
+.tab-content .tab-pane .tab-body:has(~div.tab-paging) {
+  height: calc(100vh - 220px);
+}
+
+/* 도전렉스 비활성화 */
+.tab-content .tab-pane .tab-body .not-available {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: #1e2331;
+  margin: 30px 70px;
+}
+
+.tab-content .tab-pane .tab-option{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* 외곽선 */
+.tab-content .tab-pane .card-outline{
+  border-radius: 4px;
+  border: 1px solid #D9D9D9;
+  /* background: rgba(217, 217, 217, 0.00); */
+  background-color: #1E2331;
+  /* padding: 10px 10px; */
+  padding-top: 12px;
+  margin-bottom: 12px;
+}
+
+/* 시간이 종료된 도전렉스 카드 */
+.tab-content .tab-pane .card-outline.disabled {
+  background-color: #adadad26;
+}
+
+.tab-content .tab-pane .card-outline.completed {
+  border-radius: 4px;
+  border: 1px solid #D9D9D9;
+  /* background: rgba(217, 217, 217, 0.00); */
+  background-color: #1E2331;
+  /* padding: 10px 10px 0px 10px; */
+  margin-bottom: 10px;
+}
+
+.tab-content .tab-pane .card-outline.completed .card-main{
+  margin-bottom: 0px;
+}
+
+.card-outline .card-sub,
+.card-outline .card-main {
+  display: flex;
+  font-size: 0.9rem;
+  padding: 0px 10px;
+  margin-bottom: 12px;
+}
+
+.card-outline .card-sub {
+  flex-direction: column;
+}
+
+/* 진행미션(10/10) */
+.tab-content .tab-pane .tab-option .status{
+  font-size: 0.8em;
+}
+
+/* 정렬 */
+.tab-content .tab-pane .tab-option .sort{
+  display: flex;
+}
+
+
+/* 진행 상태 */
+.card-outline .card-sub .card-status,
+.card-outline .card-main .card-status {
+  /* min-width: 70px; */
+  margin-right: 12px;
+}
+
+.card-outline .card-main .card-status > div{
+  display: flex;
+  justify-content: center;
+  /* border:1px solid #ff00007a;
+  background-color: #ff00007a; */
+  color: white;
+  font-weight: 400;
+  padding: 0px 9px;
+  width:fit-content;
+  font-size: 0.8em;
+  border-radius: 20px;
+}
+
+.card-outline.disabled .card-main .card-status > div {
+  border: 1px solid #e2e2e26f;
+  background-color: #8585856f;
+}
+
+/* 진행 중 */
+.card-outline .card-main .card-progressing > div{
+  display: flex;
+  justify-content: center;
+  border:1px solid #9dff006f;
+  background-color: #9dff006f;
+  color: white;
+  font-weight: 400;
+  padding: 0px 9px;
+  width:fit-content;
+  font-size: 0.8em;
+  border-radius: 20px;
+}
+/* 대기 중 */
+.card-outline .card-main .card-pending > div{
+  display: flex;
+  justify-content: center;
+  border:1px solid #6c6c6c6f;
+  background-color: #6c6c6c6f;
+  color: white;
+  font-weight: 400;
+  padding: 0px 9px;
+  width:fit-content;
+  font-size: 0.8em;
+  border-radius: 20px;
+}
+/* 결과 탭: 성공 상태 */
+.card-outline .card-main .card-success > div{
+  display: flex;
+  justify-content: center;
+  border:1px solid #49adff6f;
+  background-color: #49adff6f;
+  color: white;
+  font-weight: 400;
+  padding: 0px 9px;
+  width:fit-content;
+  font-size: 0.8em;
+  border-radius: 20px;
+}
+/* 결과 탭: 취소 상태 */
+.card-outline .card-main .card-canceled > div{
+  display: flex;
+  justify-content: center;
+  border:1px solid #6c6c6c6f;
+  background-color: #6c6c6c6f;
+  color: white;
+  font-weight: 400;
+  padding: 0px 9px;
+  width:fit-content;
+  font-size: 0.8em;
+  border-radius: 20px;
+}
+
+/* 결과 탭: 실패 상태 */
+.card-outline .card-main .card-failed > div{
+  display: flex;
+  justify-content: center;
+  border:1px solid #6c6c6c6f;
+  background-color: #6c6c6c6f;
+  color: white;
+  font-weight: 400;
+  padding: 0px 9px;
+  width:fit-content;
+  font-size: 0.8em;
+  border-radius: 20px;
+}
+
+/* 제목 - 남은 시간 area */
+.card-outline .card-sub .card-lex-nickname-area,
+.card-outline .card-sub .card-title-nickname,
+.card-outline .card-sub .card-title-time {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+
+/* 카드 타이틀 */
+.card-outline .card-sub .card-title-nickname .card-title,
+.card-outline .card-sub .card-title {
+  color: #2efff7;
+  font-weight: 400;
+  width: 100%
+}
+/* 결과 닉네임 */
+.card-outline .card-sub .card-title-nickname .nickname {
+  color: white;
+  font-weight: 400;
+  margin-right: 10px;
+}
+
+/* 시간 및 연장하기 버튼 */
+.card-outline .card-main .time-extend {
+  display: flex;
+  width: 370px;
+  justify-content: start;
+  margin-right: 10px;
+  /* color: var(--color-accent, #FF024A) */;
+  color: #ffffff;
+}
+.card-outline .card-main .time-extend > * {
+  margin-left: 10px;
+}
+/* 시간 및 연장하기 버튼 */
+.card-outline .card-main .time-extend .time {
+  display: flex;
+}
+/* .card-outline .card-main .time-extend .time::before{
+  content: '';
+  display: inline-flex;
+  width: 14px;
+  height: 17px;
+  background-image: url(../images/ico_clock.svg);
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: 0 3px;
+  margin-right: 5px;
+}
+ */
+/*성공 실패 시작 취소 연장하기 버튼 */
+.card-outline .action-area .right-area button:active,
+.card-outline .action-area .right-area button:hover {
+  background-color: var(--color-background-secondary-hover, #c9c9c9);
+
+}
+/* 성공 실패 시작 취소 연장하기, 후원하기 */
+.card-outline .action-area .left-area button,
+.card-outline .action-area .right-area button {
+  padding: 3px 8px;
+  margin-left:8px;
+  height: 24px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 138.462% */
+  letter-spacing: 0.15px;
+  border-radius: 4px;
+  background-color: var(--color-background-secondary, #E6E8EA);
+  color: var(--color-foreground, #171A1C);
+  font-family: var(--font-family);
+}
+
+/* 성공 버튼 */
+.card-outline .action-area .right-area button.btn-accent:active,
+.card-outline .action-area .right-area button.btn-accent:hover {
+  background-color: var(--color-accent-hover, #d1003b);
+  border:1px solid var(--color-accent-hover, #d1003b);
+}
+
+.card-outline .action-area .right-area button.btn-accent {
+  border:1px solid var(--color-accent, #FF024A);
+  background:var(--color-accent, #FF024A);
+  color: white;
+}
+
+.card-outline .action-area .right-area button.btn-accent.disabled,
+.card-outline.disabled .action-area .btnaccent {
+  border: 1px solid #e2e2e26f;
+  background-color: #8585856f;
+  color: #999;
+  cursor:default;
+}
+
+.card-outline .card-sub .card-lex-nickname {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+  color: #fff;
+  width: 100%;
+}
+
+.card-outline .card-sub .card-lex-nickname .card-lex {
+  display: flex;
+  justify-content: start;
+  font-size: 0.9em;
+  color: #fff;
+  width: 100%;
+}
+
+.card-outline .card-sub .card-lex-nickname .lex::before {
+  content: '';
+  display: inline-flex;
+  width: 14px;
+  height: 17px;
+  background-image: url(../images/icon_flex.png);
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: 0 3px;
+  margin-right: 5px;
+}
+
+.card-outline .card-sub .card-lex-nickname .card-lex .lex {
+  display: flex;
+  /* color: var(--Foreground-Neutral-1, #171A1C); */
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 138.462% */
+  letter-spacing: 0.15px;
+}
+/* 도전렉스 리스트 닉네임*/
+.card-outline .card-sub .card-lex-nickname .nickname {
+  display: flex;
+  justify-content: end;
+  margin-right: 12px;
+
+  /* color: var(--color-foreground, #171A1C); */
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 18px; /* 138.462% */
+  letter-spacing: 0.15px;
+}
+
+.card-outline .card-sub .card-btn-area {
+  display: flex;
+  justify-content: end;
+  width: 300px;
+}
+
+.card-outline .card-sub .card-btn-area > * {
+  margin-right: 10px;
+}
+.card-outline .card-main button,
+.card-outline .card-sub button {
+  padding: 0px 5px;
+  font-size: 0.8em;
+  border-radius: 3px;
+  min-width: 50px;
+  height: 20px;
+}
+
+.card-outline .action-area {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 10px;
+  border-top: 1px solid #5B626B;
+}
+/* 후원리스트 버튼*/
+/* 성공 버튼 */
+.card-outline .action-area .left-area button.btn-sponsor:active,
+.card-outline .action-area .left-area button.btn-sponsor:hover {
+  background-color: var(--color-accent-secondary-hover, #ca999c);
+  border:1px solid var(--color-accent-secondary-hover, #ca999c);
+}
+
+.card-outline .action-area .left-area button.btn-sponsor {
+  color: var(--color-foreground, #171A1C);
+  border:1px solid var(--color-accent-secondary, #FF024A);
+  background:var(--color-accent-secondary, #FF024A);
+}
+
+
+/* .btn-sponsor::before {
+  content: '';
+  background-image: url(../images/ico_sponsor.svg);
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: 0 2px;
+  margin-right: 5px;
+  width: 14px;
+  height:14px;
+} */
+
+/* .btn-sponsor:hover {
+  background: #fc3d3d;
+} */
+/*.btn-sponsor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:1px solid #ff0000;
+  background:#ff0000;
+  color: white;
+  font-weight: 400;
+  padding: 0px 3px !important;;
+  width:fit-content;
+  font-size: 0.7em;
+  font-weight: 500;
+  border-radius: 10px !important;
+  cursor: pointer;
+}*/
+/*
+button.btn-sponsor:active,
+button.btn-sponsor:hover {
+  background: #fc3d3d;
+} */
+.card-outline .action-area .right-area button.btn-accent:active,
+.card-outline .action-area .right-area button.btn-accent:hover {
+  background-color: var(--color-accent-hover, #d1003b);
+  border:1px solid var(--color-accent-hover, #d1003b);
+}
+
+.card-outline .action-area .right-area button.btn-accent {
+  border:1px solid var(--color-accent, #FF024A);
+  background:var(--color-accent, #FF024A);
+  color: white;
+}
+.card-outline .action-area .right-area  button.disabled,
+.card-outline.disabled .action-area .right-area button,
+.card-outline.disabled .action-area .right-area button:hover,
+.card-outline.disabled .action-area .right-area button:active,
+.card-outline.disabled .action-area .left-area button,
+.card-outline.disabled .action-area .left-area button:hover,
+.card-outline.disabled .action-area .left-area button:active {
+  border: 1px solid #8585856f;
+  background-color: #8585856f;
+  color: var(--color-foreground, #171A1C);
+}
+
+button.btn-primary {
+  outline: none;
+  background-color: #1faaa5;
+  color: #fff;
+  border: 0px;
+}
+
+button.btn-primary:active,
+button.btn-primary:hover {
+  background-color: #23c8c2 !important;
+  border-color: #23c8c2 !important;
+}
+
+.card-outline.disabled button.btn-primary:hover,
+.card-outline.disabled button.btn-primary:active,
+.card-outline.disabled button.btn-primary {
+  outline: none;
+  background-color: #8585856f !important;
+  color: #999;
+  border: 0px;
+}
+
+button.btn-secondary {
+  background-color: #707070;
+  color: #fff;
+  border: 0px;
+}
+button.btn-secondary:active,
+button.btn-secondary:hover {
+  background-color: #838181 !important;
+  border-color: #838181 !important;
+}
+
+.card-outline.disabled button.btn-secondary:active,
+.card-outline.disabled button.btn-secondary:hover,
+.card-outline.disabled button.btn-secondary {
+  outline: none;
+  background-color: #8585856f !important;
+  color: #999;
+  border: 0px;
+}
+
+/*  tab paging */
+.tab-content .tab-pane.active .tab-paging {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab-content .tab-pane .tab-option .sort {
+  cursor: pointer
+}
+
+.sort-asc {
+  background-image: url(../images/icon-sort-asc.svg);
+  width: 18px;
+  height: 18px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+}
+
+.sort-desc {
+  background-image: url(../images/icon-sort-desc.svg);
+  width: 18px;
+  height: 18px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
+/* .tab-content .tab-pane.active .tab-paging .paging.first{
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  width: 28px;
+}
+
+.tab-content .tab-pane.active .tab-paging .paging.last{
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  width: 28px;
+}
+
+
+.tab-content .tab-pane.active .tab-paging .paging.next{
+  width: 28px;
+}
+
+.tab-content .tab-pane.active .tab-paging .paging.previous {
+  width: 28px;
+}
+ */
+
+.tab-content .tab-pane.active .tab-paging .paging.next.disabled,
+.tab-content .tab-pane.active .tab-paging .paging.previous.disabled {
+  color: #A5A5A5bd;
+  cursor:default;
+  font-weight: 100;
+}
+
+.tab-content .tab-pane.active .tab-paging .paging {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #1e2331;
+  border-left:1px solid #1e2331;
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  font-size: 0.8em;
+  cursor: pointer;
+  background-color: #1e2331;
+  color: white;
+  font-weight: 500;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.tab-content .tab-pane.active .tab-paging .paging.current {
+  background-color: #20AAA5;
+  border: 1px solid #20AAA5;
+  color: #ffffff;
+  cursor: default;
+}
+
+/* 모달 */
+.modal-header.info .modal-title,
+.modal-header.error .modal-title {
+  width: 100%;
+}
+
+.modal-header.error .info-title,
+.modal-header.error .error-title {
+  display: inline-flex;
+  justify-content: left;
+  width: 100%;
+  font-weight: bold;
+}
+
+.modal-header.error .info-title > img,
+.modal-header.error .error-title > img {
+  margin-right: 5px
+}
+
+/* 연장하기  */
+#extendsPopup .modal-dialog {
+  width: 320px;
+}
+/* 타이틀 */
+#createChallengeLexPopup .modal-title,
+#extendsPopup .modal-title,
+#sponsorListPopup .modal-dialog .modal-title {
+  color: var(--foreground, #171A1C);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px; /* 140% */
+}
+#createChallengeLexPopup .modal-dialog .modal-content,
+#extendsPopup .modal-dialog .modal-content,
+#sponsorListPopup .modal-dialog .modal-content {
+  padding: 24px;
+}
+
+#extendsPopup .modal-dialog .modal-content .modal-header {
+  padding: 12px 0px;
+  border: 0px;
+}
+
+#extendsPopup .modal-dialog .modal-content .modal-footer,
+#sponsorListPopup .modal-dialog .modal-content .modal-footer {
+  border-top: 0px;
+  padding: 12px 0px 0px 0px !important;
+}
+#extendsPopup .modal-dialog .modal-content .modal-footer button {
+  width: 45%;
+  margin: 0px;
+}
+
+#extendsPopup .modal-dialog .modal-content .modal-footer button:first-child {
+
+  background: var(--color-accent, #FFFFFF) !important;
+  border-color: var(--color-accent, #FF024A) !important;
+
+}
+
+#createChallengeLexPopup .modal-dialog .modal-body,
+#extendsPopup .modal-dialog .modal-body,
+#sponsorListPopup .modal-dialog .modal-body {
+  padding: 0px;
+  margin: 0px;
+}
+
+#extendsPopup .modal-body {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 137.5% */
+}
+
+#extendsPopup .modal-body .inputarea
+{
+    display: flex;
+    border: 1px solid #dddddd;
+    padding: 3px;
+    border-radius: 5px;
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
+
+.modal-body .limit-time .form-control:focus,
+.modal-body .limit-time .form-control,
+.modal-body .inputarea .form-control:focus,
+.modal-body .inputarea .form-control {
+  border:0px;
+  text-align: right;
+  padding: 0px;
+  box-shadow: none;
+  font-size: 0.89rem;
+}
+
+.modal-body .limit-time .input-group-text,
+.modal-body .inputarea .input-group-text {
+  background: #FFFFFFFF;
+  border: 0px;
+  padding-left:1px;
+  font-size: 0.89rem;
+}
+/* 모달 confirm message */
+.modal-body .mainmsg {
+  display: flex;
+  justify-content: center;
+}
+/* 모달 메세지 사용자 정의 영역 */
+.modal-body .mainmsg .mainmsg-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 모달내 남은 시간 */
+.modal-body .modal-expend-time {
+  display: flex;
+  text-align: center;
+  color: var(--color-accent, #FF024A);
+  margin-top: 12px;
+  font-weight: normal;
+}
+.modal-body .modal-expend-time div:first-child {
+  margin-right: 10px;
+}
+#extendsPopup .modal-body .alert-secondary {
+  background-color: #ffffff;
+  border: 0px;
+  padding: 0px;
+  margin-bottom: 8px;
+}
+
+#extendsPopup .modal-body .alert-secondary p:first {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 137.5% */
+}
+
+/* Chrome, Safari, Edge, Opera */
+.modal-body .limit-time input::-webkit-outer-spin-button,
+.modal-body .limit-time input::-webkit-inner-spin-button,
+.modal-body .inputarea input::-webkit-outer-spin-button,
+.modal-body .inputarea input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox  */
+.modal-body .limit-time input[type='number'],
+.modal-body .inputarea input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+
+#extendsPopup .modal-body .alert-secondary ul {
+  list-style-type: disc;
+  padding-left: 20px;
+
+  color: var(--color-foreground-secondary, #5B626B);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 128.571% */
+}
+
+/* 후원목록 */
+#sponsorListPopup .modal-dialog {
+  width: 360px;
+}
+#createChallengeLexPopup .modal-dialog .modal-content .modal-header,
+#sponsorListPopup .modal-dialog .modal-content .modal-header {
+  padding: 12px 0px;
+}
+
+#sponsorListPopup .modal-dialog .modal-content .modal-footer button {
+  width: 100%;
+  background: var(--color-accent, #FF024A) !important;
+  border-color: var(--color-accent, #FF024A) !important;
+  margin: 0px;
+}
+
+/* 타이틀*/
+#sponsorListPopup .modal-body p.mission {
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+  color: var(---color-accent, #FF024A);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 133.333% */
+}
+
+#sponsorListPopup .modal-body table {
+  width: 100%;
+}
+
+#sponsorListPopup .modal-body table thead {
+  background-color: #eaeaea;
+  font-weight: 900;
+  height: 35px;
+ /*  border-top: 1px solid var(--border-color, #DBDEE1);
+  border-bottom: 1px solid var(--border-color, #DBDEE1); */
+}
+ #sponsorListPopup .modal-body .sponsor-list {
+  border: 1px solid var(--border-color, #DBDEE1);
+  border-radius: 4px;
+}
+
+/* #sponsorListPopup .modal-body .sponsor-list table thead {
+  background: var(--table-header-background, #F7F7F8);
+  font-weight: normal;
+} */
+
+/* 주체자 테이블 헤더 */
+#sponsorListPopup .modal-body table thead td {
+  text-align: center;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+
+}
+/* 주체자 td 공통 */
+#sponsorListPopup .modal-body table tbody td {
+  text-align: center;
+  padding: 6px 0px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+/* 주체자 */
+#sponsorListPopup .modal-body .mission-detail {
+  margin-top: 16
+}
+
+#sponsorListPopup .modal-body .mission-detail td {
+  text-align: left;
+}
+
+/* 주체자 닉네밈 */
+#sponsorListPopup .modal-body table tbody .mission-creator {
+  text-align: right;
+}
+
+/* 주체자 렉스-아이콘 */
+#sponsorListPopup .modal-body table tbody .mission-total::before {
+  content: '';
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  background-image: url(../images/icon_flex.png);
+  background-size: 13px;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 7px;
+  right: -2px;
+  position: relative;
+  top: 2px;
+}
+/* 접고 펼치기 */
+#sponsorListPopup .modal-body table tbody .mission-total .collapse {
+  content: '';
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  top: -2px;
+  background-size: 18px;
+  background-image: url(../images/ico_collapse.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+/* 주체자 렉스 */
+#sponsorListPopup .modal-body table tbody .mission-total {
+  display: flex;
+  justify-content: end;
+  text-align: right;
+  color: #FF024A;
+  font-weight: 700;
+}
+/* 총 모금 금액 단위*/
+#sponsorListPopup .modal-body table tbody .mission-total span.unit {
+  color: var(--color-foreground, #171A1C);
+  font-weight: normal;
+  padding-left: 3px;;
+}
+
+/* 후원한 유저 리스트 */
+#sponsorListPopup .modal-body .sponsor-list {
+  display: flex;
+  flex-direction: column;
+  height: 215px;
+  margin-top: 6px;
+}
+
+/* 전체 후원자 수*/
+#sponsorListPopup .modal-body .sponsor-list > p:first-child {
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-left: 5px;
+}
+/* 후원한 유저 렉스 */
+#sponsorListPopup .modal-body .sponsor-list table tbody td:last-child {
+  color: #212529;
+}
+/* 후원한 spinner */
+#sponsorListPopup .modal-body .sponsor-list .spinner-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/*  후원자 리스트 paging */
+#sponsorListPopup .modal-body .paging-area {
+  position: absolute;
+  bottom: 6px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#sponsorListPopup .modal-body .tab-paging {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sponsorListPopup .modal-body .tab-paging .paging.next.disabled,
+#sponsorListPopup .modal-body .tab-paging .paging.previous.disabled {
+  color: #A5A5A5bd;
+  cursor:default;
+  font-weight: 100;
+}
+
+
+/* 후원목록 페이징 */
+#sponsorListPopup .modal-body .tab-paging .paging {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px;
+  width: 24px;
+  font-size: 0.8em;
+  cursor: pointer;
+  color: #212529;
+  font-weight: 500;
+  margin: 5px 0px 0px 0px;
+}
+#sponsorListPopup .modal-body .tab-paging .paging.current {
+  color: #FF024A;
+  font-weight: bolder;
+  cursor: default;
+}
+
+#sponsorListPopup .modal-body .tab-paging .paging.first,
+#sponsorListPopup .modal-body .tab-paging .paging.last,
+#sponsorListPopup .modal-body .tab-paging .paging.next,
+#sponsorListPopup .modal-body .tab-paging .paging.previous {
+  border: 0px;
+}
+
+/* 도전렉스 등록*/
+#createChallengeLexPopup .modal-dialog {
+  width: 360px;
+}
+
+#createChallengeLexPopup .modal-dialog .modal-content .modal-footer {
+  border-top: 0px;
+  padding: 12px 0px 0px 0px !important;
+}
+
+#createChallengeLexPopup .modal-dialog .modal-content .modal-footer button{
+  width: 45%;
+}
+
+#createChallengeLexPopup .modal-dialog .modal-content .modal-footer button:first-child{
+  background: var(--color-accent, #FFFFFF) !important;
+  border-color: var(--color-accent, #FF024A) !important;
+}
+
+
+#createChallengeLexPopup .modal-body .limit-time,
+#createChallengeLexPopup .modal-body .mission
+{
+    display: flex;
+    border: 1px solid #dddddd;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+
+#createChallengeLexPopup .modal-body .mission .inputarea{
+  width: 1000%;
+}
+
+/* form-control(input tag)*/
+#createChallengeLexPopup .modal-body .mission .form-control:focus,
+#createChallengeLexPopup .modal-body .mission .form-control {
+  border:1px;
+  text-align: left;
+  padding: 3px;
+  font-size: 0.85rem;
+}
+
+/* 제힌시간 옆: (최대 10일)*/
+/* #createChallengeLexPopup .modal-body .limit-time-area > p{
+  font-size: 16px;
+} */
+
+#createChallengeLexPopup .modal-body .limit-time-area > p > span{
+  color: var(--color-foreground-secondary, #5B626B);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 138.462% */
+  letter-spacing: 0.15px;
+  margin-left: 4px;
+}
+
+/*미션/제한시간 간경 */
+#createChallengeLexPopup .modal-body .mission-area,
+#createChallengeLexPopup .modal-body .limit-time-area {
+  margin-top: 16px;
+  color: var(--color-foreground, #171A1C);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px; /* 137.5% */
+}
+
+/* 제한 시간*/
+#createChallengeLexPopup .modal-body .limit-time {
+  display: flex;
+}
+/*유의사항 및 동의*/
+#createChallengeLexPopup .modal-body .agree {
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  padding: 3px 5px;
+  margin-top: 16px;
+}
+
+/* 유의사항 동의*/
+#createChallengeLexPopup .modal-body .agress-title-area {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border: 0px solid #dddddd;
+  color: var(--color-foreground, #171A1C);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 128.571% */
+  letter-spacing: 0.25px;
+  margin-bottom: 9px
+}
+
+#createChallengeLexPopup .modal-body .agress-title-area .form-check {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 11px;
+}
+/* checkbox 위치 */
+#createChallengeLexPopup .modal-body .agress-title-area .form-check .form-check-input {
+  margin-top: 1.3px;
+}
+
+/* 유의사항 동의 내용*/
+#createChallengeLexPopup .modal-body .agree ul {
+  list-style-type: disc;
+  border: 0px solid #dddddddd;
+  padding-left: 20px;
+  color: var( --color-foreground, #171A1C);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 128.571% */
+  letter-spacing: 0.25px;
+  /* border-top: 0px;
+  padding: 10px 10px 10px 30px;
+  position: relative;
+  top: -3px; */
+
+}
+/* 유의사항 동의 토글버튼 */
+.agree-toggle {
+  width: 18px;
+  height: 18px;
+  cursor:pointer;
+}
+
+.agree-toggle-collapse {
+  background-image: url(../images/ico_collapse.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.agree-toggle-expand {
+  background-image: url(../images/ico_collapse.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: rotate(180deg);
+}
+
+.hide {
+  display: none;
+}
+

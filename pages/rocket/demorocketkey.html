@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+
+    <link rel="shortcut icon" href="" type="image/x-icon">
+    <title>FlexTV 방송도우미 · FLEXTV 이벤트</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+    <link rel="stylesheet" href="../../css/rocket_widget.css?202610171800">
+    <link rel="stylesheet" href="../../css/event_roulette.css?202610171200">
+
+    <script src="../../customjs/global.js?202506031446"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.min.js" integrity="sha512-uElffqRAo44n9cqo42itgRMY0L0zNZWEj3RGTQwyQsITiz4CB6rALOu1/S4O5iy/vFTMNs8gmTpDXB8mfQpjOg==" crossorigin="anonymous"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../../demo/mock.js"></script>
+</head>
+
+<!-- OBS 브라우저 소스: /pages/rocket/{프리셋 키} · 설정 탭 미리보기: /pages/rocket/preview (주소의 rocket 은 내부 이름) -->
+<!-- 방송 화면에는 FLEXTV 로고(메인 이미지) · 목표 · 남은 양 + 회차 · 누적 당첨 금액만 보여 준다 -->
+<body style="background-color:rgba(0, 0, 0, 0)">
+  <div id="rocketRoot">
+    <div class="ov off" id="ov">
+      <!-- 회차 · 당첨 금액: 당첨 없이 끝난 회차의 금액이 다음 회차에 쌓이면 '누적'이 붙고 숫자가 올라간다 -->
+      <div class="prize" id="prize">
+        <span class="pz-round" id="pzRound">1회차</span>
+        <span class="pz-k" id="pzLabel">당첨</span>
+        <b class="pz-v" id="pzValue">0</b>
+        <span class="pz-add" id="pzAdd" aria-hidden="true"></span>
+      </div>
+
+      <!-- 메인 이미지: 레거시 images/ico_flex_logo.svg 모양 안에 에너지가 차오르고, 성공하면 로고가 번쩍 -->
+      <div class="logo-scene" id="logoScene">
+        <div class="lg-rays" aria-hidden="true"></div>
+        <div class="lg-halo" aria-hidden="true"></div>
+        <div class="lg-stage" aria-hidden="true">
+          <div class="lg-wrap" id="lgWrap">
+            <svg viewBox="0 0 48 48">
+              <defs>
+                <clipPath id="lgBody"><path d="M48,6.666V41.337A6.692,6.692,0,0,1,41.24,48H6.648A6.668,6.668,0,0,1,0,41.337V6.666A6.668,6.668,0,0,1,6.648,0H41.24A6.555,6.555,0,0,1,48,6.666"/></clipPath>
+                <clipPath id="lgLiq"><path id="lgLiqPath" d="M0 48 H48 V48 H0 Z"/></clipPath>
+                <linearGradient id="lgShine" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+                <linearGradient id="lgDeep" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff024a" stop-opacity=".55"/><stop offset=".25" stop-color="#ff024a" stop-opacity="0"/></linearGradient>
+              </defs>
+              <g clip-path="url(#lgBody)">
+                <rect width="48" height="48" fill="#181b2b"/>
+                <path d="M6.648,46.356A6.668,6.668,0,0,1,0,39.693V7.846l35.267,38.51Z" transform="translate(0 1.644)" fill="#ff024a" opacity=".16"/>
+                <path d="M42.73,18.4V37.482a6.691,6.691,0,0,1-6.76,6.662H25.152Z" transform="translate(5.27 3.854)" fill="#00fff6" opacity=".16"/>
+                <path d="M14.743,38.465a2.055,2.055,0,0,0,2-2V27.7H31.627a2.078,2.078,0,0,0,2-2v-2a2.05,2.05,0,0,0-2-2H16.739V14.312H35a2.079,2.079,0,0,0,2-2v-2a2.076,2.076,0,0,0-2-2H10.753a2.012,2.012,0,0,0-2,2V36.465a2.068,2.068,0,0,0,2,2h3.99" transform="translate(1.835 1.742)" fill="#fff" opacity=".16"/>
+                <g clip-path="url(#lgLiq)">
+                  <rect width="48" height="48" fill="#08080d"/>
+                  <path d="M6.648,46.356A6.668,6.668,0,0,1,0,39.693V7.846l35.267,38.51Z" transform="translate(0 1.644)" fill="#ff024a"/>
+                  <path d="M42.73,18.4V37.482a6.691,6.691,0,0,1-6.76,6.662H25.152Z" transform="translate(5.27 3.854)" fill="#00fff6"/>
+                  <path d="M14.743,38.465a2.055,2.055,0,0,0,2-2V27.7H31.627a2.078,2.078,0,0,0,2-2v-2a2.05,2.05,0,0,0-2-2H16.739V14.312H35a2.079,2.079,0,0,0,2-2v-2a2.076,2.076,0,0,0-2-2H10.753a2.012,2.012,0,0,0-2,2V36.465a2.068,2.068,0,0,0,2,2h3.99" transform="translate(1.835 1.742)" fill="#fff"/>
+                  <rect id="lgDeepRect" width="48" height="48" fill="url(#lgDeep)"/>
+                  <g id="lgBubbles"></g>
+                </g>
+                <path id="lgLine" d="" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width=".6"/>
+                <g transform="skewX(-18)"><rect class="lg-shine" x="10" y="-6" width="10" height="60" fill="url(#lgShine)"/></g>
+              </g>
+              <path d="M48,6.666V41.337A6.692,6.692,0,0,1,41.24,48H6.648A6.668,6.668,0,0,1,0,41.337V6.666A6.668,6.668,0,0,1,6.648,0H41.24A6.555,6.555,0,0,1,48,6.666" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width=".7"/>
+            </svg>
+          </div>
+        </div>
+        <div class="lg-flash" id="lgFlash" aria-hidden="true"></div>
+      </div>
+
+      <!-- 룰렛(설정 '위젯 안에서'일 때만): 배너형은 로고 아래 띠, 원판형은 왼쪽 아래(pages/event_roulette.js) -->
+      <div class="ev-roulette" id="evRoulette" aria-hidden="true"></div>
+
+      <!-- 목표 · 남은 양 -->
+      <div class="readout" id="readout">
+        <div class="ro-row"><span class="ro-k">목표</span><b class="ro-v" id="roGoal">100,000</b></div>
+        <div class="ro-row left"><span class="ro-k">남은</span><b class="ro-v" id="roLeft">13,500</b></div>
+      </div>
+
+      <div class="count" id="count" aria-hidden="true">3</div>
+      <canvas class="confetti" id="confetti" width="440" height="660" aria-hidden="true"></canvas>
+    </div>
+  </div>
+  <script src="../event_roulette.js?202610171200"></script>
+  <script src="../win_rocket.js?202610171800"></script>
+</body>
+
+</html>

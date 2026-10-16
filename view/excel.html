@@ -1,0 +1,1448 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="title" content="FlexTV">
+    <meta name="author" content="FlexTV">
+    <meta name="description" content="FlexTV">
+    <meta name="keywords" content="FlexTV">
+    <meta property="og:title" content="FlexTV">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>FlexTV 도우미</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/help_ui.css?202506221531">
+    <link rel="stylesheet" href="../css/rocket_setting.css?202610171800">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
+    <link rel="stylesheet" href="../css/event_roulette.css?202610171200">
+
+    <script src="../customjs/global.js?202506031446"></script>
+    <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../js/Sortable.js"></script>
+    <script type="text/javascript" src="../js/clipboard.min.js"></script>
+    <script type="text/javascript" src="../js/nouislider.min.js"></script>
+    <script type="text/javascript" src="../js/spectrum.js"></script>
+    <script type="text/javascript" src="../js/help_ui.js?2412171239"></script>
+    <script type="text/javascript" src="../js/lodash.min.js?20250507"></script>
+
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script src="../demo/mock.js"></script>
+
+</head>
+
+<body>
+
+    <div class="spinner-border  text-success" role="status" style="display: block; position: fixed; top: 50% ;  left: 50%; z-index:11 ">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div id="wrap">
+        <!-- Container Start -->
+        <div id="container">
+
+            <!-- Snb Start -->
+            <div id="nav-snb">
+                <div id="snb-area">
+                    <div class="logo">
+                        <a href="#" title="홈 바로가기"><img src="../images/img_help_logo.png?20260106" alt="flextv"></a>
+                    </div>
+
+                    <div class="snb-user-area">
+                      <p class="img" id="user_pic" >
+                        <!-- <img style="width: 34px; height: 34px;" src="../images/ico_user.png" alt="img-user"></a> -->
+                        <img style="width: 34px; height: 34px;" src="../images/ico_user.png" alt="img-user">
+                      </p>
+                      <p class="nick" id="user_name"></p>
+                      <p class="id" id="user_mid"></p>
+                    </div>
+
+                    <!-- snb area start -->
+                    <div class="snb-nav-area">
+                      <ul>
+                        <li><a href="chat.html"><span class="ico1">채팅창</span>채팅창</a></li>
+                        <li>
+                          <a href="noti.html" ><span class="ico2">알림</span>알림</a>
+                          <ul class="snb-dep">
+                            <li><a href="noti.html">후원 알림</a></li>
+                            <li><a href="noti_roulette.html" >룰렛 후원</a></li>
+                            <li><a href="noti_honeypot.html">꿀단지 후원</a></li>
+                            <li><a href="noti_heart.html">하트 후원</a></li>
+                            <!-- <li><a href="noti_luckycard.html">럭키 카드</a></li> -->
+                            <!-- <li><a href="challenge_lex.html">도전 렉스</a></li> -->
+                          </ul>
+                        </li>
+                        <li><a href="noti_m.html"><span class="ico2">알림-모바일</span>알림-모바일</a></li>
+                        <li><a href="goal.html"><span class="ico3">목표치</span>목표치</a></li>
+                        <li><a href="goal_m.html"><span class="ico3">목표치_모바일</span>목표치_모바일</a></li>
+                        <li><a href="gift.html"><span class="ico4">후원자막</span>후원자막</a></li>
+                        <li>
+                            <a href="fulleffect.html"><span class="ico6">화면 효과</span>화면 효과</a>
+                            <ul class="snb-dep">
+                                <li><a href="fulleffect.html">후원 연출</a></li>
+                                <li><a href="liveboard.html">전광판</a></li>
+                            </ul>
+                        </li>
+                        <!-- <li><a href="gift_video.html"><span class="ico6">영상/음성 후원</span>영상/음성 후원</a></li> -->
+                        <li>
+                            <a href="noti_luckycard.html" ><span class="ico9">게임센터</span>게임센터</a>
+                            <ul class="snb-dep">
+                              <li><a href="noti_luckycard.html">럭키카드</a></li>
+                              <!-- <li><a href="luckyrace.html">플렉스 동달</a></li> -->
+                              <!-- <li><a href="horserace.html">럭키레이스</a></li> -->
+                            </ul>
+                        </li>
+                        <li><a href="clock.html"><span class="ico5">시계</span>시계</a></li>
+                        <li><a href="excel.html" class="on"><span class="ico7">엑셀방송</span>엑셀방송</a></li>
+                        <li><a href="joint.html"><span class="ico8">합동방송</span>합동방송</a></li>
+                      </ul>
+                    </div>
+
+                    <!-- 도우미 웹 버전 열기 추가-->
+                    <div class="snb-remote-btn" onclick="openWin('remote.html', 'remotePop', 1000, 800);">
+                      <span><img src="../images/ico_bell.png" alt="알림"></span>
+                      <div>
+                        도우미 웹 버전 열기<br/>
+                        <span>FLEX 라이브 방송 리모컨</span>
+                      </div>
+                    </div>
+
+                    <div class="snb-remote-guide"><a href="../view/remote_guide.html">라이브 방송 리모컨 가이드</a></div>
+                </div>
+                <!-- //snb area end -->
+            </div>
+            <!-- //Snb End -->
+
+            <!-- Content Center Start -->
+            <div id="section-center">
+                <div id="section-center-fix">
+
+                    <!-- Content Start -->
+                    <div id="content">
+                        <div id="cont-area">
+                            <!-- Content View Start -->
+                            <div id="cont-view-area">
+                                <!-- title start -->
+                                <div class="help-title">
+                                  <h1>엑셀방송</h1>
+                                  <span>다수 BJ로 진행되는 방송에서 후원 점수를 자동으로 계산하여 엑셀랭킹(엑셀판)으로 표시할 수 있습니다.
+                                    <br/>
+                                    <button class="btn mt-3 btn-setting" disabled onclick="goToExcelBjSettings()">설정 페이지 접속</button>
+                                  </span>
+                                </div>
+                                <!-- //title end -->
+
+                                <!-- setup start -->
+                                <div class="setup-area excel-setup-area">
+                                  <!-- <h2 class="section-tit">엑셀방송</h2> -->
+                                  <div class="setup-title-tab">
+                                    <h2 class="section-tit on" data-tab-id="tab-excel" onclick="showTab('tab-excel')">엑셀방송</h2>
+                                    <h2 class="section-tit" data-tab-id="tab-battle" onclick="showTab('tab-battle')">대결</h2>
+                                    <h2 class="section-tit" data-tab-id="tab-team" onclick="showTab('tab-team')">팀</h2>
+                                    <h2 class="section-tit" data-tab-id="tab-rocket" onclick="showTab('tab-rocket')">FLEXTV 이벤트</h2>
+                                  </div>
+                                  <!-- 엑셀 설정 ------------------------------------------------------------------------------------------------->
+                                  <div class="setup-box tab-box active" id="tab-excel">
+                                      <!-- preset -->
+                                      <h2 class="tab-sub-tit">프리셋</h2>
+                                      <div class="preset-box preset-box-tab">
+                                        <div class="preset-list">
+                                          <ul class="preset-list-box" id="sortList">
+                                          </ul>
+
+                                          <div class="preset-btn" style="display:none">
+                                            <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img src="../images/ico_preset_plus.png" alt="" ></span>프리셋 추가</a>
+                                          </div>
+                                        </div>
+                                        <div class="url-area">
+                                          <div class="url-input">
+                                              <input class="form-control urlCopy" type="text" id="urlCopy" value="" readonly>
+                                          </div>
+                                          <div class="url-btn-box">
+                                            <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopy">URL복사</button>
+                                            <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                                          </div>
+                                          <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
+                                        </div>
+                                      </div>
+                                      <hr class="delimiter">
+                                      <!-- //preset end -->
+
+                                      <!-- preview start -->
+                                      <div class="preview-area">
+                                        <h2 class="preview-tit">미리보기</h2>
+
+                                        <!-- chat box start -->
+                                        <div class="preview-box">
+                                          <div class="preview-list-area preview-excel-list-area">
+                                            <ul class="preview-list">
+                                              <!--미리보기 영역 -->
+                                            </ul>
+                                          </div>
+                                        </div>
+                                        <div class="preview-test-area">
+                                          <ul class="text-box">
+                                            <li>
+                                              <button type="button" class="btn" id="btn_win_reset">초기화</button>
+                                              <button type="button" class="btn" id="btn_win_reload">새로고침</button>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                      <hr class="delimiter">
+                                      <!-- preview end -->
+
+                                      <!-- <div class="setup-box"></div> -->
+                                      <h2 class="tab-sub-tit">테마</h2>
+                                      <div class="setup-item-box">
+                                        <!-- 엑셀 투명도-->
+                                        <div class="setup-item-list">
+                                            <p class="setup-txt">엑셀 투명도</p>
+                                            <div class="setup-item">
+                                                <div id="sliderChatOpacity" class="slider-item"></div>
+                                                <div class="slider-value">
+                                                    <input id="opacityVal" class="input-num" readonly><span class="input-unit">%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 엑셀 테마-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">엑셀 테마</p>
+                                          <div class="setup-item">
+                                            <div class="item-theme-box">
+                                              <!-- flex theme -->
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType10" name="chType1" value="theme-a" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeA.png?20250619" alt="theme-A"></span>
+                                                <span class="text">테마 A</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType11" name="chType1" value="theme-b" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeB.png?20250619" alt="theme-B"></span>
+                                                <span class="text">테마 B</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType12" name="chType1" value="theme-c" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeC.png?20250619" alt="theme-C"></span>
+                                                <span class="text">테마 C</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType13" name="chType1" value="theme-d" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeD.png?20250619" alt="theme-D"></span>
+                                                <span class="text">테마 D</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType14" name="chType1" value="theme-e" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeE.png?20250619" alt="theme-E"></span>
+                                                <span class="text">테마 E</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType15" name="chType1" value="theme-f" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeF.png?20250619" alt="theme-F"></span>
+                                                <span class="text">테마 F</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType16" name="chType1" value="theme-g" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeG.png?20250619" alt="theme-G"></span>
+                                                <span class="text">테마 G</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType17" name="chType1" value="theme-h" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeH.png?20250619" alt="theme-H"></span>
+                                                <span class="text">테마 H</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType18" name="chType1" value="theme-i" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeI.png?20250619" alt="theme-I"></span>
+                                                <span class="text">테마 I</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType19" name="chType1" value="theme-j" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeJ.png?20250619" alt="theme-J"></span>
+                                                <span class="text">테마 J</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType20" name="chType1" value="theme-k" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeK.png?20250619" alt="theme-K"></span>
+                                                <span class="text">테마 K</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType21" name="chType1" value="theme-l" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeL.png?20250619" alt="theme-L"></span>
+                                                <span class="text">테마 L</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType22" name="chType1" value="theme-m" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeM.png?20250619" alt="theme-M"></span>
+                                                <span class="text">테마 M</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType23" name="chType1" value="theme-n" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeN.png?20250619" alt="theme-N"></span>
+                                                <span class="text">테마 N</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chType24" name="chType1" value="theme-o" class="rdo">
+                                                <span class="img-box"><img src="../images/excelThemeO.png?20250619" alt="theme-O"></span>
+                                                <span class="text">테마 O</span>
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <!-- 타이틀 섹션-------------------------------------------------->
+                                      <h2 class="tab-sub-tit">타이틀</h2>
+                                      <div class="setup-item-box">
+                                        <!-- 타이틀 폰트 선택-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">타이틀 폰트</p>
+                                          <div class="setup-item">
+                                            <!-- 폰트 설정 select-->
+                                            <select id="excelTitlefontFmaily" name="excelTitlefontFmaily" class="font-family-select">
+                                              <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                                              <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                                              <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                                              <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                                              <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                                              <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                                              <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                                              <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                                              <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                                              <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                                              <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                                              <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                                              <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                                              <!-- <option value="ff-14" data-thumbnail="../images/img_font_14.png">만세체</option> -->
+                                              <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                                              <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                                              <!-- <option value="ff-17" data-thumbnail="../images/img_font_17.png">민국체</option> -->
+                                              <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                                              <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                                              <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                                              <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                                              <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                                              <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                                              <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                                              <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                                              <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                                              <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                                              <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                                              <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                                              <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                                              <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                                              <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                                              <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                                              <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                                              <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                                              <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                                              <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                                              <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                                              <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                                              <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+                                            </select>
+
+                                            <div class="font-view-select">
+                                              <button class="btn-excel-select" id="excelTitleFont" value="ff-01" onclick="fontFamilyExcel(this, 1);">
+                                                <li><img src="../images/img_font_1.png" alt=""><span>검은고딕</span></li>
+                                              </button>
+                                              <div class="font-view-area">
+                                                <ul id="font-view-list-title"></ul>
+                                              </div>
+                                            </div>
+
+                                            <div class="custom-control custom-control-inline custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="excelTitlefontBold">
+                                              <label class="custom-control-label" for="excelTitlefontBold">폰트 굵게 표시</label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 타이틀  -->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">타이틀</p>
+                                          <div class="setup-item">
+                                            <ul class="chat-detail-color">
+                                              <li class="w-100">
+                                                <div>
+                                                  <input type='text' value='' name='excelTitle' id='excelTitle' class="form-control form-input">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                        <!-- 타이틀 색상 -->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">타이틀 색상</p>
+                                          <div class="setup-item">
+                                            <ul class="chat-detail-color">
+                                              <li class="w-100">
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerExcelTitle' id='colorPickerExcelTitle' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+
+                                        <!-- 타이틀 크기-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">타이틀 크기</p>
+                                          <div class="setup-item">
+                                            <div id="sliderTitleFontSize" class="slider-item"></div>
+                                            <div class="slider-value">
+                                              <input id="sliderTitlefontSizeVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <!-- 타이틀 외곽선-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">타이틀 외곽선</p>
+                                          <div class="setup-item">
+                                            <div id="sliderTitleFontBorder" class="slider-item"></div>
+                                            <div class="slider-value">
+                                              <input id="sliderTitleFontBorderVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                            </div>
+                                            <div class="color-picker-area">
+                                              <input type='text' value='#00ff00' name='colorPickerExcelTitleStrokeColor' id='colorPickerExcelTitleStrokeColor' class="form-control">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- 폰트 섹션-------------------------------------------------->
+                                      <h2 class="tab-sub-tit">폰트</h2>
+                                      <!-- 엑셀 랭킹 폰트 선택-->
+                                      <div class="setup-item-box">
+                                        <!-- 엑셀 랭킹 폰트 선택-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">항목 폰트</p>
+                                          <div class="setup-item">
+                                            <!-- 폰트 설정 select-->
+                                            <select id="excelItemfontFmaily" name="excelItemfontFmaily" class="font-family-select">
+                                              <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                                              <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                                              <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                                              <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                                              <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                                              <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                                              <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                                              <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                                              <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                                              <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                                              <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                                              <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                                              <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                                              <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                                              <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                                              <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                                              <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                                              <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                                              <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                                              <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                                              <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                                              <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                                              <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                                              <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                                              <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                                              <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                                              <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                                              <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                                              <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                                              <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                                              <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                                              <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                                              <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                                              <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                                              <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                                              <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                                              <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                                              <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+                                            </select>
+
+                                            <div class="font-view-select">
+                                              <button class="btn-excel-select" id="excelItemFont" value="ff-01" onclick="fontFamilyExcel(this, 2);">
+                                                <li><img src="../images/img_font_1.png" alt=""><span>검은고딕</span></li>
+                                              </button>
+                                              <div class="font-view-area">
+                                                <ul id="font-view-list-item"></ul>
+                                              </div>
+                                            </div>
+
+                                            <div class="custom-control custom-control-inline custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="excelItemfontBold">
+                                              <label class="custom-control-label" for="excelItemfontBold">폰트 굵게 표시</label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 항목 크기-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">항목 폰트 크기</p>
+                                          <div class="setup-item">
+                                            <div id="sliderItemFontSize" class="slider-item"></div>
+                                            <div class="slider-value">
+                                              <input id="sliderItemfontSizeVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 랭킹 텍스트 색상-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">항목 색상</p>
+                                          <div class="setup-item">
+                                            <ul class="excel-detail-color">
+                                              <li>
+                                                <p class="txt-user">순위</p>
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerItem' id='colorPickerItem' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                              <li>
+                                                <p class="txt-user">BJ닉네임</p>
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerBJ' id='colorPickerBJ' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                              <li>
+                                                <p class="txt-user">렉스</p>
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerGold' id='colorPickerGold' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                              <li>
+                                                <p class="txt-user">기여도</p>
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerRate' id='colorPickerRate' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                  </div>
+                                  <!-- 대결 설정 ------------------------------------------------------------------------------------------------->
+                                  <div class="setup-box tab-box" id="tab-battle">
+                                    <!-- preset -->
+                                    <h2 class="tab-sub-tit">프리셋</h2>
+                                    <div class="preset-box preset-box-tab">
+                                      <div class="preset-list">
+                                        <ul class="preset-list-box-battle preset-list-box-ul" id="sortList">
+                                        </ul>
+
+                                        <div class="preset-btn" style="display:none">
+                                          <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img src="../images/ico_preset_plus.png" alt="" ></span>프리셋 추가</a>
+                                        </div>
+                                      </div>
+                                      <div class="url-area">
+                                        <div class="url-input">
+                                            <input class="form-control urlCopy" type="text" id="urlCopyBattle" value="" readonly>
+                                        </div>
+                                        <div class="url-btn-box">
+                                          <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopyBattle">URL복사</button>
+                                          <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                                        </div>
+                                        <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
+                                      </div>
+                                    </div>
+                                    <hr class="delimiter">
+                                    <!-- //preset end -->
+
+                                    <!-- preview start -->
+                                    <div class="preview-area">
+                                      <h2 class="preview-tit">미리보기</h2>
+
+                                      <!-- chat box start -->
+                                      <div class="preview-box">
+                                        <div class="preview-list-area preview-battle-list-area">
+                                          <ul class="preview-list">
+                                            <!--미리보기 영역 -->
+                                          </ul>
+                                        </div>
+                                      </div>
+                                      <div class="preview-test-area">
+                                        <ul class="text-box">
+                                          <li>
+                                            <button type="button" class="btn" id="btn_win_reset">초기화</button>
+                                            <button type="button" class="btn" id="btn_win_reload">새로고침</button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                    <hr class="delimiter">
+                                    <!-- preview end -->
+
+                                    <!-- <div class="setup-box"></div> -->
+                                    <h2 class="tab-sub-tit">테마</h2>
+                                    <div class="setup-item-box">
+                                      <!-- 엑셀 투명도-->
+                                      <div class="setup-item-list">
+                                          <p class="setup-txt">대결 투명도</p>
+                                          <div class="setup-item">
+                                              <div id="sliderChatOpacityBattle" class="slider-item"></div>
+                                              <div class="slider-value">
+                                                  <input id="opacityValBattle" class="input-num" readonly><span class="input-unit">%</span>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <!-- 배틀 테마-->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">대결 테마 </p>
+                                        <div class="setup-item">
+                                          <div class="item-theme-box item-battle-theme-box">
+                                            <!-- flex theme -->
+                                            <label class="theme-rdo">
+                                              <input type="radio" id="chBattleThemeType1" name="chBattleThemeType" value="theme-battle-a" class="rdo">
+                                              <span class="img-box"><img src="../images/battleThemeA.png?20250622" alt="theme-A"></span>
+                                              <span class="text">테마 A</span>
+                                            </label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <!-- 타이틀 섹션-------------------------------------------------->
+                                    <h2 class="tab-sub-tit">타이틀</h2>
+                                    <div class="setup-item-box">
+                                      <!-- 타이틀 폰트 선택-->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">타이틀 폰트</p>
+                                        <div class="setup-item">
+                                          <!-- 폰트 설정 select-->
+                                          <select id="battleTitlefontFmaily" name="battleTitlefontFmaily" class="font-family-select">
+                                            <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                                            <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                                            <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                                            <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                                            <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                                            <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                                            <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                                            <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                                            <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                                            <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                                            <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                                            <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                                            <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                                            <!-- <option value="ff-14" data-thumbnail="../images/img_font_14.png">만세체</option> -->
+                                            <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                                            <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                                            <!-- <option value="ff-17" data-thumbnail="../images/img_font_17.png">민국체</option> -->
+                                            <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                                            <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                                            <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                                            <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                                            <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                                            <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                                            <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                                            <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                                            <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                                            <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                                            <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                                            <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                                            <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                                            <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                                            <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                                            <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                                            <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                                            <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                                            <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                                            <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                                            <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                                            <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                                            <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+                                          </select>
+
+                                          <div class="font-view-select">
+                                            <button class="btn-font_preview-select" id="battleTitleFont" value="ff-01" onclick="fontFamilyExcel(this, 3);">
+                                              <li><img src="../images/img_font_1.png" alt=""><span>검은고딕</span></li>
+                                            </button>
+                                            <div class="font-view-area">
+                                              <ul id="font-view-list-battle-title"></ul>
+                                            </div>
+                                          </div>
+
+                                          <div class="custom-control custom-control-inline custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="battleTitlefontBold">
+                                            <label class="custom-control-label" for="battleTitlefontBold">폰트 굵게 표시</label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- 타이틀  -->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">타이틀</p>
+                                        <div class="setup-item">
+                                          <ul class="chat-detail-color">
+                                            <li class="w-100">
+                                              <div>
+                                                <input type='text' value='' name='battleTitle' id='battleTitle' class="form-control form-input">
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                      <!-- 타이틀 색상 -->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">타이틀 색상</p>
+                                        <div class="setup-item">
+                                          <ul class="chat-detail-color">
+                                            <li class="w-100">
+                                              <div class="color-picker-area">
+                                                <input type='text' value='#ffffff' name='colorPickerBattleTitle' id='colorPickerBattleTitle' readonly class="form-control">
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+
+                                      <!-- 타이틀 크기-->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">타이틀 크기</p>
+                                        <div class="setup-item">
+                                          <div id="sliderBattleTitleFontSize" class="slider-item"></div>
+                                          <div class="slider-value">
+                                            <input id="sliderBattleTitlefontSizeVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- end title setting-->
+
+                                  </div>
+                                  <!-- 팀 설정 ------------------------------------------------------------------------------------------------->
+                                  <div class="setup-box tab-box" id="tab-team">
+                                    <!-- preset -->
+                                    <h2 class="tab-sub-tit">프리셋</h2>
+                                    <div class="preset-box preset-box-tab">
+                                      <div class="preset-list">
+                                        <ul class="preset-list-box-team preset-list-box-ul" id="sortList">
+                                        </ul>
+
+                                        <div class="preset-btn" style="display:none">
+                                          <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img src="../images/ico_preset_plus.png" alt="" ></span>프리셋 추가</a>
+                                        </div>
+                                      </div>
+                                      <div class="url-area">
+                                        <div class="url-input">
+                                            <input class="form-control urlCopy" type="text" id="urlCopyTeam" value="" readonly>
+                                        </div>
+                                        <div class="url-btn-box">
+                                          <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopyTeam">URL복사</button>
+                                          <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                                        </div>
+                                        <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
+                                      </div>
+                                    </div>
+                                    <hr class="delimiter">
+                                    <!-- //preset end -->
+
+                                    <!-- preview start -->
+                                    <div class="preview-area">
+                                      <h2 class="preview-tit">미리보기</h2>
+
+                                      <!-- chat box start -->
+                                      <div class="preview-box">
+                                        <div class="preview-list-area preview-team-list-area">
+                                          <ul class="preview-list">
+                                            <!--미리보기 영역 -->
+                                          </ul>
+                                        </div>
+                                      </div>
+                                      <div class="preview-test-area">
+                                        <ul class="text-box">
+                                          <li>
+                                            <button type="button" class="btn" id="btn_win_reset">초기화</button>
+                                            <button type="button" class="btn" id="btn_win_reload">새로고침</button>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                    <hr class="delimiter">
+                                    <!-- preview end -->
+
+                                    <!-- <div class="setup-box"></div> -->
+                                    <h2 class="tab-sub-tit">테마</h2>
+                                    <div class="setup-item-box">
+                                      <!-- 엑셀 투명도-->
+                                      <div class="setup-item-list">
+                                          <p class="setup-txt">팀 투명도</p>
+                                          <div class="setup-item">
+                                              <div id="sliderChatOpacityTeam" class="slider-item"></div>
+                                              <div class="slider-value">
+                                                  <input id="opacityValTeam" class="input-num" readonly><span class="input-unit">%</span>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <!-- 엑셀 테마-->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">팀 테마 </p>
+                                        <div class="setup-item">
+                                          <div class="item-theme-box item-team-theme-box">
+                                            <!-- 엑셀 theme -->
+                                            <div class="row">
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chTeamThemeType1" name="chTeamThemeType" value="theme-team-a" class="rdo">
+                                                <span class="img-box"><img src="../images/teamThemeA.png?20250622" alt="theme-team-A"></span>
+                                                <span class="text">팀 테마 A</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chTeamThemeType2" name="chTeamThemeType" value="theme-team-b" class="rdo">
+                                                <span class="img-box"><img src="../images/teamThemeB.png?20250622" alt="theme-team-B"></span>
+                                                <span class="text">팀 테마 B</span>
+                                              </label>
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chTeamThemeType3" name="chTeamThemeType" value="theme-team-c" class="rdo">
+                                                <span class="img-box"><img src="../images/teamThemeC.png?20250622" alt="theme-team-C"></span>
+                                                <span class="text">팀 테마 C</span>
+                                              </label>
+                                            </div>
+                                            <!-- 대결 테마 -->
+                                            <div class="row mt-4">
+                                              <label class="theme-rdo">
+                                                <input type="radio" id="chTeamThemeType11" name="chTeamThemeType" value="theme-battle-a" class="rdo">
+                                                <span class="img-box"><img src="../images/battleThemeA.png?20250622" alt="theme-battle-A"></span>
+                                                <span class="text">대결 테마 A</span>
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <!-- 타이틀 섹션-------------------------------------------------->
+                                    <h2 class="tab-sub-tit">타이틀</h2>
+                                    <div class="setup-item-box">
+                                      <!-- 타이틀 폰트 선택-->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">타이틀 폰트</p>
+                                        <div class="setup-item">
+                                          <!-- 폰트 설정 select-->
+                                          <select id="teamTitlefontFmaily" name="teamTitlefontFmaily" class="font-family-select">
+                                            <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                                            <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                                            <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                                            <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                                            <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                                            <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                                            <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                                            <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                                            <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                                            <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                                            <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                                            <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                                            <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                                            <!-- <option value="ff-14" data-thumbnail="../images/img_font_14.png">만세체</option> -->
+                                            <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                                            <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                                            <!-- <option value="ff-17" data-thumbnail="../images/img_font_17.png">민국체</option> -->
+                                            <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                                            <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                                            <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                                            <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                                            <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                                            <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                                            <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                                            <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                                            <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                                            <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                                            <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                                            <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                                            <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                                            <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                                            <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                                            <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                                            <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                                            <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                                            <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                                            <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                                            <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                                            <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                                            <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+                                          </select>
+
+                                          <div class="font-view-select">
+                                            <button class="btn-font_preview-select" id="teamTitleFont" value="ff-01" onclick="fontFamilyExcel(this, 4);">
+                                              <li><img src="../images/img_font_1.png" alt=""><span>검은고딕</span></li>
+                                            </button>
+                                            <div class="font-view-area">
+                                              <ul id="font-view-list-team-title"></ul>
+                                            </div>
+                                          </div>
+
+                                          <div class="custom-control custom-control-inline custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="teamTitlefontBold">
+                                            <label class="custom-control-label" for="teamTitlefontBold">폰트 굵게 표시</label>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- 타이틀  -->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">타이틀</p>
+                                        <div class="setup-item">
+                                          <ul class="chat-detail-color">
+                                            <li class="w-100">
+                                              <div>
+                                                <input type='text' value='' name='teamTitle' id='teamTitle' class="form-control form-input">
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                      <!-- 타이틀 색상 -->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">타이틀 색상</p>
+                                        <div class="setup-item">
+                                          <ul class="chat-detail-color">
+                                            <li class="w-100">
+                                              <div class="color-picker-area">
+                                                <input type='text' value='#ffffff' name='colorPickerTeamTitle' id='colorPickerTeamTitle' readonly class="form-control">
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+
+                                      <!-- 타이틀 크기-->
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">타이틀 크기</p>
+                                        <div class="setup-item">
+                                          <div id="sliderTeamTitleFontSize" class="slider-item"></div>
+                                          <div class="slider-value">
+                                            <input id="sliderTeamTitlefontSizeVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <!-- 타이틀 외곽선-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">타이틀 외곽선</p>
+                                          <div class="setup-item">
+                                            <div id="sliderTeamTitleFontBorder" class="slider-item"></div>
+                                            <div class="slider-value">
+                                              <input id="sliderTeamTitleFontBorderVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                            </div>
+                                            <div class="color-picker-area">
+                                              <input type='text' value='#00ff00' name='colorPickerTeamTitleStrokeColor' id='colorPickerTeamTitleStrokeColor' class="form-control">
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <!-- end title setting-->
+
+                                    <!-- 폰트 섹션-------------------------------------------------->
+                                      <h2 class="tab-sub-tit">엑셀 팀 폰트</h2>
+                                      <!-- 엑셀 랭킹 폰트 선택-->
+                                      <div class="setup-item-box">
+                                        <!-- 엑셀 랭킹 폰트 선택-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">항목 폰트</p>
+                                          <div class="setup-item">
+                                            <!-- 폰트 설정 select-->
+                                            <select id="teamItemfontFmaily" name="teamItemfontFmaily" class="font-family-select">
+                                              <option value="ff-01" data-thumbnail="../images/img_font_1.png">검은고딕</option>
+                                              <option value="ff-02" data-thumbnail="../images/img_font_2.png">동그라미L</option>
+                                              <option value="ff-03" data-thumbnail="../images/img_font_3.png">서울한강체</option>
+                                              <option value="ff-04" data-thumbnail="../images/img_font_4.png">경기천년바탕</option>
+                                              <option value="ff-05" data-thumbnail="../images/img_font_5.png">동그라미M</option>
+                                              <option value="ff-06" data-thumbnail="../images/img_font_6.png">서울남산체</option>
+                                              <option value="ff-07" data-thumbnail="../images/img_font_7.png">경기천년제목</option>
+                                              <option value="ff-08" data-thumbnail="../images/img_font_8.png">동그라미B</option>
+                                              <option value="ff-09" data-thumbnail="../images/img_font_9.png">어비마이센체</option>
+                                              <option value="ff-10" data-thumbnail="../images/img_font_10.png">고도체</option>
+                                              <option value="ff-11" data-thumbnail="../images/img_font_11.png">레코체</option>
+                                              <option value="ff-12" data-thumbnail="../images/img_font_12.png">에스코어드림MD</option>
+                                              <option value="ff-13" data-thumbnail="../images/img_font_13.png">교보손글씨2019</option>
+                                              <option value="ff-15" data-thumbnail="../images/img_font_15.png">에스코어드림EB</option>
+                                              <option value="ff-16" data-thumbnail="../images/img_font_16.png">나눔고딕</option>
+                                              <option value="ff-18" data-thumbnail="../images/img_font_18.png">여기어때잘난체</option>
+                                              <option value="ff-19" data-thumbnail="../images/img_font_19.png">나눔명조</option>
+                                              <option value="ff-20" data-thumbnail="../images/img_font_20.png">배달의민족도현체</option>
+                                              <option value="ff-21" data-thumbnail="../images/img_font_21.png">이롭게바탕체</option>
+                                              <option value="ff-22" data-thumbnail="../images/img_font_22.png">나눔바른펜</option>
+                                              <option value="ff-23" data-thumbnail="../images/img_font_23.png">배달의민족연성체</option>
+                                              <option value="ff-24" data-thumbnail="../images/img_font_24.png">잘풀리는오늘체</option>
+                                              <option value="ff-25" data-thumbnail="../images/img_font_25.png">나눔손글씨 붓</option>
+                                              <option value="ff-26" data-thumbnail="../images/img_font_26.png">배달의민족주아체</option>
+                                              <option value="ff-27" data-thumbnail="../images/img_font_27.png">잘풀리는하루체</option>
+                                              <option value="ff-28" data-thumbnail="../images/img_font_28.png">나눔스퀘어</option>
+                                              <option value="ff-29" data-thumbnail="../images/img_font_29.png">배달의민족한나체</option>
+                                              <option value="ff-30" data-thumbnail="../images/img_font_30.png">쿠키런체</option>
+                                              <option value="ff-31" data-thumbnail="../images/img_font_31.png">나눔스퀘어라운드</option>
+                                              <option value="ff-32" data-thumbnail="../images/img_font_32.png">봄바람체</option>
+                                              <option value="ff-33" data-thumbnail="../images/img_font_33.png">티머니둥근바람체</option>
+                                              <option value="ff-34" data-thumbnail="../images/img_font_34.png">남양주고딕체</option>
+                                              <option value="ff-35" data-thumbnail="../images/img_font_35.png">빙그레체</option>
+                                              <option value="ff-36" data-thumbnail="../images/img_font_36.png">한수원한돋움체</option>
+                                              <option value="ff-37" data-thumbnail="../images/img_font_37.png">대한체</option>
+                                              <option value="ff-38" data-thumbnail="../images/img_font_38.png">빙그레체&#8545;</option>
+                                              <option value="ff-39" data-thumbnail="../images/img_font_39.png">KCC은영체</option>
+                                              <option value="ff-41" data-thumbnail="../images/img_font_41.png">산돌국대떡볶이체</option>
+                                            </select>
+
+                                            <div class="font-view-select">
+                                              <button class="btn-font_preview-select" id="teamItemFont" value="ff-01" onclick="fontFamilyExcel(this, 5);">
+                                                <li><img src="../images/img_font_1.png" alt=""><span>검은고딕</span></li>
+                                              </button>
+                                              <div class="font-view-area">
+                                                <ul id="font-view-list-team-item"></ul>
+                                              </div>
+                                            </div>
+
+                                            <div class="custom-control custom-control-inline custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="teamItemfontBold">
+                                              <label class="custom-control-label" for="teamItemfontBold">폰트 굵게 표시</label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 항목 크기-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">항목 폰트 크기</p>
+                                          <div class="setup-item">
+                                            <div id="sliderTeamItemFontSize" class="slider-item"></div>
+                                            <div class="slider-value">
+                                              <input id="sliderTeamItemfontSizeVal" class="input-num" readonly><span class="input-unit">픽셀</span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <!-- 텍스트 색상-->
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">항목 색상</p>
+                                          <div class="setup-item">
+                                            <ul class="excel-detail-color">
+                                              <li>
+                                                <p class="txt-user">팀 명</p>
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerTeamHeader' id='colorPickerTeamHeader' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                              <li>
+                                                <p class="txt-user">BJ닉네임</p>
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerTeamBJ' id='colorPickerTeamBJ' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                              <li>
+                                                <p class="txt-user">렉스</p>
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerTeamLex' id='colorPickerTeamLex' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                              <li>
+                                                <p class="txt-user">기여도</p>
+                                                <div class="color-picker-area">
+                                                  <input type='text' value='#ffffff' name='colorPickerTeamRate' id='colorPickerTeamRate' readonly class="form-control">
+                                                </div>
+                                              </li>
+                                            </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <!-- FLEXTV 이벤트 설정 (customjs/rocket.js · 설정은 서버 /api/excel/rocket, 내부 이름은 rocket) -------------------->
+                                  <div class="setup-box tab-box rocket-tab" id="tab-rocket">
+                                    <!-- preset -->
+                                    <h2 class="tab-sub-tit">프리셋</h2>
+                                    <div class="preset-box preset-box-tab">
+                                      <div class="preset-list">
+                                        <ul class="preset-list-box-rocket preset-list-box-ul">
+                                        </ul>
+
+                                        <div class="preset-btn" style="display:none">
+                                          <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img src="../images/ico_preset_plus.png" alt="" ></span>프리셋 추가</a>
+                                        </div>
+                                      </div>
+                                      <div class="url-area">
+                                        <div class="url-input">
+                                            <input class="form-control urlCopy" type="text" id="urlCopyRocket" value="" readonly>
+                                        </div>
+                                        <div class="url-btn-box">
+                                          <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopyRocket">URL복사</button>
+                                          <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                                        </div>
+                                        <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
+                                        <p class="rocket-help">OBS 브라우저 소스 크기: 가로 440 · 세로 660 (배경 투명)</p>
+                                      </div>
+                                    </div>
+                                    <hr class="delimiter">
+                                    <!-- //preset end -->
+
+                                    <!-- 이벤트 현황 -->
+                                    <h2 class="tab-sub-tit">이벤트 현황</h2>
+                                    <div class="rocket-status">
+                                      <div class="rocket-status-head">
+                                        <span class="rocket-chip" id="rocketEventChip">불러오는 중</span>
+                                        <strong id="rocketEventTitle"></strong>
+                                        <span class="rocket-period" id="rocketEventPeriod"></span>
+                                      </div>
+                                      <dl class="rocket-facts">
+                                        <div><dt>성공 확률</dt><dd id="rocketWinRate">-</dd></div>
+                                        <div><dt>회차 당첨 금액</dt><dd id="rocketPrize">-</dd></div>
+                                        <div><dt>현재 회차</dt><dd id="rocketRoundNo">-</dd></div>
+                                        <div class="is-prize"><dt>이번 회차 당첨 금액</dt><dd id="rocketRoundPrize">-</dd><span class="rocket-carry" id="rocketCarry"></span></div>
+                                        <div><dt>에너지</dt><dd id="rocketFuel">-</dd></div>
+                                        <div><dt>상태</dt><dd id="rocketRoundState">-</dd><span class="rocket-carry" id="rocketThrows"></span></div>
+                                      </dl>
+                                      <!-- 이번 방송의 회차(엑셀 회차와 같음): 성공 · 누적 · 진행 중 · 남은 회차 -->
+                                      <div class="rocket-rounds-head">
+                                        <span>이번 방송 회차</span>
+                                        <span class="rocket-rounds-legend"><i class="is-won"></i>성공 <i class="is-carry"></i>누적 <i class="is-now"></i>진행 중</span>
+                                      </div>
+                                      <ol class="rocket-rounds" id="rocketRounds"></ol>
+                                      <p class="rocket-warn" id="rocketNotice" style="display:none"></p>
+                                      <div class="rocket-status-foot">
+                                        <p class="rocket-help">엑셀 회차마다 성공은 한 번이에요. 당첨 없이 끝난 회차의 당첨 금액은 다음 회차에 쌓여요(한 방송 최대 <span id="rocketMaxRounds">10</span>회차).<br>성공 확률 · 당첨 금액 · 회차 수 · 이벤트 기간은 FLEXTV가 정하고, 결과는 서버가 추첨해요.</p>
+                                        <div class="rocket-status-btns">
+                                          <button type="button" class="btn rocket-btn-sub" id="btnRocketEndRound" disabled>지금 회차 끝내기</button>
+                                          <button type="button" class="btn rocket-btn-sub" id="btnRocketNewSession" disabled>새 방송으로 시작</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <hr class="delimiter">
+
+                                    <!-- preview start (미리보기는 OBS 위젯 화면을 그대로 띄운다) -->
+                                    <div class="rocket-preview-area">
+                                      <h2 class="preview-tit">미리보기</h2>
+                                      <div class="rocket-preview-box">
+                                        <iframe id="rocketPreviewFrame" title="FLEXTV 이벤트 위젯 미리보기" src="../pages/rocket/preview"></iframe>
+                                      </div>
+                                      <div class="rocket-preview-test">
+                                        <p class="rocket-screen-note">방송 화면에는 <b>FLEXTV 로고 · 목표 · 남은 양</b>과 맨 위 <b>회차 · 당첨 금액</b>만 나와요. 당첨 없이 끝난 회차가 있으면 '누적'이 붙고 금액이 올라가요.</p>
+                                        <p class="rocket-test-tit">미리보기 테스트 <span>(이 화면에서만 움직여요)</span></p>
+                                        <div class="rocket-test-btns">
+                                          <button type="button" class="btn" data-rocket-test="charge">에너지 충전</button>
+                                          <button type="button" class="btn" data-rocket-test="full">충전 완료</button>
+                                          <button type="button" class="btn" data-rocket-test="lose">도전 실패</button>
+                                          <button type="button" class="btn" data-rocket-test="win">도전 성공</button>
+                                          <button type="button" class="btn" data-rocket-test="end">회차 종료 · 누적</button>
+                                          <button type="button" class="btn" data-rocket-test="auto">자동 재생</button>
+                                          <button type="button" class="btn rocket-btn-sub" data-rocket-test="reset">처음으로</button>
+                                        </div>
+                                        <div class="custom-control custom-checkbox custom-control-inline rocket-sound-check">
+                                          <input type="checkbox" class="custom-control-input" id="rocketPreviewSound" checked>
+                                          <label class="custom-control-label" for="rocketPreviewSound">미리보기 소리</label>
+                                        </div>
+                                        <p class="rocket-test-tit">방송 화면(OBS) <span>(연결된 위젯에 보내요 · 기록은 남지 않아요)</span></p>
+                                        <div class="rocket-test-btns">
+                                          <button type="button" class="btn" data-rocket-obs="lose">도전 실패 보내기</button>
+                                          <button type="button" class="btn" data-rocket-obs="win">도전 성공 보내기</button>
+                                          <button type="button" class="btn rocket-btn-sub" id="btn_win_reset">초기화</button>
+                                          <button type="button" class="btn rocket-btn-sub" id="btn_win_reload">새로고침</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <hr class="delimiter">
+                                    <!-- preview end -->
+
+                                    <h2 class="tab-sub-tit">에너지 목표 · 도전 금액</h2>
+                                    <div class="setup-item-box">
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">에너지 목표</p>
+                                        <div class="setup-item">
+                                          <input type="text" id="rocketGoal" class="form-control rocket-amount text-right d-inline-block" inputmode="numeric" autocomplete="off" placeholder="예) 100,000"> <span class="text-white ml-1 mr-2">렉스</span>
+                                          <p class="rocket-help">지정 BJ에게 들어온 FLEXTV 후원이 이 금액에 닿으면 로고에 에너지가 100% 차고 충전 완료돼요. 방송 화면에는 이 목표와 남은 양이 크게 나와요.</p>
+                                        </div>
+                                      </div>
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">도전 금액</p>
+                                        <div class="setup-item">
+                                          <input type="text" id="rocketMin" class="form-control rocket-amount text-right d-inline-block" inputmode="numeric" autocomplete="off" placeholder="예) 1,000"> <span class="text-white ml-1 mr-2">렉스 이상</span>
+                                          <p class="rocket-help">에너지 100% 뒤 지정 BJ에게 이 금액 이상 후원하면 도전 1회(룰렛 1회)예요. 방송 화면에는 나오지 않으니 채팅 공지 등으로 알려 주세요.</p>
+                                          <p class="rocket-warn">바꾼 금액은 다음 회차부터 적용돼요.</p>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <h2 class="tab-sub-tit">알림 소리</h2>
+                                    <div class="setup-item-box">
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">알림방식</p>
+                                        <div class="setup-item">
+                                          <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="rocketSoundNone" name="rocketSound" class="custom-control-input" value="none">
+                                            <label class="custom-control-label" for="rocketSoundNone">사용안함</label>
+                                          </div>
+                                          <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="rocketSoundChime" name="rocketSound" class="custom-control-input" value="chime">
+                                            <label class="custom-control-label" for="rocketSoundChime">알림음</label>
+                                          </div>
+                                          <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="rocketSoundVoice" name="rocketSound" class="custom-control-input" value="voice">
+                                            <label class="custom-control-label" for="rocketSoundVoice">알림 음성</label>
+                                          </div>
+                                          <p class="rocket-help">위젯 화면에는 알림 글자가 나오지 않아요. 같은 후원을 기존 '후원 알림' 위젯도 알리니, 겹치면 '사용안함'을 고르세요.</p>
+                                        </div>
+                                      </div>
+                                      <div class="rocket-alert-body" id="rocketAlertBody">
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt" id="rocketAlertsTitle">알림 받을 때</p>
+                                          <div class="setup-item">
+                                            <div class="rocket-tpl-row">
+                                              <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" class="custom-control-input" id="rocketTplCharge" data-rocket-tpl-on="charge"><label class="custom-control-label" for="rocketTplCharge">에너지 충전</label></div>
+                                              <input type="text" class="form-control" data-rocket-tpl="charge" maxlength="60" aria-label="에너지 충전 때 읽을 문구">
+                                            </div>
+                                            <div class="rocket-tpl-row">
+                                              <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" class="custom-control-input" id="rocketTplThrow" data-rocket-tpl-on="throw"><label class="custom-control-label" for="rocketTplThrow">도전</label></div>
+                                              <input type="text" class="form-control" data-rocket-tpl="throw" maxlength="60" aria-label="도전 때 읽을 문구">
+                                            </div>
+                                            <div class="rocket-tpl-row">
+                                              <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" class="custom-control-input" id="rocketTplFail" data-rocket-tpl-on="fail"><label class="custom-control-label" for="rocketTplFail">실패</label></div>
+                                              <input type="text" class="form-control" data-rocket-tpl="fail" maxlength="60" aria-label="실패 때 읽을 문구">
+                                            </div>
+                                            <div class="rocket-tpl-row">
+                                              <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" class="custom-control-input" id="rocketTplLand" data-rocket-tpl-on="land"><label class="custom-control-label" for="rocketTplLand">성공</label></div>
+                                              <input type="text" class="form-control" data-rocket-tpl="land" maxlength="60" aria-label="성공 때 읽을 문구">
+                                            </div>
+                                            <p class="rocket-help" id="rocketAlertsHelp"></p>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list" id="rocketChimeRow">
+                                          <p class="setup-txt">알림음</p>
+                                          <div class="setup-item">
+                                            <select class="form-control rocket-select d-inline-block" id="rocketChime">
+                                              <option value="dingdong">띵동</option>
+                                              <option value="fanfare">빠밤</option>
+                                              <option value="pop">뿅</option>
+                                            </select>
+                                            <button type="button" class="btn rocket-btn-sub" data-rocket-hear="chime">들어보기</button>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list" id="rocketVoiceRow">
+                                          <p class="setup-txt">음성 재생 속도</p>
+                                          <div class="setup-item">
+                                            <select class="form-control rocket-select d-inline-block" id="rocketRate">
+                                              <option value="0.8">0.8배속</option>
+                                              <option value="1">1배속</option>
+                                              <option value="1.2">1.2배속</option>
+                                              <option value="1.5">1.5배속</option>
+                                            </select>
+                                            <button type="button" class="btn rocket-btn-sub" data-rocket-hear="voice">들어보기</button>
+                                            <p class="rocket-help">후원 알림과 같은 도우미 음성(TTS)으로 문구를 읽어요.</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">연출 효과음</p>
+                                        <div class="setup-item">
+                                          <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" class="custom-control-input" id="rocketFxCount" data-rocket-fx="count"><label class="custom-control-label" for="rocketFxCount">3 · 2 · 1</label></div>
+                                          <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" class="custom-control-input" id="rocketFxLaunch" data-rocket-fx="launch"><label class="custom-control-label" for="rocketFxLaunch">성공</label></div>
+                                          <div class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" class="custom-control-input" id="rocketFxFail" data-rocket-fx="fail"><label class="custom-control-label" for="rocketFxFail">실패</label></div>
+                                        </div>
+                                      </div>
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">볼륨</p>
+                                        <div class="setup-item">
+                                          <div id="rocketVolumeSlider" class="slider-item"></div>
+                                          <div class="slider-value">
+                                            <input id="rocketVolumeVal" class="input-num" readonly>
+                                            <span class="input-unit">%</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <h2 class="tab-sub-tit">룰렛</h2>
+                                    <div class="setup-item-box">
+                                      <div class="setup-item-list">
+                                        <p class="setup-txt">룰렛 사용</p>
+                                        <div class="setup-item">
+                                          <div class="chk-switch-box">
+                                            <input type="checkbox" id="rocketWheelOn" name="rocketWheelOn" class="switch-input">
+                                            <label for="rocketWheelOn" class="switch-label"><span class="marble"></span><span class="on">ON</span><span class="off">OFF</span></label>
+                                          </div>
+                                          <ol class="rocket-steps">
+                                            <li><b>1</b>에너지 100% 뒤 지정 BJ에게 <span id="rocketStepMin">도전 금액</span> 이상 후원</li>
+                                            <li><b>2</b>3 · 2 · 1 카운트다운 동안 룰렛이 돌아요</li>
+                                            <li><b>3</b>성공 칸에 멈추면 성공, 아니면 실패 연출</li>
+                                          </ol>
+                                          <p class="rocket-help" id="rocketWheelHelp"></p>
+                                        </div>
+                                      </div>
+                                      <div class="rocket-wheel-body" id="rocketWheelBody">
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">룰렛 표시</p>
+                                          <div class="setup-item">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                              <input type="radio" id="rocketWheelSrc" name="rocketWheelWhere" class="custom-control-input" value="src">
+                                              <label class="custom-control-label" for="rocketWheelSrc">후원 알림 위젯(룰렛 후원)에서</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                              <input type="radio" id="rocketWheelInside" name="rocketWheelWhere" class="custom-control-input" value="inside">
+                                              <label class="custom-control-label" for="rocketWheelInside">FLEXTV 이벤트 위젯 안에서</label>
+                                            </div>
+                                            <p class="rocket-help" id="rocketWheelWhereHelp"></p>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">룰렛 모양</p>
+                                          <div class="setup-item">
+                                            <div class="ev-theme-group">
+                                              <span class="ev-theme-kind">배너형</span>
+                                              <div class="ev-themes" role="radiogroup" aria-label="룰렛 모양 · 배너형">
+                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="normal"><span class="ev-theme-pic" data-theme="normal"></span><span class="ev-theme-name">일반 <em>기본</em></span></label>
+                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="gold"><span class="ev-theme-pic" data-theme="gold"></span><span class="ev-theme-name">골드</span></label>
+                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="xmas"><span class="ev-theme-pic" data-theme="xmas"></span><span class="ev-theme-name">크리스마스</span></label>
+                                              </div>
+                                            </div>
+                                            <div class="ev-theme-group">
+                                              <span class="ev-theme-kind">원판형</span>
+                                              <div class="ev-themes is-wheel" role="radiogroup" aria-label="룰렛 모양 · 원판형">
+                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="blue"><span class="ev-theme-pic" data-theme="blue"></span><span class="ev-theme-name">블루</span></label>
+                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="pink"><span class="ev-theme-pic" data-theme="pink"></span><span class="ev-theme-name">핑크</span></label>
+                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="yellow"><span class="ev-theme-pic" data-theme="yellow"></span><span class="ev-theme-name">옐로우</span></label>
+                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="black"><span class="ev-theme-pic" data-theme="black"></span><span class="ev-theme-name">블랙</span></label>
+                                              </div>
+                                            </div>
+                                            <p class="rocket-help">배너형은 성공 · 실패 칸 이름이 빠르게 돌다가 결과에서 멈추고, 원판형은 오른쪽 바늘에 결과 칸이 멈춰요. 후원 알림 위젯 · FLEXTV 이벤트 위젯 어디에 띄워도 같은 모양이에요.</p>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">룰렛 회전 시간</p>
+                                          <div class="setup-item">
+                                            <input type="text" id="rocketWheelTime" class="form-control rocket-num text-right d-inline-block" inputmode="numeric" maxlength="2" autocomplete="off"> <span class="text-white ml-1">초</span>
+                                            <p class="rocket-help">2 ~ 10초. 3 · 2 · 1(약 3초)보다 길면 그만큼 결과가 늦게 나와요.</p>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">결과 표시 시간</p>
+                                          <div class="setup-item">
+                                            <input type="text" id="rocketWheelHold" class="form-control rocket-num text-right d-inline-block" inputmode="numeric" maxlength="2" autocomplete="off"> <span class="text-white ml-1">초</span>
+                                            <p class="rocket-help">룰렛이 멈춘 뒤 결과를 보여 주는 시간이에요(1 ~ 10초).</p>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">룰렛 결과 음성</p>
+                                          <div class="setup-item">
+                                            <div class="custom-control custom-checkbox custom-control-inline">
+                                              <input type="checkbox" class="custom-control-input" id="rocketWheelVoice">
+                                              <label class="custom-control-label" for="rocketWheelVoice">결과를 음성으로 읽기 (예: '성공!')</label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">미리 돌려보기</p>
+                                          <div class="setup-item">
+                                            <div class="ev-try">
+                                              <div class="ev-try-stage" id="rocketWheelTry"></div>
+                                              <div class="rocket-test-btns">
+                                                <button type="button" class="btn" data-rocket-try="win">성공으로 돌려보기</button>
+                                                <button type="button" class="btn" data-rocket-try="lose">실패로 돌려보기</button>
+                                                <button type="button" class="btn rocket-btn-sub" id="rocketWheelSim">확률 시뮬레이션 1,000회</button>
+                                              </div>
+                                              <p class="rocket-value" id="rocketWheelSimResult"></p>
+                                              <p class="rocket-help">이 화면에서만 돌아요. 실제 결과는 서버가 FLEXTV 성공 확률로 추첨해요.</p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">칸 나누기</p>
+                                          <div class="setup-item">
+                                            <p class="rocket-value" id="rocketSlices">-</p>
+                                            <p class="rocket-help">성공 확률(FLEXTV)에 맞춰 성공 1칸과 실패 칸으로 자동으로 나눠요. 칸 수는 바꿀 수 없어요.</p>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list" id="rocketWheelNamesRow">
+                                          <p class="setup-txt">칸 이름</p>
+                                          <div class="setup-item rocket-names">
+                                            <span class="text-white mr-2">성공</span><input type="text" id="rocketWinName" class="form-control d-inline-block" maxlength="6">
+                                            <span class="text-white ml-3 mr-2">실패</span><input type="text" id="rocketLoseName" class="form-control d-inline-block" maxlength="6">
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list" id="rocketWheelTextRow">
+                                          <p class="setup-txt">룰렛 문구</p>
+                                          <div class="setup-item">
+                                            <input type="text" id="rocketWheelText" class="form-control rocket-wide" maxlength="40">
+                                            <p class="rocket-help">후원 알림 위젯의 룰렛 위에 나와요. 쓸 수 있는 말: {닉네임} {BJ} {렉스} {당첨금액}</p>
+                                          </div>
+                                        </div>
+                                        <div class="setup-item-list">
+                                          <p class="setup-txt">룰렛 소리</p>
+                                          <div class="setup-item">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                              <input type="radio" id="rocketWheelSoundOn" name="rocketWheelSound" class="custom-control-input" value="on">
+                                              <label class="custom-control-label" for="rocketWheelSoundOn">사용</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                              <input type="radio" id="rocketWheelSoundOff" name="rocketWheelSound" class="custom-control-input" value="off">
+                                              <label class="custom-control-label" for="rocketWheelSoundOff">사용안함</label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- //setup end -->
+
+                                <!-- setup start -->
+                                <div class="setup-btn-area">
+                                    <div class="setup-btn">
+                                        <div class="btn-top-area">
+                                            <a href="#" class="btn-top"><img src="../images/ico_top_arrow.png"></a>
+                                        </div>
+                                        <div class="d-flex justify-content-center align-content-center">
+                                            <button type="button" id="btn_save" class="btn mr-3">설정 저장</button>
+                                            <button type="button" id="btn_reset" class="btn type2">설정 초기화</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- //setup end -->
+
+                            </div>
+                            <!-- //Content View End -->
+
+                        </div>
+                        <!-- //cont-area End -->
+                    </div>
+                    <!-- //Content End -->
+
+                </div>
+                <!-- //section-center-fix End -->
+            </div>
+            <!-- //section-center End -->
+        </div>
+        <!-- //Container End -->
+
+
+        <!-- Layer popup : setupCompleted Start -->
+        <div class="modal fade" id="setupCompleted" tabindex="-1" aria-labelledby="setupCompleted" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="setupCompleted">설정 저장 완료</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        저장되었습니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //Layer popup : setupCompleted End -->
+
+    </div>
+    <!-- listener -->
+    <script src="../js/eventlistener.js?202506141400"></script>
+    <!-- battlecomponent (Dependencies listener) -->
+    <script src="../js/countdowntimer.js?202506141400"></script>
+    <script src="../js/battlecomponent.js?202506141400"></script>
+    <script src="../js/exelteamcomponent.js?202506141836"></script>
+
+    <script src="../customjs/team.js?202506141400"></script>
+    <script src="../customjs/preset.js?2505191239"></script>
+    <script src="../customjs/excel.js?202512291902"></script>
+    <script src="../pages/event_roulette.js?202610171200"></script>
+    <script src="../customjs/rocket.js?202610171800"></script>
+
+</body>
+
+</html>

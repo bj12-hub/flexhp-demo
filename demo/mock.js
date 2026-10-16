@@ -1,0 +1,106 @@
+// 정적 미리보기(GitHub Pages)용 가짜 API. dev/server.mjs 의 가짜 API 와 같은 응답을 브라우저 안에서 돌려준다.
+// view/excel.html 의 axios 스크립트 바로 뒤에 넣는다(build-static.mjs). 운영 서버로는 요청하지 않는다.
+(function () {
+  // 사이트 뿌리 주소: 이 파일은 {뿌리}/demo/mock.js
+  var here = document.currentScript && document.currentScript.src;
+  var root = here ? new URL("../", here).href : new URL("../", location.href).href;
+
+  window.g_url = "mock:";
+  window.g_url_socket = "";
+  window.g_url_tts_base_url = "";
+  window.g_url_tts = "";
+  window.g_url_current = "";
+  window.g_url_roulette_sound = root + "sounds/roulette.mp3";
+
+  // ─────────────── 가짜 데이터 ───────────────
+  var member = { LOGINFLAG: "Y", NAME: "테스트 BJ", MID: "testbj", MEMBER_UID: 1, IMG_URL: "" };
+  var event = { id: 1, title: "FLEXTV 이벤트", winRate: 5, prizeAmount: 500000, prizeUnit: "원", maxRounds: 10, carryOver: true, startDate: "2026-11-01T00:00:00Z", endDate: "2026-12-31T15:00:00Z", status: "ACTIVE" };
+  function hist(roundNo, carry, extra) {
+    return Object.assign({ roundNo: roundNo, status: "ENDED", endReason: "EXCEL_END", basePrize: event.prizeAmount, carryAmount: carry, prizeAmount: event.prizeAmount + carry, totalAmount: 100000, throwCount: 6, winBjNickname: null, closed: true }, extra || {});
+  }
+  // 1 · 2회차는 당첨 없이 끝나 3회차에 누적(500,000 + 1,000,000)
+  var rocket = {
+    saved: true, goalAmount: 100000, minAmount: 1000, options: null,
+    session: { no: 1, rounds: [hist(1, 0), hist(2, 500000)] },
+    round: { sessionNo: 1, roundNo: 3, maxRounds: 10, status: "FUELING", totalAmount: 86500, goalAmount: 100000, minAmount: 1000, throwCount: 0, basePrize: 500000, carryAmount: 1000000, prizeAmount: 1500000, prizeUnit: "원", pending: false },
+  };
+  var presets = {};
+
+  function rocketState() {
+    var r = rocket.round;
+    var open = r.pending ? [] : [Object.assign(hist(r.roundNo, r.carryAmount), { status: r.status, endReason: null, totalAmount: r.totalAmount, throwCount: r.throwCount, closed: false })];
+    return {
+      event: event,
+      settings: { saved: rocket.saved, goalAmount: rocket.goalAmount, minAmount: rocket.minAmount, options: rocket.options },
+      session: { no: rocket.session.no, maxRounds: event.maxRounds, rounds: rocket.session.rounds.concat(open) },
+      round: rocket.round,
+    };
+  }
+  function nextRound(roundNo, carry) {
+    var done = roundNo > event.maxRounds;
+    var base = done ? 0 : event.prizeAmount;
+    return { sessionNo: rocket.session.no, roundNo: Math.min(roundNo, event.maxRounds), maxRounds: event.maxRounds, status: done ? "DONE" : "FUELING", totalAmount: 0, goalAmount: rocket.goalAmount || 100000, minAmount: rocket.minAmount || 1000, throwCount: 0, basePrize: base, carryAmount: done ? 0 : carry, prizeAmount: done ? 0 : base + carry, prizeUnit: event.prizeUnit, pending: true };
+  }
+  function ok(resultMap) { return { returnCode: 1, message: "ok", resultMap: Object.assign({}, resultMap || {}, { returnVal: 1 }) }; }
+  function fail(message) { return { returnCode: 1, message: message, resultMap: { returnVal: 0 } }; }
+  function num(v) { return Number(String(v == null ? "" : v).replace(/,/g, "")); }
+
+  function mockApi(route, query, body) {
+    if (route === "/loginmember/getmember") return ok({ member: member });
+    if (route === "/api/excel/project/checkApprove") return ok({ data: [] });
+    if (route === "/preset/getpresetlist") {
+      var type = query.get("type") || body.type || "excel";
+      presets[type] = presets[type] || [{ ID: type + "-1", NAME: "프리셋1", URL: root + "pages/" + type + "/demo" + type + "key", PAGE: "demo" + type + "key", DATA: null }];
+      return ok({ dataList: presets[type] });
+    }
+    if (route === "/preset/createpreset") {
+      var t = body.type || "excel";
+      var row = { ID: t + "-" + Date.now(), NAME: "프리셋", URL: root + "pages/" + t + "/demo" + t + "key", PAGE: "demo" + t + "key", DATA: null };
+      (presets[t] = presets[t] || []).push(row);
+      return ok({ dataRow: row });
+    }
+    if (route === "/api/excel/rocket/state" || route === "/api/pages/rocket/state") return ok({ data: rocketState() });
+    if (route === "/api/excel/rocket/save") {
+      var goal = num(body.goalAmount), min = num(body.minAmount);
+      if (!(goal >= 1) || !(min >= 1)) return fail("인자값이 맞지 않습니다.");
+      Object.assign(rocket, { saved: true, goalAmount: goal, minAmount: min, options: body.options || null });
+      return ok({ data: rocketState() });
+    }
+    if (route === "/api/excel/rocket/endround") {
+      var r = rocket.round;
+      if (r.pending) return fail("지금 끝낼 회차가 없어요. 다음 후원이 들어오면 회차가 시작돼요.");
+      rocket.session.rounds.push(Object.assign(hist(r.roundNo, r.carryAmount), { endReason: "STREAMER", totalAmount: r.totalAmount, throwCount: r.throwCount }));
+      rocket.round = nextRound(r.roundNo + 1, event.carryOver ? r.prizeAmount : 0);
+      return ok({ data: rocketState() });
+    }
+    if (route === "/api/excel/rocket/newsession") {
+      rocket.session = { no: rocket.session.no + 1, rounds: [] };
+      rocket.round = nextRound(1, 0);
+      return ok({ data: rocketState() });
+    }
+    return ok({ data: [], dataList: [] }); // 나머지는 빈 성공
+  }
+
+  // axios 0.18: 모든 요청을 브라우저 안 가짜 API 로 돌린다
+  if (window.axios) {
+    window.axios.defaults.adapter = function (config) {
+      var raw = String(config.url || "");
+      var path = raw.indexOf("mock:") === 0 ? raw.slice(5) : raw.replace(/^https?:\/\/[^/]+/, "");
+      var u = new URL(path || "/", "http://mock");
+      var query = u.searchParams;
+      if (config.params) Object.keys(config.params).forEach(function (k) { query.set(k, config.params[k]); });
+      var body = {};
+      try { body = typeof config.data === "string" ? JSON.parse(config.data || "{}") : (config.data || {}); } catch (e) { body = {}; }
+      if (body instanceof FormData) { var o = {}; body.forEach(function (v, k) { o[k] = v; }); body = o; }
+      var data = mockApi(u.pathname, query, body || {});
+      return new Promise(function (resolve) {
+        setTimeout(function () { resolve({ data: data, status: 200, statusText: "OK", headers: {}, config: config, request: {} }); }, 60);
+      });
+    };
+  }
+
+  // 주소 끝이 #tab-rocket 이면 FLEXTV 이벤트 탭을 연다
+  window.addEventListener("load", function () {
+    if (location.hash === "#tab-rocket" && typeof window.showTab === "function") window.showTab("tab-rocket");
+  });
+})();
