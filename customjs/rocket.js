@@ -13,7 +13,7 @@ const RocketTab = (function () {
       land: { on: true, text: "{BJ} 성공! 당첨 금액 {당첨금액}" },
     },
     sound: "chime",
-    chime: "dingdong",
+    chime: "machine",
     rate: 1,
     volume: 70,
     fx: { count: true, launch: true, fail: true },
@@ -110,7 +110,18 @@ const RocketTab = (function () {
     trying = true;
     tab().find("[data-rocket-try]").prop("disabled", true);
     const sound = opt.wheelSound === "on" && $("#rocketPreviewSound").prop("checked");
-    tryRoulette.spin(win, opt.wheelTime, sound ? tryTick : null).then(function () {
+    // 룰렛 머신 소리: 레버 → 모터 · 칸마다 카지노 음 → 멈춤 → 성공(잭팟) · 실패(와-와)
+    const rs = sound && typeof EventRoulette !== "undefined" && EventRoulette.sound;
+    if (rs) {
+      rs.setVolume((Number(opt.volume) || 0) / 100);
+      rs.lever();
+      rs.reel(opt.wheelTime);
+    }
+    tryRoulette.spin(win, opt.wheelTime, rs ? rs.tick : sound ? tryTick : null).then(function () {
+      if (rs) {
+        rs.stop();
+        setTimeout(win ? rs.jackpot : rs.fail, 250);
+      }
       setTimeout(function () {
         trying = false;
         tab().find("[data-rocket-try]").prop("disabled", false);

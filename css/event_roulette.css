@@ -46,9 +46,22 @@
 .evr-xmas .evr-reel span { color: #7dffd9; text-shadow: -2px -2px 0 #06122a, 2px -2px 0 #06122a, -2px 2px 0 #06122a, 2px 2px 0 #06122a, 0 3px 0 #06122a; }
 .evr-xmas.is-win .evr-reel span:last-child { color: #ffffff; text-shadow: -2px -2px 0 #e53935, 2px -2px 0 #e53935, -2px 2px 0 #e53935, 2px 2px 0 #e53935, 0 0 18px #7dffd9; }
 
+/* 결과마다 다른 모습: 성공 = 전구가 빠르게 돌며 금빛으로 번쩍, 실패 = 빛이 꺼지듯 회색으로 가라앉고 흔들림 */
+.evr-banner.is-spin .evr-bulbs i { animation-duration: .25s; }
+.evr-banner.is-win .evr-frame { animation: evrWinGlow .45s ease-in-out 5 alternate; }
+.evr-banner.is-win .evr-bulbs i { animation: evrBlink .12s steps(2, jump-none) infinite; background: #fffbe0; box-shadow: 0 0 9px 3px rgba(255, 221, 96, 1); }
+@keyframes evrWinGlow { from { box-shadow: 0 0 0 3px rgba(255, 216, 74, .9), 0 0 12px 4px rgba(255, 216, 74, .5); transform: scale(1); } to { box-shadow: 0 0 0 4px #fff3b0, 0 0 34px 12px rgba(255, 216, 74, .95); transform: scale(1.04); } }
+.evr-banner.is-lose .evr-frame { animation: evrLoseShake .5s ease-in-out 1; filter: grayscale(.75) brightness(.72); transition: filter .4s; }
+.evr-banner.is-lose .evr-bulbs i { animation: none; opacity: .25; box-shadow: none; }
+.evr-banner.is-lose .evr-reel span:last-child { color: #c9c3d6; }
+@keyframes evrLoseShake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
+
 /* ── 원판형 ── */
 .evr-wheel svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .35)); }
 .evr-wheel text { font-family: "Black Han Sans", "Noto Sans KR", sans-serif; }
 .evr-rot { transform-box: view-box; transform-origin: 150px 150px; }
 .evr-wheel .evr-slice.is-hit { animation: evrHit .3s steps(2, jump-none) 5; }
 @keyframes evrHit { 0% { filter: brightness(1.35); } 100% { filter: brightness(1); } }
+.evr-wheel.is-win svg { animation: evrWheelWin .45s ease-in-out 5 alternate; }
+@keyframes evrWheelWin { from { filter: drop-shadow(0 0 6px rgba(255, 216, 74, .6)); transform: scale(1); } to { filter: drop-shadow(0 0 22px rgba(255, 216, 74, 1)); transform: scale(1.05); } }
+.evr-wheel.is-lose svg { filter: grayscale(.8) brightness(.75) drop-shadow(0 6px 12px rgba(0, 0, 0, .35)); animation: evrLoseShake .5s ease-in-out 1; transition: filter .4s; }

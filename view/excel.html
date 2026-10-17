@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../css/help_ui.css?202506221531">
     <link rel="stylesheet" href="../css/rocket_setting.css?202610172300">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
-    <link rel="stylesheet" href="../css/event_roulette.css?202610171200">
+    <link rel="stylesheet" href="../css/event_roulette.css?202610181200">
 
     <script src="../customjs/global.js?202506031446"></script>
     <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
@@ -1116,6 +1116,7 @@
                                         <div class="rocket-test-btns">
                                           <button type="button" class="btn" data-rocket-test="charge">에너지 충전</button>
                                           <button type="button" class="btn" data-rocket-test="full">충전 완료</button>
+                                          <button type="button" class="btn" data-rocket-test="small">도전 금액 미만 후원</button>
                                           <button type="button" class="btn" data-rocket-test="lose">도전 실패</button>
                                           <button type="button" class="btn" data-rocket-test="win">도전 성공</button>
                                           <button type="button" class="btn" data-rocket-test="end">회차 종료</button>
@@ -1204,11 +1205,14 @@
                                           <p class="setup-txt">알림음</p>
                                           <div class="setup-item">
                                             <select class="form-control rocket-select d-inline-block" id="rocketChime">
+                                              <option value="machine">룰렛 머신 (기본)</option>
                                               <option value="dingdong">띵동</option>
                                               <option value="fanfare">빠밤</option>
                                               <option value="pop">뿅</option>
                                             </select>
-                                            <button type="button" class="btn rocket-btn-sub" data-rocket-hear="chime">들어보기</button>
+                                            <button type="button" class="btn rocket-btn-sub" data-rocket-hear="chime">성공 들어보기</button>
+                                            <button type="button" class="btn rocket-btn-sub" data-rocket-hear="chime-lose">실패 들어보기</button>
+                                            <p class="rocket-help">룰렛 머신: 충전 때 동전 소리, 100%면 준비 음, 도전 때 레버를 당기고 릴이 돌다 멈춰요. 성공은 잭팟 팡파르, 실패는 내려가는 '와-와' 소리예요.</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list" id="rocketVoiceRow">
@@ -1257,7 +1261,7 @@
                                           <ol class="rocket-steps">
                                             <li><b>1</b>에너지 100% 뒤 지정 BJ에게 <span id="rocketStepMin">도전 금액</span> 이상 후원</li>
                                             <li><b>2</b>3 · 2 · 1 카운트다운 동안 룰렛이 돌아요</li>
-                                            <li><b>3</b>성공 칸에 멈추면 성공, 아니면 실패 연출</li>
+                                            <li><b>3</b>성공 칸에 멈추면 성공, 아니면 실패 연출 뒤 룰렛은 사라져요</li>
                                           </ol>
                                           <p class="rocket-help" id="rocketWheelHelp"></p>
                                         </div>
@@ -1440,8 +1444,8 @@
     <script src="../customjs/team.js?202506141400"></script>
     <script src="../customjs/preset.js?2505191239"></script>
     <script src="../customjs/excel.js?202512291902"></script>
-    <script src="../pages/event_roulette.js?202610171200"></script>
-    <script src="../customjs/rocket.js?202610172300"></script>
+    <script src="../pages/event_roulette.js?202610181200"></script>
+    <script src="../customjs/rocket.js?202610181200"></script>
 
 </body>
 

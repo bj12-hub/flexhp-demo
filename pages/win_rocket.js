@@ -25,7 +25,7 @@ const DEFAULT_OPTIONS = {
     land: { on: true, text: "{BJ} 성공! 당첨 금액 {당첨금액}" },
   },
   sound: "chime",
-  chime: "dingdong",
+  chime: "machine", // machine(룰렛 머신, 기본) · dingdong · fanfare · pop
   rate: 1,
   volume: 70,
   fx: { count: true, launch: true, fail: true },
@@ -306,10 +306,22 @@ function speak(text) {
 }
 
 // 이벤트 알림은 소리로만: 알림음 또는 알림 음성(문구를 읽는다). 화면에는 글자를 띄우지 않는다.
+// 알림음 '룰렛 머신'(pages/event_roulette.js EventRoulette.sound): 충전 동전 · 도전 레버 · 실패 와-와 · 성공 잭팟
+const machineOn = () => OPT.sound === "chime" && OPT.chime === "machine" && typeof EventRoulette !== "undefined" && !!EventRoulette.sound;
+function machine(name, arg) {
+  if (typeof EventRoulette === "undefined" || !EventRoulette.sound) return;
+  EventRoulette.sound.setVolume(vol());
+  EventRoulette.sound[name](arg);
+}
+const MACHINE_ALERT = { charge: "coin", throw: "lever", fail: "fail", land: "jackpot" };
+function chime(kind) {
+  if (machineOn()) machine(MACHINE_ALERT[kind] || "coin");
+  else (CHIMES[OPT.chime] || CHIMES.dingdong)();
+}
 function alertEvent(kind, e) {
   const t = OPT.tpl && OPT.tpl[kind];
   if (!t || !t.on) return;
-  if (OPT.sound === "chime") (CHIMES[OPT.chime] || CHIMES.dingdong)();
+  if (OPT.sound === "chime") chime(kind);
   else if (OPT.sound === "voice") speak(fill(t.text, e));
 }
 
@@ -338,7 +350,7 @@ function rouletteFor(e, w) {
   const slices = slicesFor(e.winRate || S.winRate);
   const key = [theme, slices, w.winName, w.loseName].join("|");
   const box = $id("evRoulette");
-  box.className = `ev-roulette is-${EventRoulette.kindOf(theme)}${box.classList.contains("show") ? " show" : ""}`;
+  box.className = `ev-roulette is-${EventRoulette.kindOf(theme)}${box.classList.contains("show") ? " show" : ""}${box.classList.contains("hide") ? " hide" : ""}`;
   if (!roulette || key !== rouletteKey) {
     roulette = EventRoulette.create(box, { theme, slices, winName: w.winName, loseName: w.loseName });
     rouletteKey = key;
@@ -359,21 +371,33 @@ async function spinInside(e) {
   const win = e.result === "WIN";
   const r = rouletteFor(e, w);
   r.idle();
-  $id("evRoulette").classList.add("show");
-  await sleep(200);
-  await r.spin(win, w.time, w.sound === "on" ? FX.tick : null);
+  // 도전(에너지 100% 뒤 도전 금액 이상 후원)일 때만 룰렛이 튀어나온다
+  const box = $id("evRoulette");
+  box.classList.remove("hide");
+  retrigger(box, "show");
+  await sleep(350);
+  // 룰렛 소리: 모터가 돌고 칸마다 카지노 음, 멈출 때 철컥
+  const reelSound = w.sound === "on";
+  if (reelSound) machine("reel", w.time);
+  await r.spin(win, w.time, reelSound ? () => machine("tick") : null);
+  if (reelSound) machine("stop");
   resultAt = performance.now();
   resultHold = w.hold * 1000;
   if (w.voice) speak(`${win ? w.winName : w.loseName}!`);
 }
-// 결과 표시 시간만큼은 룰렛을 남겨 둔다
+// 결과 표시 시간만큼 남겨 둔 뒤 룰렛이 사라진다
 async function hideWheel() {
   if (resultAt) {
     const left = resultHold - (performance.now() - resultAt);
     if (left > 0) await sleep(left);
   }
   resultAt = 0;
-  $id("evRoulette").classList.remove("show");
+  const box = $id("evRoulette");
+  if (!box.classList.contains("show")) return;
+  box.classList.remove("show");
+  box.classList.add("hide");
+  await sleep(450);
+  box.classList.remove("hide");
 }
 
 // ─────────────── 연출 ───────────────
@@ -481,7 +505,10 @@ async function onArmed(e) {
   applyRound(Object.assign(roundOf(e), { totalAmount: e.totalAmount, status: "ARMED", throwCount: 0 }));
   Logo.slosh = 0.8;
   render(true);
-  if (OPT.sound === "chime") (CHIMES[OPT.chime] || CHIMES.dingdong)();
+  if (OPT.sound === "chime") {
+    if (machineOn()) machine("ready");
+    else (CHIMES[OPT.chime] || CHIMES.dingdong)();
+  }
   await sleep(1000);
 }
 
@@ -493,7 +520,9 @@ async function onThrow(e) {
   ov.classList.add("busy");
   render(true);
   alertEvent("throw", e);
-  if (OPT.fx.count) FX.power();
+  // 위젯 안 룰렛 소리가 나면 모터 소리가 겹치지 않게 충전음은 뺀다
+  const w = wheelOf(e);
+  if (OPT.fx.count && !(w.on && w.where === "inside" && w.sound === "on")) FX.power();
   await Promise.all([spinInside(e), countdown()]);
   if (e.result === "WIN") await igniteSuccess(e);
   else await igniteFail(e);
@@ -524,7 +553,8 @@ async function igniteSuccess(e) {
   const colors = ["#ff024a", "#00fff6", "#ffffff", "#ffd54a"];
   sparks(220, 220, colors, 90, 12);
   confetti(220, 250, colors, 140, 9);
-  if (OPT.fx.launch) FX.land();
+  // 알림음이 룰렛 머신이면 성공 알림(잭팟)이 팡파르를 대신한다
+  if (OPT.fx.launch && !(machineOn() && OPT.tpl.land && OPT.tpl.land.on)) FX.land();
   alertEvent("land", e);
   await sleep(4800);
   // 당첨 금액은 방송 후원 기준이라 성공해도 그대로 이어진다
@@ -738,6 +768,14 @@ function testThrow(win) {
   }
   enqueue(e);
 }
+// 도전 금액 미만 후원(테스트): 룰렛은 돌지 않는다. 충전 중이면 에너지에, 충전 완료 뒤면 당첨 금액에만 더해진다
+function testSmall() {
+  const p = projected();
+  if (p.status === "DONE") return;
+  const amount = Math.max(1, Math.floor(p.min / 10));
+  if (p.status === "ARMED") enqueue(Object.assign(testBase(amount), { type: ROCKET_TYPE.PROGRESS, kind: "SKIP", totalAmount: p.total }));
+  else testFill(amount);
+}
 // 회차 끝내기(테스트): 다음 회차로 넘어간다(당첨 금액은 그대로)
 function testEnd() {
   const p = projected();
@@ -763,6 +801,7 @@ function runTest(kind) {
   else if (kind === "lose") testThrow(false);
   else if (kind === "win") testThrow(true);
   else if (kind === "end") testEnd();
+  else if (kind === "small") testSmall();
   else if (kind === "auto") {
     testFill(5000);
     testFill(null);
@@ -922,7 +961,12 @@ function startPreview() {
     } else if (m.type === "rocket:test") {
       runTest(String(m.kind || ""));
     } else if (m.type === "rocket:hear") {
-      if (m.what === "voice") {
+      if (m.what === "chime" && OPT.chime === "machine") {
+        machine("demo", true); // 레버 → 릴 → 멈춤 → 잭팟
+      } else if (m.what === "chime-lose") {
+        if (OPT.chime === "machine") machine("demo", false);
+        else (CHIMES[OPT.chime] || CHIMES.dingdong)();
+      } else if (m.what === "voice") {
         speak(fill(OPT.tpl.charge.text, { sponsorNickname: "도도쭈", bjNickname: "BJ A", amount: 5000 }));
       } else {
         (CHIMES[OPT.chime] || CHIMES.dingdong)();

@@ -144,5 +144,124 @@
     };
   }
 
-  root.EventRoulette = { create, THEMES, ORDER, DEFAULT, kindOf, themeOf };
+  // ── 룰렛 머신 소리(파일 없이 브라우저에서 만든다) ──
+  // 알림음 '룰렛 머신': 동전(충전) · 준비(100%) · 레버(도전) · 릴(회전 중 모터 + 칸마다 카지노 음) · 멈춤 · 잭팟(성공) · 실패
+  const sound = (function () {
+    let ctx = null;
+    let volume = 0.7;
+    let step = 0;
+    const NOTES = [1047, 1319, 1568, 2093, 1568, 1319];
+    function ac() {
+      if (volume <= 0) return null;
+      try {
+        ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+        if (ctx.state === "suspended") ctx.resume();
+        return ctx;
+      } catch (e) {
+        return null;
+      }
+    }
+    function tone(freq, at, dur, type, gain, slideTo) {
+      const a = ac();
+      if (!a) return;
+      const t0 = a.currentTime + at;
+      const o = a.createOscillator();
+      const g = a.createGain();
+      o.type = type || "sine";
+      o.frequency.setValueAtTime(freq, t0);
+      if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(Math.max(gain * volume, 0.0002), t0 + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g).connect(a.destination);
+      o.start(t0);
+      o.stop(t0 + dur + 0.05);
+    }
+    function noise(at, dur, from, to, type, gain) {
+      const a = ac();
+      if (!a) return;
+      const t0 = a.currentTime + at;
+      const len = Math.max(1, Math.floor(a.sampleRate * dur));
+      const buf = a.createBuffer(1, len, a.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      const src = a.createBufferSource();
+      const f = a.createBiquadFilter();
+      const g = a.createGain();
+      src.buffer = buf;
+      f.type = type;
+      f.frequency.setValueAtTime(from, t0);
+      f.frequency.exponentialRampToValueAtTime(to, t0 + dur);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(Math.max(gain * volume, 0.0002), t0 + Math.min(0.03, dur / 3));
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      src.connect(f).connect(g).connect(a.destination);
+      src.start(t0);
+    }
+    const s = {
+      setVolume(v) {
+        volume = clamp(Number(v) || 0, 0, 1);
+      },
+      // 충전: 동전 떨어지는 소리
+      coin() {
+        tone(1976, 0, 0.08, "square", 0.07);
+        tone(2637, 0.07, 0.26, "triangle", 0.14);
+        noise(0.05, 0.22, 7000, 9500, "highpass", 0.05);
+      },
+      // 에너지 100%: 올라가는 아르페지오 + 종소리
+      ready() {
+        [523, 659, 784, 1047, 1319, 1568].forEach((f, i) => tone(f, i * 0.06, 0.24, "triangle", 0.14));
+        [1047, 1319, 1568].forEach((f) => tone(f, 0.38, 0.9, "sine", 0.07));
+      },
+      // 도전: 레버 당기는 소리(쿵 + 톱니)
+      lever() {
+        noise(0, 0.2, 900, 120, "lowpass", 0.35);
+        tone(110, 0, 0.26, "sine", 0.3, 55);
+        for (let i = 0; i < 7; i++) tone(2400 - i * 130, 0.18 + i * 0.04, 0.025, "square", 0.05);
+      },
+      // 릴이 도는 동안 모터 소리
+      reel(seconds) {
+        tone(70, 0, Math.max(0.5, seconds), "sawtooth", 0.035, 140);
+        noise(0, Math.max(0.5, seconds), 600, 2400, "bandpass", 0.03);
+      },
+      // 칸이 바뀔 때마다 카지노 음
+      tick() {
+        const f = NOTES[step++ % NOTES.length];
+        tone(f, 0, 0.06, "square", 0.045);
+        tone(f * 2, 0, 0.03, "sine", 0.03);
+      },
+      // 멈춤: 철컥 + 딩
+      stop() {
+        noise(0, 0.12, 1400, 200, "lowpass", 0.3);
+        tone(90, 0, 0.18, "sine", 0.28, 60);
+        tone(1568, 0.08, 0.5, "triangle", 0.12);
+      },
+      // 성공: 팡파르 + 쏟아지는 동전 + 반짝임
+      jackpot() {
+        [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.09, 0.3, "square", 0.08));
+        [1047, 1319, 1568, 2093].forEach((f) => tone(f, 0.4, 1.2, "triangle", 0.08));
+        for (let i = 0; i < 26; i++) tone(1800 + Math.random() * 1600, 0.45 + i * 0.06 + Math.random() * 0.03, 0.12, "triangle", 0.055);
+        noise(0.4, 1.4, 5000, 9000, "highpass", 0.05);
+      },
+      // 실패: 내려가는 '와-와-와-와앙'
+      fail() {
+        [392, 370, 349].forEach((f, i) => tone(f, i * 0.32, 0.3, "sawtooth", 0.07, f * 0.97));
+        tone(330, 0.96, 0.95, "sawtooth", 0.08, 220);
+        noise(0.96, 0.6, 400, 150, "lowpass", 0.05);
+      },
+      // 들어보기: 레버 → 릴 → 멈춤 → 결과
+      demo(win, seconds) {
+        const sec = seconds || 2.4;
+        const n = Math.round(sec * 9);
+        s.lever();
+        setTimeout(() => s.reel(sec), 250);
+        for (let k = 0; k < n; k++) setTimeout(s.tick, 250 + sec * 1000 * (1 - Math.pow(1 - k / n, 1 / 3)));
+        setTimeout(s.stop, 300 + sec * 1000);
+        setTimeout(win ? s.jackpot : s.fail, 550 + sec * 1000);
+      },
+    };
+    return s;
+  })();
+
+  root.EventRoulette = { create, THEMES, ORDER, DEFAULT, kindOf, themeOf, sound };
 })(window);

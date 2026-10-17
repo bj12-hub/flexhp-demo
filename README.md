@@ -3,6 +3,7 @@
 FlexTV 도우미를 서버 없이 볼 수 있는 미리보기예요. 첫 화면은 채팅창이고, 왼쪽 메뉴로 각 페이지를 열 수 있어요.
 
 - 도우미: https://bj12-hub.github.io/flexhp-demo/
+- FLEXTV 이벤트 안내: https://bj12-hub.github.io/flexhp-demo/event/
 - 엑셀방송 › FLEXTV 이벤트 탭: https://bj12-hub.github.io/flexhp-demo/view/excel.html#tab-rocket
 - FLEXTV 이벤트 위젯만: https://bj12-hub.github.io/flexhp-demo/pages/rocket/preview
 

@@ -389,8 +389,10 @@ async function runRocketRoulette(data) {
       bgm.play().catch(() => {});
     } catch (e) {}
   }
+  // 도전(에너지 100% 뒤 도전 금액 이상 후원)일 때만 튀어나와 돌고, 결과를 보여 준 뒤 사라진다
+  layer.classList.remove("hide");
   layer.classList.add("show");
-  await wait(200);
+  await wait(350);
   await roulette.spin(win, seconds);
   if (w.voice && typeof g_url_tts === "string" && g_url_tts) {
     try {
@@ -401,12 +403,14 @@ async function runRocketRoulette(data) {
   }
   await wait(hold * 1000);
   layer.classList.remove("show");
+  layer.classList.add("hide");
   if (bgm) {
     try {
       bgm.pause();
     } catch (e) {}
   }
-  await wait(350);
+  await wait(450);
+  layer.classList.remove("hide");
 }
 
 function show_noti_popup(_data, bgmObj = null) {
