@@ -72,16 +72,25 @@ html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
 /* ── 회차 · 당첨 금액(맨 위): 당첨 금액은 방송 후원 × 비율이라 후원마다 금색 숫자가 올라가고, 금액이 있으면 '누적' ── */
 .prize { position: absolute; left: 22px; right: 22px; top: 14px; z-index: 6; height: 64px; display: flex; align-items: center; gap: 10px; padding: 0 16px 0 8px; border-radius: 20px;
   background: rgba(12, 10, 24, .86); border: 3px solid rgba(255, 213, 74, .55); box-shadow: 0 8px 24px rgba(0, 0, 0, .4); }
-.pz-round { flex: none; padding: 4px 12px 5px; border-radius: 14px; background: linear-gradient(90deg, var(--pink), #ff4d7e); font-family: var(--display); font-size: 28px; line-height: 1.1; color: #fff; }
-.pz-k { flex: none; font-weight: 900; font-size: 24px; color: rgba(255, 255, 255, .78); }
-.pz-v { flex: 1; min-width: 0; text-align: right; font-family: var(--display); font-weight: 400; font-size: 42px; line-height: 1.1; color: #ffd54a; font-variant-numeric: tabular-nums; white-space: nowrap;
-  display: inline-block; transform-origin: right center; }
+.pz-round { flex: none; padding: 4px 11px 5px; border-radius: 14px; background: linear-gradient(90deg, var(--pink), #ff4d7e); font-family: var(--display); font-size: 26px; line-height: 1.1; color: #fff; }
+.pz-k { flex: none; font-weight: 900; font-size: 21px; color: rgba(255, 255, 255, .78); }
+/* 금액: 숫자는 크게, 단위(렉스)는 작게 밑줄에 맞춘다. 자릿수가 늘면 숫자를 한 단계씩 줄이고(data-len),
+   그래도 넘치면 win_rocket.js fitPrize 가 칸에 맞게 줄인다 */
+.pz-v { flex: 1; min-width: 0; display: flex; justify-content: flex-end; align-items: center; }
+.pz-amt { flex: none; display: inline-flex; align-items: baseline; gap: 4px; white-space: nowrap; color: #ffd54a; transform-origin: right center; }
+.pz-num { display: inline-block; font-family: var(--display); font-weight: 400; font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; transform-origin: right center; }
+.pz-unit { font-family: var(--display); font-weight: 400; font-size: 20px; line-height: 1; opacity: .85; }
+.prize[data-len="7"] .pz-num { font-size: 34px; }
+.prize[data-len="8"] .pz-num { font-size: 30px; }
+.prize[data-len="9"] .pz-num { font-size: 26px; }
+.prize[data-len="7"] .pz-unit, .prize[data-len="8"] .pz-unit, .prize[data-len="9"] .pz-unit { font-size: 18px; }
 .prize.carry .pz-k { color: #ffd54a; }
-.pz-v.bump { animation: robump .5s cubic-bezier(.2, 1.5, .4, 1) 1; }
+.pz-num.bump { animation: robump .5s cubic-bezier(.2, 1.5, .4, 1) 1; }
 .pz-round.flip { animation: pzflip .6s ease-out 1; }
 @keyframes pzflip { 0% { transform: rotateX(0); } 50% { transform: rotateX(90deg); } 100% { transform: rotateX(0); } }
 .ov.boom .prize { border-color: #ffd54a; box-shadow: 0 0 30px rgba(255, 213, 74, .7); }
-.prize.done .pz-v { color: rgba(255, 255, 255, .7); }
+.prize.done .pz-amt { color: rgba(255, 255, 255, .7); }
+.prize.done .pz-unit { display: none; }
 
 /* 성공한 회차의 엑셀이 끝나길 기다리거나 이번 방송의 회차가 끝났을 때: 로고 · 숫자를 흐리게 */
 .lg-stage, .readout { transition: opacity .5s, filter .5s; }

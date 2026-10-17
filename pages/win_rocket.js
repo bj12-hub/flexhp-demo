@@ -121,14 +121,26 @@ function setReadout() {
   requestAnimationFrame(step);
 }
 
-// 회차 · 당첨 금액: 금액이 바뀌면 숫자가 올라가고, 길면 칸에 맞게 줄인다
+// 회차 · 당첨 금액: 금액이 바뀌면 숫자가 올라간다. 자릿수(백만 · 천만 · 억)마다 숫자 크기를 한 단계씩 줄이고(data-len),
+// 그래도 칸보다 길면 칸에 맞게 줄인다
 let shownPrize = null;
 let pzAnim = 0;
+const digitsOf = (n) => String(Math.max(0, Math.floor(Number(n) || 0))).length;
+function sizePrize(n) {
+  const d = digitsOf(n);
+  $id("prize").dataset.len = d <= 6 ? "6" : d >= 9 ? "9" : String(d);
+}
 function fitPrize() {
-  const el = $id("pzValue");
-  el.style.transform = "";
-  const k = el.scrollWidth > el.clientWidth ? el.clientWidth / el.scrollWidth : 1;
-  if (k < 1) el.style.transform = `scale(${k.toFixed(3)})`;
+  const amt = $id("pzAmt");
+  amt.style.transform = "";
+  const room = $id("pzValue").clientWidth;
+  const w = amt.offsetWidth;
+  if (room > 0 && w > room) amt.style.transform = `scale(${(room / w).toFixed(3)})`;
+}
+function showPrize(n) {
+  $id("pzNum").textContent = fmt(n);
+  $id("pzUnit").textContent = S.unit;
+  fitPrize();
 }
 function setPrize(animate) {
   const done = S.status === "DONE";
@@ -142,33 +154,33 @@ function setPrize(animate) {
     if (animate) retrigger(round, "flip");
   }
   $id("pzLabel").textContent = done ? "" : S.prize > 0 ? "누적" : "당첨";
-  const el = $id("pzValue");
   if (done) {
     pzAnim += 1;
     shownPrize = null;
-    el.textContent = "종료";
+    $id("prize").dataset.len = "6";
+    $id("pzNum").textContent = "종료";
     fitPrize();
     return;
   }
   const to = S.prize;
+  // 크기는 도착할 금액으로 정한다(숫자가 올라가는 중에 글자 크기가 바뀌지 않게)
+  sizePrize(to);
   if (!animate || shownPrize === null || !S.active || to === shownPrize) {
     pzAnim += 1;
     shownPrize = to;
-    el.textContent = money(to);
-    fitPrize();
+    showPrize(to);
     return;
   }
   const from = shownPrize;
   const t0 = performance.now();
   const token = (pzAnim += 1);
   shownPrize = to;
-  retrigger(el, "bump");
+  retrigger($id("pzNum"), "bump");
   const step = (t) => {
     if (token !== pzAnim) return;
     const k = Math.min(1, (t - t0) / 1200);
     const e = 1 - Math.pow(1 - k, 3);
-    el.textContent = money(from + (to - from) * e);
-    fitPrize();
+    showPrize(from + (to - from) * e);
     if (k < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
