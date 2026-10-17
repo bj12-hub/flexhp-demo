@@ -1,19 +1,19 @@
 // FlexTV 도우미 · FLEXTV 이벤트 OBS 위젯 (내부 이름은 rocket: 주소 /pages/rocket · 소켓 'rocket' · API /api/pages/rocket)
 // 서버(RocketService)가 보내는 socket.io 'rocket' 이벤트를 받은 순서대로 연출한다.
 // 추첨은 서버가 하고, 여기서는 결과를 받아 3 · 2 · 1 → 실패 / 성공을 보여 준다.
-// 방송 화면에는 FLEXTV 로고(메인 이미지) · 목표 · 남은 양과 맨 위 회차 · (누적) 당첨 금액만 보여 준다.
+// 방송 화면에는 FLEXTV 로고(메인 이미지) · 목표 · 남은 양과 맨 위 회차 · 당첨 금액만 보여 준다.
 // 작은 안내 글자는 방송에서 읽히지 않아 넣지 않는다.
-// 회차: 엑셀 회차와 같고 한 방송에 최대 10회차. 당첨 없이 끝난 회차의 금액은 다음 회차에 쌓인다(누적).
-// 성공한 회차는 그 엑셀이 끝날 때까지 다음 회차를 열지 않는다(WAIT: 로고를 흐리게).
+// 당첨 금액: 이번 방송 지정 BJ 후원 전체 × 비율(기본 7%), 후원마다 올라가고 성공해도 줄지 않는다(새 방송이면 0부터).
+// 회차: 엑셀 회차와 같고 한 방송에 최대 10회차. 성공한 회차는 그 엑셀이 끝날 때까지 다음 회차를 열지 않는다(WAIT: 로고를 흐리게).
 //  /pages/rocket/{key}     실제 방송(프리셋 키)
 //  /pages/rocket/preview   도우미 설정 탭 미리보기: 부모 창이 postMessage 로 설정 · 테스트를 보낸다(서버 연결 없음)
 axios.defaults.withCredentials = true;
 
 const ROCKET_TYPE = {
-  PROGRESS: "390", // 에너지 충전 (kind FUEL) · 충전 완료 뒤 도전 금액 미달 (kind SKIP)
+  PROGRESS: "390", // 에너지 충전 (kind FUEL) · 충전 완료 뒤 도전 금액 미달 (kind SKIP) · 다음 회차 대기 중 후원 (kind WAIT)
   ARMED: "391", // 에너지 100% · 충전 완료
   THROW: "392", // 도전 + 결과(result WIN | LOSE)
-  ROUND_ENDED: "393", // 회차 종료(당첨 없이 끝나 누적 · 성공 회차의 엑셀 종료 · 새 방송)
+  ROUND_ENDED: "393", // 회차 종료(당첨 없이 종료 · 성공 회차의 엑셀 종료 · 새 방송)
 };
 
 // 알림 문구(tpl)는 화면에 쓰지 않고, 알림 음성을 고르면 읽어 준다
@@ -62,11 +62,13 @@ const S = {
   status: "FUELING", // FUELING · ARMED | WAIT(성공한 회차의 엑셀 진행 중) · DONE(방송의 회차 끝)
   throwCount: 0,
   winRate: 5,
-  base: 0, // 회차 기본 당첨 금액(FLEXTV 운영)
-  carry: 0, // 앞 회차에서 넘어온 금액
-  prize: 0, // 이번 회차 당첨 금액 = base + carry
-  unit: "원",
+  sessionTotal: 0, // 이번 방송 지정 BJ 후원 합계
+  prizeRate: 7, // 당첨 금액 비율(%, FLEXTV 운영)
+  prize: 0, // 당첨 금액 = sessionTotal × prizeRate%
+  unit: "렉스",
 };
+// 서버(RocketService::prizeOf)와 같은 계산: 소수 둘째 자리 비율, 소수점 아래 버림
+const prizeOf = (total, rate) => Math.floor((Math.max(0, Number(total) || 0) * Math.round((Number(rate) || 0) * 100)) / 10000);
 const bjNames = {};
 
 // ─────────────── 화면 크기 · 표시 ───────────────
@@ -131,14 +133,15 @@ function fitPrize() {
 function setPrize(animate) {
   const done = S.status === "DONE";
   $id("prize").classList.toggle("done", done);
-  $id("prize").classList.toggle("carry", !done && S.carry > 0);
+  // 당첨 금액은 방송 후원이 쌓인 만큼이라 금액이 있으면 '누적'으로 보여 준다
+  $id("prize").classList.toggle("carry", !done && S.prize > 0);
   const round = $id("pzRound");
   const roundText = `${S.roundNo}회차`;
   if (round.textContent !== roundText) {
     round.textContent = roundText;
     if (animate) retrigger(round, "flip");
   }
-  $id("pzLabel").textContent = done ? "" : S.carry > 0 ? "누적" : "당첨";
+  $id("pzLabel").textContent = done ? "" : S.prize > 0 ? "누적" : "당첨";
   const el = $id("pzValue");
   if (done) {
     pzAnim += 1;
@@ -255,7 +258,6 @@ const FX = {
   count: () => tone(880, 0, 0.12, "square", 0.08),
   land: () => [659, 784, 988, 1319].forEach((f, i) => tone(f, i * 0.11, 0.4, "triangle", 0.2)),
   tick: () => tone(1700, 0, 0.03, "square", 0.04),
-  carry: () => [784, 988, 1175, 1568, 1976].forEach((f, i) => tone(f, i * 0.08, 0.22, "triangle", 0.16)),
   power: () => tone(180, 0, 3.1, "sawtooth", 0.06, 900),
   glitch: () => {
     for (let i = 0; i < 7; i++) tone(200 + Math.random() * 900, i * 0.09, 0.06, "square", 0.09);
@@ -433,25 +435,32 @@ function applyRound(r) {
   if (r.minAmount != null) S.min = Number(r.minAmount);
   if (r.status) S.status = r.status;
   if (r.throwCount != null) S.throwCount = Number(r.throwCount);
-  if (r.basePrize != null) S.base = Number(r.basePrize);
-  if (r.carryAmount != null) S.carry = Number(r.carryAmount);
+  if (r.sessionTotal != null) S.sessionTotal = Number(r.sessionTotal);
+  if (r.prizeRate != null) S.prizeRate = Number(r.prizeRate);
   if (r.prizeAmount != null) S.prize = Number(r.prizeAmount);
   if (r.prizeUnit) S.unit = r.prizeUnit;
 }
 // 후원 이벤트에 실려 오는 회차 값(회차 번호 · 목표 · 당첨 금액)
-const roundOf = (e) => ({ roundNo: e.roundNo, maxRounds: e.maxRounds, goalAmount: e.goalAmount, minAmount: e.minAmount, basePrize: e.basePrize, carryAmount: e.carryAmount, prizeAmount: e.prizeAmount, prizeUnit: e.prizeUnit });
+const roundOf = (e) => ({ roundNo: e.roundNo, maxRounds: e.maxRounds, goalAmount: e.goalAmount, minAmount: e.minAmount, sessionTotal: e.sessionTotal, prizeRate: e.prizeRate, prizeAmount: e.prizeAmount, prizeUnit: e.prizeUnit });
 
 async function onProgress(e) {
+  if (e.kind === "WAIT") {
+    // 다음 회차를 기다리는 중 · 방송 회차가 끝난 뒤 후원: 에너지는 그대로, 당첨 금액만 올라간다
+    applyRound(Object.assign(roundOf(e), { status: e.status }));
+    render(true);
+    await sleep(500);
+    return;
+  }
   applyRound(roundOf(e));
   if (e.kind === "SKIP") {
-    render();
+    render(true);
     await sleep(500);
     return;
   }
   S.total = Number(e.totalAmount);
   S.status = "FUELING";
   Logo.slosh = 0.8;
-  render();
+  render(true);
   alertEvent("charge", e);
   await sleep(800);
 }
@@ -459,7 +468,7 @@ async function onProgress(e) {
 async function onArmed(e) {
   applyRound(Object.assign(roundOf(e), { totalAmount: e.totalAmount, status: "ARMED", throwCount: 0 }));
   Logo.slosh = 0.8;
-  render();
+  render(true);
   if (OPT.sound === "chime") (CHIMES[OPT.chime] || CHIMES.dingdong)();
   await sleep(1000);
 }
@@ -470,7 +479,7 @@ async function onThrow(e) {
   S.throwCount = Number(e.throwNo) || S.throwCount + 1;
   if (e.winRate) S.winRate = Number(e.winRate);
   ov.classList.add("busy");
-  render();
+  render(true);
   alertEvent("throw", e);
   if (OPT.fx.count) FX.power();
   await Promise.all([spinInside(e), countdown()]);
@@ -506,7 +515,8 @@ async function igniteSuccess(e) {
   if (OPT.fx.launch) FX.land();
   alertEvent("land", e);
   await sleep(4800);
-  applyRound(e.next || { roundNo: Math.min(S.roundNo + 1, S.maxRounds), totalAmount: 0, status: S.roundNo >= S.maxRounds ? "DONE" : "WAIT", carryAmount: 0, prizeAmount: S.base });
+  // 당첨 금액은 방송 후원 기준이라 성공해도 그대로 이어진다
+  applyRound(e.next || { roundNo: Math.min(S.roundNo + 1, S.maxRounds), totalAmount: 0, status: S.roundNo >= S.maxRounds ? "DONE" : "WAIT" });
   S.total = 0;
   S.throwCount = 0;
   ov.classList.remove("boom");
@@ -514,29 +524,15 @@ async function igniteSuccess(e) {
   render(true);
 }
 
-// 회차 종료: 에너지가 빠지고 남은 양이 목표로 돌아간다.
-// 당첨 없이 끝나 누적되면(carried) 회차 번호가 넘어가고 당첨 금액이 금색으로 올라간다.
+// 회차 종료: 에너지가 빠지고 남은 양이 목표로 돌아가며 회차 번호가 넘어간다(당첨 금액은 그대로, 새 방송이면 0)
 async function onRoundEnded(e) {
-  const before = S.prize;
   applyRound(e.next || { roundNo: S.roundNo + 1, totalAmount: 0, status: "FUELING" });
   S.total = 0;
   S.throwCount = 0;
   if (!e.next || !e.next.status) S.status = "FUELING";
   Logo.slosh = 1;
-  const carried = Number(e.carried) > 0 && S.status === "FUELING";
-  render(carried);
-  if (!carried) {
-    await sleep(1600);
-    return;
-  }
-  const add = S.prize - before;
-  if (add > 0) {
-    $id("pzAdd").textContent = `+${fmt(add)}`;
-    retrigger($id("pzAdd"), "go");
-  }
-  retrigger($id("prize"), "flash");
-  if (OPT.fx.launch) FX.carry();
-  await sleep(2400);
+  render(true);
+  await sleep(1600);
 }
 
 // ─────────────── 꽃가루 · 불꽃 (캔버스) ───────────────
@@ -665,12 +661,15 @@ async function drain() {
 const TEST_DONORS = ["도도쭈", "새벽감성", "밤톨게임", "고양이집사", "별빛토끼"];
 let testDonor = 0;
 function projected() {
-  if (!P) P = { roundNo: S.roundNo, total: S.total, goal: S.goal, min: S.min, status: S.status, throwCount: S.throwCount, carry: S.carry, prize: S.prize };
+  if (!P) P = { roundNo: S.roundNo, total: S.total, goal: S.goal, min: S.min, status: S.status, throwCount: S.throwCount, sessionTotal: S.sessionTotal };
   return P;
 }
+const prizeFields = (p) => ({ sessionTotal: p.sessionTotal, prizeRate: S.prizeRate, prizeAmount: prizeOf(p.sessionTotal, S.prizeRate), prizeUnit: S.unit });
+// 후원 하나: 방송 후원 합계에 더하고(당첨 금액이 올라감) 이벤트 공통 값을 만든다
 function testBase(amount) {
   const p = projected();
-  return {
+  p.sessionTotal += amount;
+  return Object.assign({
     roundNo: p.roundNo,
     maxRounds: S.maxRounds,
     amount,
@@ -679,17 +678,13 @@ function testBase(amount) {
     sponsorNickname: TEST_DONORS[testDonor++ % TEST_DONORS.length],
     goalAmount: p.goal,
     minAmount: p.min,
-    basePrize: S.base,
-    carryAmount: p.carry,
-    prizeAmount: p.prize,
-    prizeUnit: S.unit,
     winRate: S.winRate,
-  };
+  }, prizeFields(p));
 }
-// 다음 회차(테스트). carry: 넘어가는 금액
-function testNext(p, carry, status) {
+// 다음 회차(테스트). 당첨 금액은 방송 후원 기준이라 그대로 이어진다
+function testNext(p, status) {
   const done = p.roundNo >= S.maxRounds;
-  return {
+  return Object.assign({
     roundNo: done ? S.maxRounds : p.roundNo + 1,
     maxRounds: S.maxRounds,
     status: done ? "DONE" : status,
@@ -697,11 +692,7 @@ function testNext(p, carry, status) {
     goalAmount: p.goal,
     minAmount: p.min,
     throwCount: 0,
-    basePrize: done ? 0 : S.base,
-    carryAmount: done ? 0 : carry,
-    prizeAmount: done ? 0 : S.base + carry,
-    prizeUnit: S.unit,
-  };
+  }, prizeFields(p));
 }
 function testFill(amount) {
   const p = projected();
@@ -730,19 +721,19 @@ function testThrow(win) {
   });
   if (win) {
     // 성공해도 다음 회차는 그 엑셀이 끝난 뒤 → WAIT
-    e.next = testNext(p, 0, "WAIT");
-    Object.assign(p, { roundNo: e.next.roundNo, total: 0, status: e.next.status, throwCount: 0, carry: 0, prize: e.next.prizeAmount });
+    e.next = testNext(p, "WAIT");
+    Object.assign(p, { roundNo: e.next.roundNo, total: 0, status: e.next.status, throwCount: 0 });
   }
   enqueue(e);
 }
-// 회차 끝내기(테스트): 당첨 없이 끝나면 당첨 금액이 다음 회차에 누적
+// 회차 끝내기(테스트): 다음 회차로 넘어간다(당첨 금액은 그대로)
 function testEnd() {
   const p = projected();
   if (p.status === "DONE") return;
-  const won = p.status === "WAIT"; // 성공한 회차의 엑셀 종료: 누적 없이 다음 회차 시작
-  const next = won ? testNext(Object.assign({}, p, { roundNo: p.roundNo - 1 }), 0, "FUELING") : testNext(p, p.prize, "FUELING");
-  enqueue({ type: ROCKET_TYPE.ROUND_ENDED, reason: "STREAMER", roundNo: won ? p.roundNo - 1 : p.roundNo, won, prizeAmount: p.prize, carried: won || next.status === "DONE" ? 0 : p.prize, next });
-  Object.assign(p, { roundNo: next.roundNo, total: 0, status: next.status, throwCount: 0, carry: next.carryAmount, prize: next.prizeAmount });
+  const won = p.status === "WAIT"; // 성공한 회차의 엑셀 종료: 대기하던 다음 회차 시작
+  const next = won ? testNext(Object.assign({}, p, { roundNo: p.roundNo - 1 }), "FUELING") : testNext(p, "FUELING");
+  enqueue({ type: ROCKET_TYPE.ROUND_ENDED, reason: "STREAMER", roundNo: won ? p.roundNo - 1 : p.roundNo, won, next });
+  Object.assign(p, { roundNo: next.roundNo, total: 0, status: next.status, throwCount: 0 });
 }
 function runTest(kind) {
   if (kind === "reset") {
@@ -782,8 +773,8 @@ function applyState(state) {
   applyOptions(settings.options);
   if (ev) {
     S.winRate = Number(ev.winRate) || S.winRate;
-    S.base = S.prize = Number(ev.prizeAmount) || 0;
-    S.unit = ev.prizeUnit || "원";
+    if (ev.prizeRate != null) S.prizeRate = Number(ev.prizeRate);
+    S.unit = ev.prizeUnit || "렉스";
     if (ev.maxRounds) S.maxRounds = Number(ev.maxRounds);
   }
   applyRound(state.round);
@@ -891,7 +882,7 @@ function startPreview() {
       applyOptions(m.options);
       if (m.event) {
         S.winRate = Number(m.event.winRate) || S.winRate;
-        S.base = Number(m.event.prizeAmount) || S.base;
+        if (m.event.prizeRate != null) S.prizeRate = Number(m.event.prizeRate);
         S.unit = m.event.prizeUnit || S.unit;
         if (m.event.maxRounds) S.maxRounds = Number(m.event.maxRounds);
       }
@@ -902,15 +893,15 @@ function startPreview() {
         shownLeft = null; // 목표를 바꾸면 숫자는 바로 바꾼다
       }
       if (m.minAmount) S.min = Number(m.minAmount);
-      // 회차 · 누적 금액은 처음과 서버 회차가 바뀌었을 때만(테스트로 바뀐 회차 유지). 미리보기는 늘 충전 중으로 보여 준다
-      const roundChanged = m.round && (!previewRound || previewRound.roundNo !== m.round.roundNo || previewRound.prizeAmount !== m.round.prizeAmount);
+      // 회차 · 당첨 금액은 처음과 서버 회차가 바뀌었을 때만(테스트로 바뀐 회차 유지). 미리보기는 늘 충전 중으로 보여 준다
+      const roundChanged = m.round && (!previewRound || previewRound.roundNo !== m.round.roundNo || previewRound.sessionTotal !== m.round.sessionTotal);
       if (m.round && !running && (!previewConfigured || roundChanged)) {
-        previewRound = { roundNo: m.round.roundNo, maxRounds: m.round.maxRounds, basePrize: m.round.basePrize, carryAmount: m.round.carryAmount, prizeAmount: m.round.prizeAmount };
+        previewRound = { roundNo: m.round.roundNo, maxRounds: m.round.maxRounds, sessionTotal: m.round.sessionTotal, prizeRate: m.round.prizeRate, prizeAmount: m.round.prizeAmount };
         applyRound(previewRound);
         if (S.status === "WAIT" || S.status === "DONE") S.status = "FUELING";
         shownPrize = null;
       } else if (!previewConfigured && !previewRound) {
-        S.prize = S.base;
+        S.prize = prizeOf(S.sessionTotal, S.prizeRate);
       }
       if (typeof m.sound === "boolean") soundOn = m.sound;
       previewConfigured = true;

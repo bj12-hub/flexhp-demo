@@ -27,12 +27,12 @@
 .rocket-status-foot .btn {padding:6px 18px}
 .rocket-status-btns {display:flex; flex-wrap:wrap; gap:8px}
 
-/* 이번 방송 회차(1 ~ 10): 성공 · 누적 · 진행 중 · 남은 회차 */
+/* 이번 방송 회차(1 ~ 10): 성공 · 당첨 없음 · 진행 중 · 남은 회차 */
 .rocket-rounds-head {display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:6px 12px; margin:18px 0 8px; font-size:13px; font-weight:700; color:#00FFF6}
 .rocket-rounds-legend {font-weight:400; color:#bbb}
 .rocket-rounds-legend i {display:inline-block; width:10px; height:10px; margin:0 4px 0 10px; border-radius:3px; vertical-align:-1px}
 .rocket-rounds-legend i.is-won {background-color:#ff024a}
-.rocket-rounds-legend i.is-carry {background-color:#ffd54a}
+.rocket-rounds-legend i.is-lost {background-color:#707070}
 .rocket-rounds-legend i.is-now {box-shadow:inset 0 0 0 2px #00FFF6}
 .rocket-rounds {display:grid; grid-template-columns:repeat(10, minmax(0, 1fr)); gap:6px; margin:0; padding:0; list-style:none}
 .rocket-rounds li {min-width:0; padding:6px 2px 7px; border-radius:8px; background-color:#2C3344; text-align:center; color:#707070}
@@ -40,10 +40,9 @@
 .rocket-rounds li span {display:block; overflow:hidden; font-size:11px; line-height:1.3; white-space:nowrap; text-overflow:ellipsis}
 .rocket-rounds li.is-won {background-color:rgba(255, 2, 74, .22); color:#fff}
 .rocket-rounds li.is-won span {color:#ff6b93}
-.rocket-rounds li.is-carry {background-color:rgba(255, 213, 74, .14); color:#fff}
-.rocket-rounds li.is-carry span {color:#ffd54a}
 .rocket-rounds li.is-now {box-shadow:inset 0 0 0 2px #00FFF6; color:#fff}
 .rocket-rounds li.is-now span {color:#00FFF6}
+.rocket-rounds li.is-lost {color:#fff}
 .rocket-rounds li.is-lost span {color:#bbb}
 @media (max-width: 760px) {
   .rocket-rounds {grid-template-columns:repeat(5, minmax(0, 1fr))}

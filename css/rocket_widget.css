@@ -69,7 +69,7 @@ html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
 .readout.done .ro-row.left .ro-v { animation: roglow 1.3s ease-in-out infinite; }
 @keyframes roglow { 0%, 100% { text-shadow: 0 0 0 transparent; } 50% { text-shadow: 0 0 18px var(--cyan); } }
 
-/* ── 회차 · 당첨 금액(맨 위): 누적되면 '누적'이 붙고 금색으로 숫자가 올라간다 ── */
+/* ── 회차 · 당첨 금액(맨 위): 당첨 금액은 방송 후원 × 비율이라 후원마다 금색 숫자가 올라가고, 금액이 있으면 '누적' ── */
 .prize { position: absolute; left: 22px; right: 22px; top: 14px; z-index: 6; height: 64px; display: flex; align-items: center; gap: 10px; padding: 0 16px 0 8px; border-radius: 20px;
   background: rgba(12, 10, 24, .86); border: 3px solid rgba(255, 213, 74, .55); box-shadow: 0 8px 24px rgba(0, 0, 0, .4); }
 .pz-round { flex: none; padding: 4px 12px 5px; border-radius: 14px; background: linear-gradient(90deg, var(--pink), #ff4d7e); font-family: var(--display); font-size: 28px; line-height: 1.1; color: #fff; }
@@ -77,15 +77,9 @@ html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
 .pz-v { flex: 1; min-width: 0; text-align: right; font-family: var(--display); font-weight: 400; font-size: 42px; line-height: 1.1; color: #ffd54a; font-variant-numeric: tabular-nums; white-space: nowrap;
   display: inline-block; transform-origin: right center; }
 .prize.carry .pz-k { color: #ffd54a; }
-.prize.flash { animation: pzflash 1.6s ease-out 1; }
-@keyframes pzflash { 0% { box-shadow: 0 0 0 0 rgba(255, 213, 74, .9); border-color: #ffd54a; } 30% { box-shadow: 0 0 34px 6px rgba(255, 213, 74, .75); border-color: #fff3b0; } 100% { box-shadow: 0 8px 24px rgba(0, 0, 0, .4); } }
 .pz-v.bump { animation: robump .5s cubic-bezier(.2, 1.5, .4, 1) 1; }
 .pz-round.flip { animation: pzflip .6s ease-out 1; }
 @keyframes pzflip { 0% { transform: rotateX(0); } 50% { transform: rotateX(90deg); } 100% { transform: rotateX(0); } }
-.pz-add { position: absolute; right: 18px; top: 66px; font-family: var(--display); font-size: 30px; color: #ffd54a; opacity: 0; pointer-events: none;
-  text-shadow: 0 2px 0 #1c1f3d, 0 0 14px rgba(255, 213, 74, .8); }
-.pz-add.go { animation: pzadd 1.6s ease-out 1; }
-@keyframes pzadd { 0% { opacity: 0; transform: translateY(16px) scale(.8); } 20% { opacity: 1; transform: translateY(0) scale(1.08); } 75% { opacity: 1; transform: translateY(-4px); } 100% { opacity: 0; transform: translateY(-10px); } }
 .ov.boom .prize { border-color: #ffd54a; box-shadow: 0 0 30px rgba(255, 213, 74, .7); }
 .prize.done .pz-v { color: rgba(255, 255, 255, .7); }
 

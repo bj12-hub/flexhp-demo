@@ -14,32 +14,35 @@
 
   // ─────────────── 가짜 데이터 ───────────────
   var member = { LOGINFLAG: "Y", NAME: "테스트 BJ", MID: "testbj", MEMBER_UID: 1, IMG_URL: "" };
-  var event = { id: 1, title: "FLEXTV 이벤트", winRate: 5, prizeAmount: 500000, prizeUnit: "원", maxRounds: 10, carryOver: true, startDate: "2026-11-01T00:00:00Z", endDate: "2026-12-31T15:00:00Z", status: "ACTIVE" };
-  function hist(roundNo, carry, extra) {
-    return Object.assign({ roundNo: roundNo, status: "ENDED", endReason: "EXCEL_END", basePrize: event.prizeAmount, carryAmount: carry, prizeAmount: event.prizeAmount + carry, totalAmount: 100000, throwCount: 6, winBjNickname: null, closed: true }, extra || {});
+  var event = { id: 1, title: "FLEXTV 이벤트", winRate: 5, prizeRate: 7, prizeUnit: "렉스", maxRounds: 10, startDate: "2026-11-01T00:00:00Z", endDate: "2026-12-31T15:00:00Z", status: "ACTIVE" };
+  // 당첨 금액 = 방송 후원 합계 × 7%(서버 RocketService::prizeOf 와 같은 계산)
+  function prizeOf(total, rate) { return Math.floor((Math.max(0, total) * Math.round(rate * 100)) / 10000); }
+  function hist(roundNo, extra) {
+    return Object.assign({ roundNo: roundNo, status: "ENDED", endReason: "EXCEL_END", prizeRate: event.prizeRate, prizeBasis: null, prizeAmount: null, totalAmount: 100000, throwCount: 6, winBjNickname: null, closed: true }, extra || {});
   }
-  // 1 · 2회차는 당첨 없이 끝나 3회차에 누적(500,000 + 1,000,000)
+  // 1 · 2회차는 당첨 없이 끝남. 이번 방송 후원 1,500,000렉스 → 당첨 금액 105,000렉스
   var rocket = {
     saved: true, goalAmount: 100000, minAmount: 1000, options: null,
-    session: { no: 1, rounds: [hist(1, 0), hist(2, 500000)] },
-    round: { sessionNo: 1, roundNo: 3, maxRounds: 10, status: "FUELING", totalAmount: 86500, goalAmount: 100000, minAmount: 1000, throwCount: 0, basePrize: 500000, carryAmount: 1000000, prizeAmount: 1500000, prizeUnit: "원", pending: false },
+    session: { no: 1, total: 1500000, rounds: [hist(1), hist(2)] },
+    round: { sessionNo: 1, roundNo: 3, maxRounds: 10, status: "FUELING", totalAmount: 86500, goalAmount: 100000, minAmount: 1000, throwCount: 0, pending: false },
   };
   var presets = {};
 
   function rocketState() {
     var r = rocket.round;
-    var open = r.pending ? [] : [Object.assign(hist(r.roundNo, r.carryAmount), { status: r.status, endReason: null, totalAmount: r.totalAmount, throwCount: r.throwCount, closed: false })];
+    var prize = { sessionTotal: rocket.session.total, prizeRate: event.prizeRate, prizeAmount: prizeOf(rocket.session.total, event.prizeRate), prizeUnit: event.prizeUnit };
+    var open = r.pending ? [] : [Object.assign(hist(r.roundNo), { status: r.status, endReason: null, totalAmount: r.totalAmount, throwCount: r.throwCount, closed: false })];
     return {
       event: event,
       settings: { saved: rocket.saved, goalAmount: rocket.goalAmount, minAmount: rocket.minAmount, options: rocket.options },
-      session: { no: rocket.session.no, maxRounds: event.maxRounds, rounds: rocket.session.rounds.concat(open) },
-      round: rocket.round,
+      session: { no: rocket.session.no, maxRounds: event.maxRounds, total: rocket.session.total, rounds: rocket.session.rounds.concat(open) },
+      round: Object.assign({}, r, prize),
     };
   }
-  function nextRound(roundNo, carry) {
+  // 다음 회차(아직 행이 없음). 당첨 금액은 방송 후원 기준이라 그대로 이어진다
+  function nextRound(roundNo) {
     var done = roundNo > event.maxRounds;
-    var base = done ? 0 : event.prizeAmount;
-    return { sessionNo: rocket.session.no, roundNo: Math.min(roundNo, event.maxRounds), maxRounds: event.maxRounds, status: done ? "DONE" : "FUELING", totalAmount: 0, goalAmount: rocket.goalAmount || 100000, minAmount: rocket.minAmount || 1000, throwCount: 0, basePrize: base, carryAmount: done ? 0 : carry, prizeAmount: done ? 0 : base + carry, prizeUnit: event.prizeUnit, pending: true };
+    return { sessionNo: rocket.session.no, roundNo: Math.min(roundNo, event.maxRounds), maxRounds: event.maxRounds, status: done ? "DONE" : "FUELING", totalAmount: 0, goalAmount: rocket.goalAmount || 100000, minAmount: rocket.minAmount || 1000, throwCount: 0, pending: true };
   }
   function ok(resultMap) { return { returnCode: 1, message: "ok", resultMap: Object.assign({}, resultMap || {}, { returnVal: 1 }) }; }
   function fail(message) { return { returnCode: 1, message: message, resultMap: { returnVal: 0 } }; }
@@ -69,13 +72,13 @@
     if (route === "/api/excel/rocket/endround") {
       var r = rocket.round;
       if (r.pending) return fail("지금 끝낼 회차가 없어요. 다음 후원이 들어오면 회차가 시작돼요.");
-      rocket.session.rounds.push(Object.assign(hist(r.roundNo, r.carryAmount), { endReason: "STREAMER", totalAmount: r.totalAmount, throwCount: r.throwCount }));
-      rocket.round = nextRound(r.roundNo + 1, event.carryOver ? r.prizeAmount : 0);
+      rocket.session.rounds.push(Object.assign(hist(r.roundNo), { endReason: "STREAMER", totalAmount: r.totalAmount, throwCount: r.throwCount }));
+      rocket.round = nextRound(r.roundNo + 1);
       return ok({ data: rocketState() });
     }
     if (route === "/api/excel/rocket/newsession") {
-      rocket.session = { no: rocket.session.no + 1, rounds: [] };
-      rocket.round = nextRound(1, 0);
+      rocket.session = { no: rocket.session.no + 1, total: 0, rounds: [] };
+      rocket.round = nextRound(1);
       return ok({ data: rocketState() });
     }
     return ok({ data: [], dataList: [] }); // 나머지는 빈 성공

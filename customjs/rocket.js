@@ -214,34 +214,35 @@ const RocketTab = (function () {
     });
   }
 
-  // 회차 끝내기: 진행 중인 회차는 당첨 없이 끝나 다음 회차에 누적, 성공한 회차는 닫고 다음 회차를 연다
+  // 회차 끝내기: 진행 중인 회차는 당첨 없이 끝내고, 성공한 회차는 닫고 다음 회차를 연다(당첨 금액은 그대로 이어짐)
   function endRound() {
     const ev = state && state.event;
     const round = state && state.round;
     if (!ev || !round) return;
-    const unit = ev.prizeUnit || "";
+    const unit = round.prizeUnit || ev.prizeUnit || "";
     let message;
     if (round.status === "WAIT") {
       message = `${round.roundNo - 1}회차는 성공했어요. 엑셀이 끝나면 자동으로 다음 회차가 시작되는데, 지금 바로 ${round.roundNo}회차를 시작할까요?`;
-    } else if (ev.carryOver && round.roundNo < (round.maxRounds || 10)) {
-      message = `당첨 없이 ${round.roundNo}회차를 끝낼까요? 당첨 금액 ${fmt(round.prizeAmount)}${unit}은 ${round.roundNo + 1}회차에 쌓여요.`;
+    } else if (round.roundNo < (round.maxRounds || 10)) {
+      message = `당첨 없이 ${round.roundNo}회차를 끝낼까요? 다음 후원부터 ${round.roundNo + 1}회차이고, 당첨 금액 ${fmt(round.prizeAmount)}${unit}(방송 후원의 ${ev.prizeRate}%)은 그대로 이어져요.`;
     } else {
-      message = `당첨 없이 ${round.roundNo}회차를 끝낼까요? 이번 방송의 마지막 회차라 당첨 금액이 넘어가지 않아요.`;
+      message = `당첨 없이 ${round.roundNo}회차를 끝낼까요? 이번 방송의 마지막 회차예요.`;
     }
     Message.confirm({ title: "회차 끝내기", message }, function () {
       return postRound("/api/excel/rocket/endround");
     });
   }
 
-  // 새 방송으로 시작: 다음 후원부터 1회차(쌓인 누적 금액은 넘어가지 않는다)
+  // 새 방송으로 시작: 다음 후원부터 1회차, 방송 후원(당첨 금액 기준)은 0부터 다시 쌓인다
   function newSession() {
     const ev = state && state.event;
     const round = state && state.round;
-    const carry = round && round.status !== "DONE" ? Number(round.carryAmount) || 0 : 0;
+    const session = (state && state.session) || {};
+    const unit = (ev && ev.prizeUnit) || "";
     const open = round && !round.pending;
     let message = "새 방송으로 시작할까요? 다음 후원부터 1회차예요.";
     if (open) message += ` 진행 중인 ${round.roundNo}회차는 당첨 없이 끝나요.`;
-    if (carry > 0) message += ` 쌓인 누적 금액 ${fmt(carry)}${(ev && ev.prizeUnit) || ""}은 새 방송으로 넘어가지 않아요.`;
+    if (Number(session.total) > 0) message += ` 이번 방송 후원 ${fmt(session.total)}${unit}(당첨 금액 ${fmt(round && round.prizeAmount)}${unit})은 0부터 다시 쌓여요.`;
     Message.confirm({ title: "새 방송으로 시작", message }, function () {
       return postRound("/api/excel/rocket/newsession");
     });
@@ -262,16 +263,14 @@ const RocketTab = (function () {
       let label = "";
       let title = `${i}회차`;
       if (r) {
-        title += ` · 당첨 금액 ${fmt(r.prizeAmount)}${unit}`;
         if (r.status === "WON") {
           cls = "is-won";
           label = r.winBjNickname || "성공";
-          title += ` · 성공${r.winBjNickname ? ` (${r.winBjNickname})` : ""}`;
+          title += ` · 성공${r.winBjNickname ? ` (${r.winBjNickname})` : ""} · 당첨 금액 ${fmt(r.prizeAmount)}${unit}(방송 후원 ${fmt(r.prizeBasis)}${unit}의 ${r.prizeRate}%)`;
         } else if (r.status === "ENDED") {
-          const carried = ev && ev.carryOver && r.endReason !== "NEW_SESSION" && i < max;
-          cls = carried ? "is-carry" : "is-lost";
-          label = carried ? "누적" : "종료";
-          title += carried ? " · 다음 회차에 누적" : " · 종료";
+          cls = "is-lost";
+          label = "당첨 없음";
+          title += " · 당첨 없이 종료";
         } else {
           cls = "is-now";
           label = r.status === "ARMED" ? "충전 완료" : "진행 중";
@@ -279,7 +278,6 @@ const RocketTab = (function () {
       } else if (round && round.pending && Number(round.roundNo) === i && round.status !== "DONE") {
         cls = "is-now";
         label = round.status === "WAIT" ? "대기" : "다음";
-        title += ` · 당첨 금액 ${fmt(round.prizeAmount)}${unit}`;
       }
       cells.push(`<li class="${cls}" title="${$("<i>").text(title).html().replace(/"/g, "&quot;")}"><b>${i}</b><span>${$("<i>").text(label).html() || "&nbsp;"}</span></li>`);
     }
@@ -317,7 +315,8 @@ const RocketTab = (function () {
     $("#rocketEventTitle").text(ev.title || "FLEXTV 이벤트");
     $("#rocketEventPeriod").text(`${kstText(ev.startDate)} ~ ${kstText(ev.endDate)}`);
     $("#rocketWinRate").text(`${ev.winRate}%`);
-    $("#rocketPrize").text(`${fmt(ev.prizeAmount)}${ev.prizeUnit || ""}`);
+    $("#rocketPrize").text(`방송 후원의 ${ev.prizeRate}%`);
+    $("#rocketPrizeRateText").text(ev.prizeRate);
 
     const n = Math.max(4, Math.min(24, Math.round(100 / (Number(ev.winRate) || 5))));
     $("#rocketSlices").text(`성공 1칸 · 실패 ${n - 1}칸 (성공 확률 ${ev.winRate}%)`);
@@ -327,10 +326,9 @@ const RocketTab = (function () {
       const max = round.maxRounds || ev.maxRounds || 10;
       const unit = round.prizeUnit || ev.prizeUnit || "";
       const done = round.status === "DONE";
-      const carry = Number(round.carryAmount) || 0;
       $("#rocketRoundNo").text(done ? `${max}회차 끝` : `${round.roundNo} / ${max}회차`);
       $("#rocketRoundPrize").text(done ? "-" : `${fmt(round.prizeAmount)}${unit}`);
-      $("#rocketCarry").text(done ? "" : carry > 0 ? `기본 ${fmt(round.basePrize)} + 누적 ${fmt(carry)}` : "누적 없음");
+      $("#rocketCarry").text(done ? "" : `이번 방송 후원 ${fmt(round.sessionTotal)}${unit} × ${round.prizeRate}%`);
       $("#rocketFuel").text(goal && !done ? `${fmt(round.totalAmount)} / ${fmt(goal)}렉스` : "-");
       $("#rocketRoundState").text(
         done ? "이번 방송 회차 끝" : round.status === "WAIT" ? "성공 · 엑셀이 끝나면 다음 회차" : round.pending ? "다음 후원부터 시작" : round.status === "ARMED" ? "충전 완료" : "에너지 충전 중"
@@ -450,7 +448,7 @@ const RocketTab = (function () {
         options: opt,
         goalAmount: parseAmount($("#rocketGoal").val()) || PREVIEW_GOAL,
         minAmount: parseAmount($("#rocketMin").val()) || PREVIEW_MIN,
-        event: ev ? { winRate: ev.winRate, prizeAmount: ev.prizeAmount, prizeUnit: ev.prizeUnit, maxRounds: ev.maxRounds } : null,
+        event: ev ? { winRate: ev.winRate, prizeRate: ev.prizeRate, prizeUnit: ev.prizeUnit, maxRounds: ev.maxRounds } : null,
         round: state && state.round && state.round.status !== "DONE" ? state.round : null,
         sound: $("#rocketPreviewSound").prop("checked"),
       },
