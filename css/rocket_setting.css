@@ -67,6 +67,8 @@
 /* 입력 */
 .rocket-tab .setup-item .form-control.rocket-amount {width:160px}
 .rocket-tab .setup-item select.form-control.rocket-select {width:140px; margin-right:8px}
+/* 알림음: '룰렛 머신 (기본)'이 잘리지 않게 */
+.rocket-tab #rocketChime.rocket-select {width:176px}
 .rocket-tab .setup-item .form-control.rocket-wide {width:60%; max-width:520px}
 .rocket-tab .rocket-names .form-control {width:140px}
 .rocket-tpl-row {display:flex; align-items:center; gap:12px; margin-bottom:10px}
