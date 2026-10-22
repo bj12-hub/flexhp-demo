@@ -18,9 +18,10 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/help_ui.css?202506221531">
-    <!-- FLEXTV 이벤트 룰렛(배너형 · 원판형) -->
+    <!-- FLEXTV 이벤트 룰렛(배너형) + 따로 있는 후원자 · 지정 BJ 이름표 -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
-    <link rel="stylesheet" href="../css/event_roulette.css?202610181200">
+    <link rel="stylesheet" href="../css/event_roulette.css?202610221700">
+    <link rel="stylesheet" href="../css/event_nametag.css?202610221700">
 
     <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
@@ -100,8 +101,16 @@
         text-align:center;
         text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     }
-    .ev-roulette-box.is-banner { width:440px; max-width:96vw; height:76px; --evr-h:76px; }
-    .ev-roulette-box.is-wheel { width:240px; height:218px; }
+    .ev-roulette-row {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        width:100%;
+        padding:0 8px;
+        box-sizing:border-box;
+    }
+    .ev-roulette-box.is-banner { flex:0 1 440px; width:440px; min-width:240px; height:76px; --evr-h:76px; }
 
     </style>
 
@@ -142,10 +151,14 @@
 
             </div>
 
-            <!-- FLEXTV 이벤트 룰렛 (win_info_tts.js showRocketRoulette) -->
+            <!-- FLEXTV 이벤트 룰렛 (win_info_tts.js showRocketRoulette): 룰렛 양옆에 따로 있는 이름표(왼쪽 후원자 · 오른쪽 지정 BJ) -->
             <div class="ev-roulette-layer" id="evRouletteLayer" aria-hidden="true">
                 <p class="ev-roulette-text"></p>
-                <div class="ev-roulette-box"></div>
+                <div class="ev-roulette-row">
+                    <span class="evn-tag is-donor" hidden></span>
+                    <div class="ev-roulette-box"></div>
+                    <span class="evn-tag is-bj" hidden></span>
+                </div>
             </div>
 
             <!-- roulette -->
@@ -167,8 +180,9 @@
 
     <!-- <script src="../win_info.js?240304"></script> -->
      <script src="../customjs/common.js?202512291902"></script>
-    <script src="../event_roulette.js?202610181200"></script>
-    <script src="../win_info_tts.js?202610181200"></script>
+    <script src="../event_roulette.js?202610221700"></script>
+    <script src="../event_nametag.js?202610221700"></script>
+    <script src="../win_info_tts.js?202610221700"></script>
     <script src="../roulette.js?040507"></script>
 
 </body>

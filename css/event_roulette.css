@@ -1,5 +1,5 @@
-/* FLEXTV 이벤트 룰렛(pages/event_roulette.js) — 배너형 3종 · 원판형 4종.
-   배너 높이는 부모가 --evr-h 로 정한다(기본 72px). 원판은 부모 크기에 맞춰 늘어난다. */
+/* FLEXTV 이벤트 룰렛(pages/event_roulette.js) — 배너형 3종. 후원자 · 지정 BJ 이름표는 따로(css/event_nametag.css).
+   배너 높이는 부모가 --evr-h 로 정한다(기본 72px). */
 .evr { position: relative; width: 100%; height: 100%; box-sizing: border-box; font-family: "Black Han Sans", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif; user-select: none; }
 .evr *, .evr *::before, .evr *::after { box-sizing: border-box; }
 
@@ -55,13 +55,3 @@
 .evr-banner.is-lose .evr-bulbs i { animation: none; opacity: .25; box-shadow: none; }
 .evr-banner.is-lose .evr-reel span:last-child { color: #c9c3d6; }
 @keyframes evrLoseShake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
-
-/* ── 원판형 ── */
-.evr-wheel svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .35)); }
-.evr-wheel text { font-family: "Black Han Sans", "Noto Sans KR", sans-serif; }
-.evr-rot { transform-box: view-box; transform-origin: 150px 150px; }
-.evr-wheel .evr-slice.is-hit { animation: evrHit .3s steps(2, jump-none) 5; }
-@keyframes evrHit { 0% { filter: brightness(1.35); } 100% { filter: brightness(1); } }
-.evr-wheel.is-win svg { animation: evrWheelWin .45s ease-in-out 5 alternate; }
-@keyframes evrWheelWin { from { filter: drop-shadow(0 0 6px rgba(255, 216, 74, .6)); transform: scale(1); } to { filter: drop-shadow(0 0 22px rgba(255, 216, 74, 1)); transform: scale(1.05); } }
-.evr-wheel.is-lose svg { filter: grayscale(.8) brightness(.75) drop-shadow(0 6px 12px rgba(0, 0, 0, .35)); animation: evrLoseShake .5s ease-in-out 1; transition: filter .4s; }

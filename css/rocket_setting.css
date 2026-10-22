@@ -86,10 +86,7 @@
 
 /* 룰렛 모양 (css/event_roulette.css 로 그린 작은 그림 + 이름) */
 .rocket-tab .setup-item .form-control.rocket-num {width:70px}
-.ev-theme-group {display:flex; align-items:flex-start; gap:14px; margin-bottom:12px}
-.ev-theme-kind {flex:none; width:52px; padding-top:30px; font-size:13px; font-weight:700; color:#bbb}
-.ev-themes {display:grid; grid-template-columns:repeat(3, 190px); gap:10px}
-.ev-themes.is-wheel {grid-template-columns:repeat(4, 120px)}
+.ev-themes {display:grid; grid-template-columns:repeat(3, 190px); gap:10px; margin-bottom:12px}
 .ev-theme {position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; margin:0; padding:12px 10px 10px; border:2px solid #2C3344; border-radius:10px; background-color:#1d2331; color:#fff; cursor:pointer; transition:border-color .15s}
 .ev-theme:hover {border-color:#707070}
 .ev-theme.is-on {border-color:#00FFF6}
@@ -97,19 +94,17 @@
 .ev-theme input:focus-visible ~ .ev-theme-pic {outline:2px solid #00FFF6; outline-offset:3px}
 .ev-theme-pic {display:block; width:168px; height:40px; --evr-h:40px}
 .ev-theme-pic .evr-reel span {font-size:15px}
-.ev-themes.is-wheel .ev-theme-pic {width:92px; height:84px}
 .ev-theme-name {font-size:13px; font-weight:700}
 .ev-theme-name em {margin-left:4px; padding:0 6px; border-radius:99px; background-color:#1faaa5; font-style:normal; font-size:11px}
-/* 미리 돌려보기 */
+/* 미리 돌려보기: 룰렛 + 양옆에 따로 있는 이름표(css/event_nametag.css) */
 .ev-try {display:flex; flex-direction:column; align-items:flex-start; gap:12px}
-.ev-try-stage {display:flex; align-items:center; justify-content:center; padding:18px; border-radius:10px; background:radial-gradient(260px 160px at 20% 80%, rgba(237, 0, 94, .22), transparent 70%), linear-gradient(160deg, #1b1630, #0e0c18 60%, #120e1c)}
-.ev-try-stage.is-banner {width:476px; height:112px; --evr-h:76px}
-.ev-try-stage.is-banner .evr {height:76px}
-.ev-try-stage.is-wheel {width:276px; height:254px}
+.ev-try-stage {display:flex; align-items:center; justify-content:center; gap:10px; max-width:100%; padding:18px; border-radius:10px; background:radial-gradient(260px 160px at 20% 80%, rgba(237, 0, 94, .22), transparent 70%), linear-gradient(160deg, #1b1630, #0e0c18 60%, #120e1c)}
+.ev-try-roulette {flex:0 1 360px; width:360px; min-width:220px; height:76px; --evr-h:76px}
+.ev-try-roulette .evr {height:76px}
+.ev-try-stage .evn-tag {max-width:120px}
 .ev-try .rocket-test-btns {margin-bottom:0}
 @media (max-width: 1200px) {
   .ev-themes {grid-template-columns:repeat(2, 190px)}
-  .ev-themes.is-wheel {grid-template-columns:repeat(2, 120px)}
 }
 
 /* 꺼진 묶음 */

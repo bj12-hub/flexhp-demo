@@ -18,9 +18,10 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/help_ui.css?202506221531">
-    <link rel="stylesheet" href="../css/rocket_setting.css?202610180600">
+    <link rel="stylesheet" href="../css/rocket_setting.css?202610221700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
-    <link rel="stylesheet" href="../css/event_roulette.css?202610181200">
+    <link rel="stylesheet" href="../css/event_roulette.css?202610221700">
+    <link rel="stylesheet" href="../css/event_nametag.css?202610221700">
 
     <script src="../customjs/global.js?202506031446"></script>
     <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
@@ -1260,7 +1261,7 @@
                                           </div>
                                           <ol class="rocket-steps">
                                             <li><b>1</b>에너지 100% 뒤 지정 BJ에게 <span id="rocketStepMin">도전 금액</span> 이상 후원</li>
-                                            <li><b>2</b>3 · 2 · 1 카운트다운 동안 룰렛이 돌아요</li>
+                                            <li><b>2</b>3 · 2 · 1 카운트다운 동안 후원 알림 위젯에 룰렛과 후원자 · 지정 BJ 이름표가 떠서 돌아요</li>
                                             <li><b>3</b>성공 칸에 멈추면 성공, 아니면 실패 연출 뒤 룰렛은 사라져요</li>
                                           </ol>
                                           <p class="rocket-help" id="rocketWheelHelp"></p>
@@ -1270,38 +1271,19 @@
                                         <div class="setup-item-list">
                                           <p class="setup-txt">룰렛 표시</p>
                                           <div class="setup-item">
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                              <input type="radio" id="rocketWheelSrc" name="rocketWheelWhere" class="custom-control-input" value="src">
-                                              <label class="custom-control-label" for="rocketWheelSrc">후원 알림 위젯(룰렛 후원)에서</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                              <input type="radio" id="rocketWheelInside" name="rocketWheelWhere" class="custom-control-input" value="inside">
-                                              <label class="custom-control-label" for="rocketWheelInside">FLEXTV 이벤트 위젯 안에서</label>
-                                            </div>
-                                            <p class="rocket-help" id="rocketWheelWhereHelp"></p>
+                                            <p class="rocket-value">후원 알림 위젯(룰렛 후원) 아래쪽 · 도전 때만</p>
+                                            <p class="rocket-help">FLEXTV 이벤트 위젯은 목표 UI만 늘 띄우고, 룰렛은 따로 지금 쓰는 후원 알림 위젯 아래쪽(기존 룰렛 자리)에 도전 후원이 들어올 때만 떠요. 룰렛 양옆에 후원자 · 지정 BJ 이름표가 함께 떠요. OBS에 후원 알림 위젯이 있어야 해요.</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list">
                                           <p class="setup-txt">룰렛 모양</p>
                                           <div class="setup-item">
-                                            <div class="ev-theme-group">
-                                              <span class="ev-theme-kind">배너형</span>
-                                              <div class="ev-themes" role="radiogroup" aria-label="룰렛 모양 · 배너형">
-                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="normal"><span class="ev-theme-pic" data-theme="normal"></span><span class="ev-theme-name">일반 <em>기본</em></span></label>
-                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="gold"><span class="ev-theme-pic" data-theme="gold"></span><span class="ev-theme-name">골드</span></label>
-                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="xmas"><span class="ev-theme-pic" data-theme="xmas"></span><span class="ev-theme-name">크리스마스</span></label>
-                                              </div>
+                                            <div class="ev-themes" role="radiogroup" aria-label="룰렛 모양">
+                                              <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="normal"><span class="ev-theme-pic" data-theme="normal"></span><span class="ev-theme-name">일반 <em>기본</em></span></label>
+                                              <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="gold"><span class="ev-theme-pic" data-theme="gold"></span><span class="ev-theme-name">골드</span></label>
+                                              <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="xmas"><span class="ev-theme-pic" data-theme="xmas"></span><span class="ev-theme-name">크리스마스</span></label>
                                             </div>
-                                            <div class="ev-theme-group">
-                                              <span class="ev-theme-kind">원판형</span>
-                                              <div class="ev-themes is-wheel" role="radiogroup" aria-label="룰렛 모양 · 원판형">
-                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="blue"><span class="ev-theme-pic" data-theme="blue"></span><span class="ev-theme-name">블루</span></label>
-                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="pink"><span class="ev-theme-pic" data-theme="pink"></span><span class="ev-theme-name">핑크</span></label>
-                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="yellow"><span class="ev-theme-pic" data-theme="yellow"></span><span class="ev-theme-name">옐로우</span></label>
-                                                <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="black"><span class="ev-theme-pic" data-theme="black"></span><span class="ev-theme-name">블랙</span></label>
-                                              </div>
-                                            </div>
-                                            <p class="rocket-help">배너형은 성공 · 실패 칸 이름이 빠르게 돌다가 결과에서 멈추고, 원판형은 오른쪽 바늘에 결과 칸이 멈춰요. 후원 알림 위젯 · FLEXTV 이벤트 위젯 어디에 띄워도 같은 모양이에요.</p>
+                                            <p class="rocket-help">성공 · 실패 칸 이름이 빠르게 돌다가 결과에서 멈춰요. 후원자 · 지정 BJ 이름표는 룰렛과 따로 양옆에 떠요.</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list">
@@ -1331,7 +1313,12 @@
                                           <p class="setup-txt">미리 돌려보기</p>
                                           <div class="setup-item">
                                             <div class="ev-try">
-                                              <div class="ev-try-stage" id="rocketWheelTry"></div>
+                                              <!-- 룰렛과 따로 있는 이름표(예시 닉네임) -->
+                                              <div class="ev-try-stage" id="rocketWheelStage">
+                                                <span class="evn-tag is-donor">도도쭈</span>
+                                                <div class="ev-try-roulette" id="rocketWheelTry"></div>
+                                                <span class="evn-tag is-bj">BJ A</span>
+                                              </div>
                                               <div class="rocket-test-btns">
                                                 <button type="button" class="btn" data-rocket-try="win">성공으로 돌려보기</button>
                                                 <button type="button" class="btn" data-rocket-try="lose">실패로 돌려보기</button>
@@ -1342,13 +1329,6 @@
                                             </div>
                                           </div>
                                         </div>
-                                        <div class="setup-item-list">
-                                          <p class="setup-txt">칸 나누기</p>
-                                          <div class="setup-item">
-                                            <p class="rocket-value" id="rocketSlices">-</p>
-                                            <p class="rocket-help">성공 확률(FLEXTV)에 맞춰 성공 1칸과 실패 칸으로 자동으로 나눠요. 칸 수는 바꿀 수 없어요.</p>
-                                          </div>
-                                        </div>
                                         <div class="setup-item-list" id="rocketWheelNamesRow">
                                           <p class="setup-txt">칸 이름</p>
                                           <div class="setup-item rocket-names">
@@ -1356,7 +1336,7 @@
                                             <span class="text-white ml-3 mr-2">실패</span><input type="text" id="rocketLoseName" class="form-control d-inline-block" maxlength="6">
                                           </div>
                                         </div>
-                                        <div class="setup-item-list" id="rocketWheelTextRow">
+                                        <div class="setup-item-list">
                                           <p class="setup-txt">룰렛 문구</p>
                                           <div class="setup-item">
                                             <input type="text" id="rocketWheelText" class="form-control rocket-wide" maxlength="40">
@@ -1444,8 +1424,9 @@
     <script src="../customjs/team.js?202506141400"></script>
     <script src="../customjs/preset.js?2505191239"></script>
     <script src="../customjs/excel.js?202512291902"></script>
-    <script src="../pages/event_roulette.js?202610181200"></script>
-    <script src="../customjs/rocket.js?202610181200"></script>
+    <script src="../pages/event_roulette.js?202610221700"></script>
+    <script src="../pages/event_nametag.js?202610221700"></script>
+    <script src="../customjs/rocket.js?202610221700"></script>
 
 </body>
 

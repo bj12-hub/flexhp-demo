@@ -1,0 +1,11 @@
+/* FLEXTV 이벤트 이름표(pages/event_nametag.js) — 룰렛과 따로 있는 요소. 룰렛 양옆에 놓는다.
+   왼쪽 후원자(핑크) · 오른쪽 지정 BJ(청록), FLEXTV 로고 색. 긴 이름은 … 로 줄인다. */
+.evn-tag { flex: none; box-sizing: border-box; display: block; max-width: 160px; height: 44px; padding: 0 15px; border: 3px solid #ffffff; border-radius: 999px; font-family: "Black Han Sans", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif; font-size: 21px; line-height: 38px; letter-spacing: .01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 3px 10px rgba(0, 0, 0, .45); transition: filter .4s; }
+.evn-tag[hidden] { display: none; }
+.evn-tag.is-donor { background: linear-gradient(180deg, #ff4f80, #ff024a 60%, #c8003b); color: #ffffff; text-shadow: 0 2px 0 rgba(80, 0, 28, .55); }
+.evn-tag.is-bj { background: linear-gradient(180deg, #8afffb, #00fff6 55%, #00c4bd); color: #181b2b; }
+
+/* 결과(EventNameTags.result): 성공이면 당첨 금액을 받는 BJ 이름표가 빛나고, 실패면 함께 가라앉는다 */
+.evn-win .evn-tag.is-bj { animation: evnWin .45s ease-in-out 5 alternate; }
+@keyframes evnWin { from { box-shadow: 0 0 0 2px rgba(255, 255, 255, .8), 0 0 10px 3px rgba(0, 255, 246, .5); } to { box-shadow: 0 0 0 3px #ffffff, 0 0 26px 9px rgba(0, 255, 246, .95); } }
+.evn-lose .evn-tag { filter: grayscale(.7) brightness(.75); }

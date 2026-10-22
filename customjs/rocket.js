@@ -18,7 +18,7 @@ const RocketTab = (function () {
     volume: 70,
     fx: { count: true, launch: true, fail: true },
     wheelOn: true,
-    wheelWhere: "src",
+    wheelWhere: "src", // 늘 후원 알림 위젯(FLEXTV 이벤트 위젯과 따로)
     wheelTheme: "normal",
     wheelTime: 4,
     wheelHold: 3,
@@ -66,9 +66,9 @@ const RocketTab = (function () {
 
   // 성공 확률(FLEXTV). 이벤트가 없으면 보기용 5%
   const winRate = () => Number(state && state.event && state.event.winRate) || 5;
-  const sliceCount = () => Math.max(4, Math.min(24, Math.round(100 / winRate())));
 
   // ─────────────── 룰렛 모양 · 미리 돌려보기 (pages/event_roulette.js) ───────────────
+  // 미리 돌려보기 양옆의 이름표(pages/event_nametag.js)는 룰렛과 따로 있는 예시('도도쭈' → 'BJ A')
   let tryRoulette = null;
   let tryKey = "";
   let trying = false;
@@ -76,19 +76,17 @@ const RocketTab = (function () {
     if (typeof EventRoulette === "undefined") return;
     tab().find(".ev-theme-pic").each(function () {
       const theme = this.getAttribute("data-theme");
-      const r = EventRoulette.create(this, { theme, slices: 8, winName: opt.winName, loseName: opt.loseName });
-      if (r.kind === "banner") r.idle(opt.winName);
+      EventRoulette.create(this, { theme, winName: opt.winName, loseName: opt.loseName }).idle(opt.winName);
     });
   }
   function renderTry(force) {
     if (typeof EventRoulette === "undefined" || trying) return;
-    const key = [opt.wheelTheme, sliceCount(), opt.winName, opt.loseName].join("|");
+    const key = [opt.wheelTheme, opt.winName, opt.loseName].join("|");
     if (!force && key === tryKey) return;
     tryKey = key;
-    const stage = document.getElementById("rocketWheelTry");
-    stage.className = "ev-try-stage is-" + EventRoulette.kindOf(opt.wheelTheme);
-    tryRoulette = EventRoulette.create(stage, { theme: opt.wheelTheme, slices: sliceCount(), winName: opt.winName, loseName: opt.loseName });
-    if (tryRoulette.kind === "banner") tryRoulette.idle(opt.winName);
+    tryRoulette = EventRoulette.create(document.getElementById("rocketWheelTry"), { theme: opt.wheelTheme, winName: opt.winName, loseName: opt.loseName });
+    tryRoulette.idle(opt.winName);
+    if (typeof EventNameTags !== "undefined") EventNameTags.result(document.getElementById("rocketWheelStage"), null);
   }
   function tryTick() {
     try {
@@ -118,6 +116,7 @@ const RocketTab = (function () {
       rs.reel(opt.wheelTime);
     }
     tryRoulette.spin(win, opt.wheelTime, rs ? rs.tick : sound ? tryTick : null).then(function () {
+      if (typeof EventNameTags !== "undefined") EventNameTags.result(document.getElementById("rocketWheelStage"), win);
       if (rs) {
         rs.stop();
         setTimeout(win ? rs.jackpot : rs.fail, 250);
@@ -315,7 +314,6 @@ const RocketTab = (function () {
       $("#rocketEventPeriod").text("");
       $("#rocketWinRate, #rocketPrize, #rocketRoundNo, #rocketRoundPrize, #rocketFuel, #rocketRoundState").text("-");
       $("#rocketCarry, #rocketThrows").text("");
-      $("#rocketSlices").text("-");
       $("#rocketRounds").empty();
       $("#btnRocketEndRound, #btnRocketNewSession").prop("disabled", true);
       showNotice("참여 방송은 FLEXTV가 정해요. 설정은 미리 저장해 둘 수 있어요.");
@@ -328,9 +326,6 @@ const RocketTab = (function () {
     $("#rocketWinRate").text(`${ev.winRate}%`);
     $("#rocketPrize").text(`방송 후원의 ${ev.prizeRate}%`);
     $("#rocketPrizeRateText").text(ev.prizeRate);
-
-    const n = Math.max(4, Math.min(24, Math.round(100 / (Number(ev.winRate) || 5))));
-    $("#rocketSlices").text(`성공 1칸 · 실패 ${n - 1}칸 (성공 확률 ${ev.winRate}%)`);
 
     if (round) {
       const goal = round.goalAmount || settings.goalAmount;
@@ -376,7 +371,6 @@ const RocketTab = (function () {
     if (slider) slider.noUiSlider.set(opt.volume);
     $("#rocketVolumeVal").val(opt.volume);
     $("#rocketWheelOn").prop("checked", !!opt.wheelOn);
-    $(`input[name=rocketWheelWhere][value=${opt.wheelWhere}]`).prop("checked", true);
     $(`input[name=rocketWheelTheme][value=${opt.wheelTheme}]`).prop("checked", true);
     $("#rocketWheelTime").val(opt.wheelTime);
     $("#rocketWheelHold").val(opt.wheelHold);
@@ -401,7 +395,7 @@ const RocketTab = (function () {
     });
     opt.volume = Number($("#rocketVolumeVal").val()) || 0;
     opt.wheelOn = $("#rocketWheelOn").prop("checked");
-    opt.wheelWhere = $("input[name=rocketWheelWhere]:checked").val() || DEFAULT_OPTIONS.wheelWhere;
+    opt.wheelWhere = DEFAULT_OPTIONS.wheelWhere;
     opt.wheelTheme = $("input[name=rocketWheelTheme]:checked").val() || DEFAULT_OPTIONS.wheelTheme;
     opt.wheelTime = parseSeconds($("#rocketWheelTime").val(), 2, 10, DEFAULT_OPTIONS.wheelTime);
     opt.wheelHold = parseSeconds($("#rocketWheelHold").val(), 1, 10, DEFAULT_OPTIONS.wheelHold);
@@ -424,12 +418,6 @@ const RocketTab = (function () {
     $("#rocketVoiceRow").toggle(voice);
     $("#rocketWheelBody").toggleClass("is-off", !opt.wheelOn);
     $("#rocketWheelHelp").text(opt.wheelOn ? "" : "룰렛을 쓰지 않으면 카운트다운이 끝날 때 위젯이 바로 결과를 보여 줘요.");
-    $("#rocketWheelTextRow").toggle(opt.wheelWhere === "src");
-    $("#rocketWheelWhereHelp").text(
-      opt.wheelWhere === "src"
-        ? "지금 쓰는 후원 알림 위젯 아래쪽(기존 룰렛 자리)에 룰렛 문구와 함께 떠요. OBS에 후원 알림 위젯이 있어야 해요."
-        : "FLEXTV 이벤트 위젯 안에 떠요(배너형은 로고 아래 띠, 원판형은 왼쪽 아래). OBS 소스는 이 위젯 하나면 돼요."
-    );
     tab().find(".ev-theme").each(function () {
       $(this).toggleClass("is-on", $(this).find("input").prop("checked"));
     });

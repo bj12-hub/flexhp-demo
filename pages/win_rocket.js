@@ -29,9 +29,8 @@ const DEFAULT_OPTIONS = {
   rate: 1,
   volume: 70,
   fx: { count: true, launch: true, fail: true },
-  wheelOn: true,
-  wheelWhere: "src",
-  wheelTheme: "normal", // 룰렛 모양: normal · gold · xmas(배너형) · blue · pink · yellow · black(원판형)
+  wheelOn: true, // 룰렛은 이 위젯이 아니라 후원 알림 위젯에서 돈다
+  wheelTheme: "normal", // 룰렛 모양(배너형): normal · gold · xmas
   wheelTime: 4, // 룰렛 회전 시간(초)
   wheelHold: 3, // 결과 표시 시간(초)
   wheelVoice: false, // 룰렛 결과 음성
@@ -325,8 +324,9 @@ function alertEvent(kind, e) {
   else if (OPT.sound === "voice") speak(fill(t.text, e));
 }
 
-// ─────────────── 룰렛(pages/event_roulette.js): 배너형 · 원판형 ───────────────
-const slicesFor = (winRate) => Math.max(4, Math.min(24, Math.round(100 / (Number(winRate) || 5))));
+// ─────────────── 룰렛: 이 위젯에는 띄우지 않는다 ───────────────
+// 이 위젯은 늘 떠 있는 목표 UI 다. 룰렛은 따로, 후원 알림 위젯(pages/info.html)에서 도전 때만 돈다.
+// 여기서는 그 룰렛이 멈출 때에 맞춰 결과 연출을 보여 주려고 기다리기만 한다.
 const clampNum = (v, a, b, d) => {
   const n = Math.round(Number(v));
   return Number.isFinite(n) ? Math.max(a, Math.min(b, n)) : d;
@@ -334,70 +334,24 @@ const clampNum = (v, a, b, d) => {
 // 이번 도전의 룰렛 설정: 서버가 보낸 값(e.wheel)이 있으면 그것, 없으면(미리보기) 탭 설정
 function wheelOf(e) {
   const w = Object.assign(
-    { on: OPT.wheelOn, where: OPT.wheelWhere, sound: OPT.wheelSound, theme: OPT.wheelTheme, time: OPT.wheelTime, hold: OPT.wheelHold, voice: OPT.wheelVoice, winName: OPT.winName, loseName: OPT.loseName },
+    { on: OPT.wheelOn, sound: OPT.wheelSound, theme: OPT.wheelTheme, time: OPT.wheelTime, hold: OPT.wheelHold, voice: OPT.wheelVoice, winName: OPT.winName, loseName: OPT.loseName, text: OPT.wheelText },
     (e && e.wheel) || {}
   );
   w.time = clampNum(w.time, 2, 10, DEFAULT_OPTIONS.wheelTime);
   w.hold = clampNum(w.hold, 1, 10, DEFAULT_OPTIONS.wheelHold);
   return w;
 }
-let roulette = null;
-let rouletteKey = "";
-let resultAt = 0;
-let resultHold = 0;
-function rouletteFor(e, w) {
-  const theme = EventRoulette.themeOf(w.theme);
-  const slices = slicesFor(e.winRate || S.winRate);
-  const key = [theme, slices, w.winName, w.loseName].join("|");
-  const box = $id("evRoulette");
-  box.className = `ev-roulette is-${EventRoulette.kindOf(theme)}${box.classList.contains("show") ? " show" : ""}${box.classList.contains("hide") ? " hide" : ""}`;
-  if (!roulette || key !== rouletteKey) {
-    roulette = EventRoulette.create(box, { theme, slices, winName: w.winName, loseName: w.loseName });
-    rouletteKey = key;
-  }
-  return roulette;
-}
-async function spinInside(e) {
+async function waitWheel(e) {
   const w = wheelOf(e);
-  resultAt = 0;
-  if (!w.on) {
-    await sleep(3400); // 카운트다운과 같은 길이
-    return;
+  // 미리보기: 부모 창(이벤트 안내 페이지)이 따로 그리는 룰렛 · 이름표를 같은 때 돌릴 수 있게 알린다
+  if (isPreview && window.parent !== window && w.on) {
+    window.parent.postMessage(
+      { type: "rocket:throw", result: e.result, sponsorNickname: e.sponsorNickname, bjNickname: e.bjNickname || bjNames[String(e.bjMemberId)] || "", amount: e.amount, wheel: w },
+      window.location.origin
+    );
   }
-  if (w.where !== "inside") {
-    await sleep(Math.max(3400, w.time * 1000 + 200)); // 후원 알림 위젯의 룰렛과 같은 때 결과를 보여 준다
-    return;
-  }
-  const win = e.result === "WIN";
-  const r = rouletteFor(e, w);
-  r.idle();
-  // 도전(에너지 100% 뒤 도전 금액 이상 후원)일 때만 룰렛이 튀어나온다
-  const box = $id("evRoulette");
-  box.classList.remove("hide");
-  retrigger(box, "show");
-  await sleep(350);
-  // 룰렛 소리: 모터가 돌고 칸마다 카지노 음, 멈출 때 철컥
-  const reelSound = w.sound === "on";
-  if (reelSound) machine("reel", w.time);
-  await r.spin(win, w.time, reelSound ? () => machine("tick") : null);
-  if (reelSound) machine("stop");
-  resultAt = performance.now();
-  resultHold = w.hold * 1000;
-  if (w.voice) speak(`${win ? w.winName : w.loseName}!`);
-}
-// 결과 표시 시간만큼 남겨 둔 뒤 룰렛이 사라진다
-async function hideWheel() {
-  if (resultAt) {
-    const left = resultHold - (performance.now() - resultAt);
-    if (left > 0) await sleep(left);
-  }
-  resultAt = 0;
-  const box = $id("evRoulette");
-  if (!box.classList.contains("show")) return;
-  box.classList.remove("show");
-  box.classList.add("hide");
-  await sleep(450);
-  box.classList.remove("hide");
+  // 룰렛을 쓰면 후원 알림 위젯의 룰렛이 멈추는 때, 안 쓰면 카운트다운이 끝나는 때 결과를 보여 준다
+  await sleep(w.on ? Math.max(3400, w.time * 1000 + 200) : 3400);
 }
 
 // ─────────────── 연출 ───────────────
@@ -520,13 +474,10 @@ async function onThrow(e) {
   ov.classList.add("busy");
   render(true);
   alertEvent("throw", e);
-  // 위젯 안 룰렛 소리가 나면 모터 소리가 겹치지 않게 충전음은 뺀다
-  const w = wheelOf(e);
-  if (OPT.fx.count && !(w.on && w.where === "inside" && w.sound === "on")) FX.power();
-  await Promise.all([spinInside(e), countdown()]);
+  if (OPT.fx.count) FX.power();
+  await Promise.all([waitWheel(e), countdown()]);
   if (e.result === "WIN") await igniteSuccess(e);
   else await igniteFail(e);
-  await hideWheel();
   ov.classList.remove("busy");
   render();
 }

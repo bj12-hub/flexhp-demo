@@ -103,13 +103,4 @@ html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
 .count.go { animation: countpop .8s ease-out; }
 @keyframes countpop { 0% { opacity: 0; transform: scale(1.8); } 22% { opacity: 1; transform: scale(1); } 78% { opacity: 1; } 100% { opacity: 0; transform: scale(.9); } }
 canvas.confetti { position: absolute; inset: 0; z-index: 8; pointer-events: none; }
-
-/* ── 룰렛(위젯 안, css/event_roulette.css): 배너형은 로고 아래 띠, 원판형은 왼쪽 아래 ── */
-/* 평소에는 보이지 않는다. 에너지 100% 뒤 도전 금액 이상 후원(도전)일 때만 튀어나와 돌고, 결과를 보여 준 뒤 사라진다 */
-.ev-roulette { position: absolute; z-index: 6; visibility: hidden; opacity: 0; pointer-events: none; }
-.ev-roulette.show { visibility: visible; animation: evrIn .5s cubic-bezier(.2, 1.5, .4, 1) both; }
-.ev-roulette.hide { visibility: visible; animation: evrOut .45s ease-in both; }
-@keyframes evrIn { 0% { opacity: 0; transform: translateY(26px) scale(.7); } 55% { opacity: 1; } 100% { opacity: 1; transform: none; } }
-@keyframes evrOut { 0% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(18px) scale(.85); } }
-.ev-roulette.is-banner { left: 22px; right: 22px; top: 408px; height: 76px; --evr-h: 76px; }
-.ev-roulette.is-wheel { left: 4px; top: 360px; width: 152px; height: 138px; }
+/* 룰렛은 이 위젯에 띄우지 않는다(후원 알림 위젯에서 따로 돈다) */
