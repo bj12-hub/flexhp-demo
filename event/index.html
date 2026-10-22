@@ -138,7 +138,9 @@
 
   /* 화면 */
   .figure { display: grid; gap: 10px; margin: 0; }
-  .figure img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+  .figure img, .figure video { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); }
+  .figure .more { font-size: 13px; color: var(--muted); }
+  .figure .more a { color: var(--cyan); }
   .figure figcaption { font-size: 14px; color: var(--muted); max-width: 70ch; }
   .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
 
@@ -255,8 +257,12 @@
       <p class="lead">위젯에는 FLEXTV 로고 · 목표 · 남은 양을 크게 보여 주고, 맨 위에 누적 당첨 금액 한 줄을 둬요(회차는 보여 주지 않아요). 방송에서 읽기 어려운 작은 글자는 넣지 않았어요. 목표 UI는 방송 내내 떠 있고, 룰렛은 목표 UI와 겹치지 않게 룰렛 칸(440 × 140)에서 도전 때만 따로 돌아요. 같은 프리셋에 주소가 셋 있어서, OBS에 '목표 UI'(440 × 660)와 '룰렛'(440 × 140)을 따로 두 소스로 넣으면 위치 · 크기를 각각 바꿀 수 있고, '하나로 쓰기'(440 × 800) 한 소스로 넣어도 돼요. 두 소스로 넣어도 목표 UI는 알림 소리, 룰렛은 룰렛 소리만 내서 소리가 겹치지 않아요.</p>
     </div>
     <figure class="figure">
-      <img src="media/broadcast.gif" alt="1280 × 720 방송 화면 오른쪽 위에 FLEXTV 이벤트 위젯이 놓인 녹화. 3회차 당첨 금액 105,000렉스가 후원마다 올라가고, 실패, 당첨 없이 회차 종료(4회차, 금액 그대로), 다시 충전 완료 뒤 성공, 5회차 대기로 이어진다." width="1280" height="720" loading="lazy">
-      <figcaption>방송 화면 녹화(반복). 후원마다 맨 위 당첨 금액이 올라가요(방송 후원 × 7%) → 실패 → 당첨 없이 회차 종료(4회차, 금액 그대로) → 성공 → 그 엑셀이 끝날 때까지 5회차 대기. 이 녹화는 예전 모습이에요(맨 위 회차 표시 · 성공 뒤 대기 · 위젯 안 룰렛). 지금은 목표 UI와 누적 당첨 금액만 늘 떠 있고, 성공하면 바로 0부터 다시 쌓이며, 룰렛은 위젯 아래 룰렛 칸에서 도전 때만 따로 돌아요.</figcaption>
+      <!-- 소리 있는 영상(처음엔 소리 꺼짐, 반복). 영상을 못 틀면 같은 장면의 GIF 를 보여 준다 -->
+      <video src="media/broadcast.mp4" width="1280" height="720" autoplay muted loop playsinline controls preload="metadata" aria-label="1280 × 720 방송 화면 녹화: 오른쪽 위 목표 UI 소스와 아래쪽 룰렛 소스. 에너지 충전, 충전 완료, 3 2 1과 함께 룰렛이 돌아 실패, 다시 도전해 성공하고 0부터 다시 충전한다.">
+        <img src="media/broadcast.gif" alt="1280 × 720 방송 화면 녹화: 오른쪽 위 목표 UI 소스와 아래쪽 룰렛 소스. 에너지 충전, 충전 완료, 3 2 1과 함께 룰렛이 돌아 실패, 다시 도전해 성공하고 0부터 다시 충전한다." width="1280" height="720" loading="lazy">
+      </video>
+      <figcaption>방송 화면 녹화(반복, 2026-10-22). 같은 프리셋의 목표 UI 소스(오른쪽 위)와 룰렛 소스(아래쪽)를 따로 놓은 예시예요. 후원마다 에너지와 맨 위 당첨 금액이 올라가요(지난 성공 뒤 후원 × 7%) → 충전 완료 → 3 · 2 · 1과 함께 룰렛이 돌아 실패(도도쭈 → BJ A) → 다시 도전해 성공(10글자 닉네임 별빛가득한밤하늘아래 → 엑셀방송최강댄서BJ) → 당첨 금액을 받고 바로 0부터 다시 충전. 영상의 소리를 켜면 '룰렛 머신' 소리(충전 동전 · 레버 · 릴 · 성공 잭팟 · 실패 '와-와')가 들려요.</figcaption>
+      <p class="more"><a href="media/broadcast.mp4" download>소리 있는 영상(MP4) 받기</a> · <a href="media/broadcast.gif" download>GIF 받기</a></p>
     </figure>
     <div class="two">
       <figure class="figure">

@@ -604,7 +604,9 @@ function stepParts() {
     p.y += p.vy;
     p.r += p.vr;
     ctx.save();
-    ctx.globalAlpha = Math.min(1, p.life / 30);
+    // 소스 경계(캔버스 가장자리) 28px 안쪽부터 흐려져서, 조각이 경계에서 툭 잘려 보이지 않게 한다
+    const edge = Math.min(p.x, cv.width - p.x, p.y, cv.height - p.y);
+    ctx.globalAlpha = Math.min(1, p.life / 30) * Math.max(0, Math.min(1, edge / 28));
     if (p.spark) {
       ctx.fillStyle = p.c;
       ctx.shadowColor = p.c;
