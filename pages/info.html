@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/help_ui.css?202506221531">
-    <!-- FLEXTV 이벤트 룰렛(배너형) + 따로 있는 후원자 · 지정 BJ 이름표 -->
+    <!-- FLEXTV 이벤트 룰렛(배너형) + 룰렛 위 문구의 후원자 · 지정 BJ 이름표(따로 있는 요소) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
     <link rel="stylesheet" href="../css/event_roulette.css?202610221700">
     <link rel="stylesheet" href="../css/event_nametag.css?202610221700">
@@ -101,16 +101,7 @@
         text-align:center;
         text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
     }
-    .ev-roulette-row {
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:10px;
-        width:100%;
-        padding:0 8px;
-        box-sizing:border-box;
-    }
-    .ev-roulette-box.is-banner { flex:0 1 440px; width:440px; min-width:240px; height:76px; --evr-h:76px; }
+    .ev-roulette-box.is-banner { width:440px; max-width:96vw; height:76px; --evr-h:76px; }
 
     </style>
 
@@ -151,14 +142,10 @@
 
             </div>
 
-            <!-- FLEXTV 이벤트 룰렛 (win_info_tts.js showRocketRoulette): 룰렛 양옆에 따로 있는 이름표(왼쪽 후원자 · 오른쪽 지정 BJ) -->
+            <!-- FLEXTV 이벤트 룰렛 (win_info_tts.js showRocketRoulette): 위 문구에 후원자 · 지정 BJ 이름표(event_nametag.js), 아래 룰렛 -->
             <div class="ev-roulette-layer" id="evRouletteLayer" aria-hidden="true">
                 <p class="ev-roulette-text"></p>
-                <div class="ev-roulette-row">
-                    <span class="evn-tag is-donor" hidden></span>
-                    <div class="ev-roulette-box"></div>
-                    <span class="evn-tag is-bj" hidden></span>
-                </div>
+                <div class="ev-roulette-box"></div>
             </div>
 
             <!-- roulette -->

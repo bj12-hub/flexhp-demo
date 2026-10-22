@@ -346,7 +346,7 @@ function show_noti_popup_roulette(_data, rouletteData, bgmObj = null) {
   pushNotiPop(_data, null, rouletteData);
 }
 
-// FLEXTV 이벤트 도전(392) → 이벤트 룰렛(배너형, pages/event_roulette.js)과 양옆의 후원자 · 지정 BJ 이름표(pages/event_nametag.js). 결과는 서버 값.
+// FLEXTV 이벤트 도전(392) → 이벤트 룰렛(배너형, pages/event_roulette.js)과 그 위 문구의 후원자 · 지정 BJ 이름표(pages/event_nametag.js). 결과는 서버 값.
 // 룰렛은 FLEXTV 이벤트 위젯(늘 떠 있는 목표 UI)과 따로 이 위젯에서만 돈다.
 // FLEXTV 이벤트 위젯의 3 · 2 · 1과 같은 때 돌도록 후원 알림 대기열을 거치지 않고 바로 띄운다(자리는 기존 룰렛처럼 알림 아래).
 // 도전이 연달아 오면 앞 룰렛이 끝난 뒤 차례로 돈다.
@@ -368,23 +368,24 @@ async function runRocketRoulette(data) {
   const loseName = w.loseName || "실패";
   const amount = parseInt(data.amount) || 0;
   const prize = numberWithCommas(parseInt(data.prizeAmount) || 0) + (data.prizeUnit || "");
-  layer.querySelector(".ev-roulette-text").textContent = String(w.text || "{닉네임}님 도전! 결과는?")
-    .replace("{닉네임}", data.sponsorNickname || "후원자")
-    .replace("{BJ}", data.bjNickname || "BJ")
-    .replace("{렉스}", numberWithCommas(amount))
-    .replace("{당첨금액}", prize);
+  // 룰렛 위 문구: {닉네임} → 후원자 이름표, {BJ} → 지정 BJ 이름표(pages/event_nametag.js)
+  const textEl = layer.querySelector(".ev-roulette-text");
+  const tags = typeof EventNameTags !== "undefined" ? EventNameTags : null;
+  if (tags) {
+    tags.caption(textEl, w.text, { donor: data.sponsorNickname, bj: data.bjNickname, amount: numberWithCommas(amount), prize });
+    tags.result(textEl, null);
+  } else {
+    textEl.textContent = String(w.text || "{닉네임}님 → {BJ} 도전! 결과는?")
+      .replace("{닉네임}", data.sponsorNickname || "후원자")
+      .replace("{BJ}", data.bjNickname || "BJ")
+      .replace("{렉스}", numberWithCommas(amount))
+      .replace("{당첨금액}", prize);
+  }
 
   const theme = EventRoulette.themeOf(w.theme);
   const box = layer.querySelector(".ev-roulette-box");
   box.className = "ev-roulette-box is-" + EventRoulette.kindOf(theme);
   const roulette = EventRoulette.create(box, { theme, winName, loseName });
-  // 이름표(룰렛과 따로): 왼쪽 후원자 · 오른쪽 지정 BJ. 닉네임이 비면 그쪽 이름표는 빠진다
-  const tagRow = layer.querySelector(".ev-roulette-row");
-  const tags = typeof EventNameTags !== "undefined" && tagRow ? EventNameTags : null;
-  if (tags) {
-    tags.set(tagRow, data.sponsorNickname, data.bjNickname);
-    tags.result(tagRow, null);
-  }
   const seconds = Math.max(2, Math.min(10, Math.round(Number(w.time) || 4)));
   const hold = Math.max(1, Math.min(10, Math.round(Number(w.hold) || 3)));
 
@@ -401,7 +402,7 @@ async function runRocketRoulette(data) {
   layer.classList.add("show");
   await wait(350);
   await roulette.spin(win, seconds);
-  if (tags) tags.result(tagRow, win);
+  if (tags) tags.result(textEl, win);
   if (w.voice && typeof g_url_tts === "string" && g_url_tts) {
     try {
       const a = new Audio(g_url_tts + encodeURIComponent(`${win ? winName : loseName}!`));

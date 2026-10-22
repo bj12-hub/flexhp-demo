@@ -1083,20 +1083,20 @@
                                       <dl class="rocket-facts">
                                         <div><dt>성공 확률</dt><dd id="rocketWinRate">-</dd></div>
                                         <div><dt>당첨 금액 비율</dt><dd id="rocketPrize">-</dd></div>
-                                        <div><dt>현재 회차</dt><dd id="rocketRoundNo">-</dd></div>
+                                        <div><dt>엑셀 회차(기록)</dt><dd id="rocketRoundNo">-</dd></div>
                                         <div class="is-prize"><dt>지금 당첨 금액</dt><dd id="rocketRoundPrize">-</dd><span class="rocket-carry" id="rocketCarry"></span></div>
                                         <div><dt>에너지</dt><dd id="rocketFuel">-</dd></div>
                                         <div><dt>상태</dt><dd id="rocketRoundState">-</dd><span class="rocket-carry" id="rocketThrows"></span></div>
                                       </dl>
-                                      <!-- 이번 방송의 회차(엑셀 회차와 같음): 성공 · 당첨 없음 · 진행 중 · 남은 회차 -->
+                                      <!-- 이번 방송 엑셀 회차 기록(위젯에는 나오지 않음): 성공 · 당첨 없음 · 진행 중 -->
                                       <div class="rocket-rounds-head">
-                                        <span>이번 방송 회차</span>
+                                        <span>이번 방송 엑셀 회차 기록</span>
                                         <span class="rocket-rounds-legend"><i class="is-won"></i>성공 <i class="is-lost"></i>당첨 없음 <i class="is-now"></i>진행 중</span>
                                       </div>
                                       <ol class="rocket-rounds" id="rocketRounds"></ol>
                                       <p class="rocket-warn" id="rocketNotice" style="display:none"></p>
                                       <div class="rocket-status-foot">
-                                        <p class="rocket-help">당첨 금액은 이번 방송에 지정 BJ에게 들어온 후원 전체의 <span id="rocketPrizeRateText">7</span>%예요. 후원마다 올라가고 성공해도 줄지 않아요(새 방송이면 0부터). 엑셀 회차마다 성공은 한 번, 한 방송 최대 <span id="rocketMaxRounds">10</span>회차예요.<br>성공 확률 · 당첨 금액 비율 · 회차 수 · 이벤트 기간은 FLEXTV가 정하고, 결과는 서버가 추첨해요.</p>
+                                        <p class="rocket-help">에너지와 당첨 금액(지난 성공 뒤 지정 BJ에게 들어온 후원 전체의 <span id="rocketPrizeRateText">7</span>%)은 엑셀 회차가 바뀌어도 그대로 이어지고, 성공하면 바로 0부터 다시 쌓여요(새 방송이어도 0부터). 한 엑셀 회차에 성공이 여러 번 나올 수 있어요. 회차는 기록으로만 남고 방송 위젯에는 나오지 않아요.<br>성공 확률 · 당첨 금액 비율 · 이벤트 기간은 FLEXTV가 정하고, 결과는 서버가 추첨해요.</p>
                                         <div class="rocket-status-btns">
                                           <button type="button" class="btn rocket-btn-sub" id="btnRocketEndRound" disabled>지금 회차 끝내기</button>
                                           <button type="button" class="btn rocket-btn-sub" id="btnRocketNewSession" disabled>새 방송으로 시작</button>
@@ -1112,7 +1112,7 @@
                                         <iframe id="rocketPreviewFrame" title="FLEXTV 이벤트 위젯 미리보기" src="../pages/rocket/preview"></iframe>
                                       </div>
                                       <div class="rocket-preview-test">
-                                        <p class="rocket-screen-note">방송 화면에는 <b>FLEXTV 로고 · 목표 · 남은 양</b>과 맨 위 <b>회차 · 당첨 금액</b>만 나와요. 당첨 금액은 방송 후원 전체의 일정 비율이라 후원이 들어올 때마다 올라가요.</p>
+                                        <p class="rocket-screen-note">방송 화면에는 <b>FLEXTV 로고 · 목표 · 남은 양</b>과 맨 위 <b>누적 당첨 금액</b>만 늘 나와요(회차는 나오지 않아요). 당첨 금액은 지난 성공 뒤 후원의 일정 비율이라 후원마다 올라가고, 성공하면 0부터 다시 쌓여요.</p>
                                         <p class="rocket-test-tit">미리보기 테스트 <span>(이 화면에서만 움직여요)</span></p>
                                         <div class="rocket-test-btns">
                                           <button type="button" class="btn" data-rocket-test="charge">에너지 충전</button>
@@ -1120,13 +1120,19 @@
                                           <button type="button" class="btn" data-rocket-test="small">도전 금액 미만 후원</button>
                                           <button type="button" class="btn" data-rocket-test="lose">도전 실패</button>
                                           <button type="button" class="btn" data-rocket-test="win">도전 성공</button>
-                                          <button type="button" class="btn" data-rocket-test="end">회차 종료</button>
                                           <button type="button" class="btn" data-rocket-test="auto">자동 재생</button>
                                           <button type="button" class="btn rocket-btn-sub" data-rocket-test="reset">처음으로</button>
                                         </div>
                                         <div class="custom-control custom-checkbox custom-control-inline rocket-sound-check">
                                           <input type="checkbox" class="custom-control-input" id="rocketPreviewSound" checked>
                                           <label class="custom-control-label" for="rocketPreviewSound">미리보기 소리</label>
+                                        </div>
+                                        <!-- 룰렛은 위젯과 따로: 미리보기에서 도전하면 후원 알림 위젯처럼 여기 따로 뜬다 -->
+                                        <p class="rocket-test-tit">후원 알림 위젯 · 룰렛 <span>(위젯과 따로, 도전 때만 떠요)</span></p>
+                                        <div class="ev-try-stage ev-preview-stage" id="rocketPreviewStage">
+                                          <p class="ev-try-caption" id="rocketPreviewCaption"></p>
+                                          <div class="ev-try-roulette" id="rocketPreviewWheel"></div>
+                                          <p class="ev-preview-idle">평소에는 비어 있어요. 위 '도전 실패' · '도전 성공'을 누르면 문구(후원자 → 지정 BJ)와 룰렛이 여기 떠요.</p>
                                         </div>
                                         <p class="rocket-test-tit">방송 화면(OBS) <span>(연결된 위젯에 보내요 · 기록은 남지 않아요)</span></p>
                                         <div class="rocket-test-btns">
@@ -1153,8 +1159,8 @@
                                         <p class="setup-txt">도전 금액</p>
                                         <div class="setup-item">
                                           <input type="text" id="rocketMin" class="form-control rocket-amount text-right d-inline-block" inputmode="numeric" autocomplete="off" placeholder="예) 1,000"> <span class="text-white ml-1 mr-2">렉스 이상</span>
-                                          <p class="rocket-help">에너지 100% 뒤 지정 BJ에게 이 금액 이상 후원하면 도전 1회(룰렛 1회)예요. 이보다 적은 후원은 룰렛을 돌리지 않고 당첨 금액(방송 후원)에만 더해져요. 방송 화면에는 나오지 않으니 채팅 공지 등으로 알려 주세요.</p>
-                                          <p class="rocket-warn">바꾼 금액은 다음 회차부터 적용돼요.</p>
+                                          <p class="rocket-help">에너지 100% 뒤 지정 BJ에게 이 금액 이상 후원하면 도전 1회(룰렛 1회)예요. 이보다 적은 후원은 룰렛을 돌리지 않고 당첨 금액에만 더해져요. 방송 화면에는 나오지 않으니 채팅 공지 등으로 알려 주세요.</p>
+                                          <p class="rocket-warn">바꾼 금액은 저장하면 바로 적용돼요(지금까지 쌓인 에너지 · 당첨 금액은 그대로).</p>
                                         </div>
                                       </div>
                                     </div>
@@ -1261,7 +1267,7 @@
                                           </div>
                                           <ol class="rocket-steps">
                                             <li><b>1</b>에너지 100% 뒤 지정 BJ에게 <span id="rocketStepMin">도전 금액</span> 이상 후원</li>
-                                            <li><b>2</b>3 · 2 · 1 카운트다운 동안 후원 알림 위젯에 룰렛과 후원자 · 지정 BJ 이름표가 떠서 돌아요</li>
+                                            <li><b>2</b>3 · 2 · 1 카운트다운 동안 후원 알림 위젯에 '후원자 → 지정 BJ' 문구와 룰렛이 떠서 돌아요</li>
                                             <li><b>3</b>성공 칸에 멈추면 성공, 아니면 실패 연출 뒤 룰렛은 사라져요</li>
                                           </ol>
                                           <p class="rocket-help" id="rocketWheelHelp"></p>
@@ -1272,7 +1278,7 @@
                                           <p class="setup-txt">룰렛 표시</p>
                                           <div class="setup-item">
                                             <p class="rocket-value">후원 알림 위젯(룰렛 후원) 아래쪽 · 도전 때만</p>
-                                            <p class="rocket-help">FLEXTV 이벤트 위젯은 목표 UI만 늘 띄우고, 룰렛은 따로 지금 쓰는 후원 알림 위젯 아래쪽(기존 룰렛 자리)에 도전 후원이 들어올 때만 떠요. 룰렛 양옆에 후원자 · 지정 BJ 이름표가 함께 떠요. OBS에 후원 알림 위젯이 있어야 해요.</p>
+                                            <p class="rocket-help">FLEXTV 이벤트 위젯은 목표 UI만 늘 띄우고, 룰렛은 따로 지금 쓰는 후원 알림 위젯 아래쪽(기존 룰렛 자리)에 도전 후원이 들어올 때만 떠요. 룰렛 위 문구에 후원자 · 지정 BJ 이름표가 함께 떠요. OBS에 후원 알림 위젯이 있어야 해요.</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list">
@@ -1283,7 +1289,7 @@
                                               <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="gold"><span class="ev-theme-pic" data-theme="gold"></span><span class="ev-theme-name">골드</span></label>
                                               <label class="ev-theme"><input type="radio" name="rocketWheelTheme" value="xmas"><span class="ev-theme-pic" data-theme="xmas"></span><span class="ev-theme-name">크리스마스</span></label>
                                             </div>
-                                            <p class="rocket-help">성공 · 실패 칸 이름이 빠르게 돌다가 결과에서 멈춰요. 후원자 · 지정 BJ 이름표는 룰렛과 따로 양옆에 떠요.</p>
+                                            <p class="rocket-help">성공 · 실패 칸 이름이 빠르게 돌다가 결과에서 멈춰요. 후원자 · 지정 BJ 이름표는 룰렛과 따로, 룰렛 위 문구에 떠요.</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list">
@@ -1313,11 +1319,10 @@
                                           <p class="setup-txt">미리 돌려보기</p>
                                           <div class="setup-item">
                                             <div class="ev-try">
-                                              <!-- 룰렛과 따로 있는 이름표(예시 닉네임) -->
+                                              <!-- 후원 알림 위젯과 같은 모양: 위 문구(예시 후원자 · 지정 BJ 이름표) + 룰렛 -->
                                               <div class="ev-try-stage" id="rocketWheelStage">
-                                                <span class="evn-tag is-donor">도도쭈</span>
+                                                <p class="ev-try-caption" id="rocketWheelCaption"></p>
                                                 <div class="ev-try-roulette" id="rocketWheelTry"></div>
-                                                <span class="evn-tag is-bj">BJ A</span>
                                               </div>
                                               <div class="rocket-test-btns">
                                                 <button type="button" class="btn" data-rocket-try="win">성공으로 돌려보기</button>
@@ -1340,7 +1345,7 @@
                                           <p class="setup-txt">룰렛 문구</p>
                                           <div class="setup-item">
                                             <input type="text" id="rocketWheelText" class="form-control rocket-wide" maxlength="40">
-                                            <p class="rocket-help">후원 알림 위젯의 룰렛 위에 나와요. 쓸 수 있는 말: {닉네임} {BJ} {렉스} {당첨금액}</p>
+                                            <p class="rocket-help">후원 알림 위젯의 룰렛 위에 나와요. {닉네임}은 후원자 이름표, {BJ}는 지정 BJ 이름표로 보여요. 쓸 수 있는 말: {닉네임} {BJ} {렉스} {당첨금액}</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list">

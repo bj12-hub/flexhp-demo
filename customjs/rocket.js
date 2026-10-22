@@ -25,9 +25,11 @@ const RocketTab = (function () {
     wheelVoice: false,
     winName: "성공",
     loseName: "실패",
-    wheelText: "{닉네임}님 도전! 결과는?",
+    wheelText: "{닉네임}님 → {BJ} 도전! 결과는?", // {닉네임} · {BJ} 는 이름표로 보인다(pages/event_nametag.js)
     wheelSound: "on",
   };
+  // 이름표 전의 기본 문구(지정 BJ 가 없음)는 새 기본 문구로 바꿔 보여 준다
+  const OLD_WHEEL_TEXT = "{닉네임}님 도전! 결과는?";
   // 미리보기에서 값을 비워 둘 때만 쓰는 보기용 숫자(저장되지 않음)
   const PREVIEW_GOAL = 100000;
   const PREVIEW_MIN = 1000;
@@ -47,6 +49,7 @@ const RocketTab = (function () {
     const m = Object.assign(clone(DEFAULT_OPTIONS), o || {});
     m.tpl = Object.assign(clone(DEFAULT_OPTIONS.tpl), (o && o.tpl) || {});
     m.fx = Object.assign(clone(DEFAULT_OPTIONS.fx), (o && o.fx) || {});
+    if (!m.wheelText || m.wheelText === OLD_WHEEL_TEXT) m.wheelText = DEFAULT_OPTIONS.wheelText;
     return m;
   }
 
@@ -68,10 +71,20 @@ const RocketTab = (function () {
   const winRate = () => Number(state && state.event && state.event.winRate) || 5;
 
   // ─────────────── 룰렛 모양 · 미리 돌려보기 (pages/event_roulette.js) ───────────────
-  // 미리 돌려보기 양옆의 이름표(pages/event_nametag.js)는 룰렛과 따로 있는 예시('도도쭈' → 'BJ A')
+  // 미리 돌려보기는 후원 알림 위젯과 같은 모양: 위 문구(룰렛 문구 + 예시 이름표 '도도쭈' → 'BJ A') + 룰렛
+  const TRY_WHO = { donor: "도도쭈", bj: "BJ A", amount: "5,000" };
   let tryRoulette = null;
   let tryKey = "";
   let trying = false;
+  function renderCaption(el, text, who, prize) {
+    if (!el) return;
+    if (typeof EventNameTags === "undefined") {
+      el.textContent = String(text || "");
+      return;
+    }
+    EventNameTags.caption(el, text, Object.assign({ prize: prize || "" }, who));
+    EventNameTags.result(el, null);
+  }
   function renderThemePics() {
     if (typeof EventRoulette === "undefined") return;
     tab().find(".ev-theme-pic").each(function () {
@@ -81,12 +94,12 @@ const RocketTab = (function () {
   }
   function renderTry(force) {
     if (typeof EventRoulette === "undefined" || trying) return;
-    const key = [opt.wheelTheme, opt.winName, opt.loseName].join("|");
+    const key = [opt.wheelTheme, opt.winName, opt.loseName, opt.wheelText].join("|");
     if (!force && key === tryKey) return;
     tryKey = key;
+    renderCaption(document.getElementById("rocketWheelCaption"), opt.wheelText, TRY_WHO);
     tryRoulette = EventRoulette.create(document.getElementById("rocketWheelTry"), { theme: opt.wheelTheme, winName: opt.winName, loseName: opt.loseName });
     tryRoulette.idle(opt.winName);
-    if (typeof EventNameTags !== "undefined") EventNameTags.result(document.getElementById("rocketWheelStage"), null);
   }
   function tryTick() {
     try {
@@ -116,7 +129,7 @@ const RocketTab = (function () {
       rs.reel(opt.wheelTime);
     }
     tryRoulette.spin(win, opt.wheelTime, rs ? rs.tick : sound ? tryTick : null).then(function () {
-      if (typeof EventNameTags !== "undefined") EventNameTags.result(document.getElementById("rocketWheelStage"), win);
+      if (typeof EventNameTags !== "undefined") EventNameTags.result(document.getElementById("rocketWheelCaption"), win);
       if (rs) {
         rs.stop();
         setTimeout(win ? rs.jackpot : rs.fail, 250);
@@ -224,48 +237,40 @@ const RocketTab = (function () {
     });
   }
 
-  // 회차 끝내기: 진행 중인 회차는 당첨 없이 끝내고, 성공한 회차는 닫고 다음 회차를 연다(당첨 금액은 그대로 이어짐)
+  // 엑셀 회차 끝내기(기록): 에너지 · 당첨 금액은 그대로 다음 회차로 이어진다
   function endRound() {
     const ev = state && state.event;
     const round = state && state.round;
     if (!ev || !round) return;
     const unit = round.prizeUnit || ev.prizeUnit || "";
-    let message;
-    if (round.status === "WAIT") {
-      message = `${round.roundNo - 1}회차는 성공했어요. 엑셀이 끝나면 자동으로 다음 회차가 시작되는데, 지금 바로 ${round.roundNo}회차를 시작할까요?`;
-    } else if (round.roundNo < (round.maxRounds || 10)) {
-      message = `당첨 없이 ${round.roundNo}회차를 끝낼까요? 다음 후원부터 ${round.roundNo + 1}회차이고, 당첨 금액 ${fmt(round.prizeAmount)}${unit}(방송 후원의 ${ev.prizeRate}%)은 그대로 이어져요.`;
-    } else {
-      message = `당첨 없이 ${round.roundNo}회차를 끝낼까요? 이번 방송의 마지막 회차예요.`;
-    }
+    const message = `${round.roundNo}회차를 끝낼까요? 다음 후원부터 ${round.roundNo + 1}회차예요. 에너지 ${fmt(round.totalAmount)}렉스와 당첨 금액 ${fmt(round.prizeAmount)}${unit}은 그대로 이어져요.`;
     Message.confirm({ title: "회차 끝내기", message }, function () {
       return postRound("/api/excel/rocket/endround");
     });
   }
 
-  // 새 방송으로 시작: 다음 후원부터 1회차, 방송 후원(당첨 금액 기준)은 0부터 다시 쌓인다
+  // 새 방송으로 시작: 다음 후원부터 1회차, 에너지 · 당첨 금액은 0부터 다시 쌓인다
   function newSession() {
     const ev = state && state.event;
     const round = state && state.round;
-    const session = (state && state.session) || {};
     const unit = (ev && ev.prizeUnit) || "";
     const open = round && !round.pending;
     let message = "새 방송으로 시작할까요? 다음 후원부터 1회차예요.";
-    if (open) message += ` 진행 중인 ${round.roundNo}회차는 당첨 없이 끝나요.`;
-    if (Number(session.total) > 0) message += ` 이번 방송 후원 ${fmt(session.total)}${unit}(당첨 금액 ${fmt(round && round.prizeAmount)}${unit})은 0부터 다시 쌓여요.`;
+    if (open) message += ` 진행 중인 ${round.roundNo}회차는 끝나요.`;
+    if (round && (Number(round.totalAmount) > 0 || Number(round.prizeAmount) > 0)) message += ` 쌓인 에너지 ${fmt(round.totalAmount)}렉스와 당첨 금액 ${fmt(round.prizeAmount)}${unit}은 0부터 다시 쌓여요.`;
     Message.confirm({ title: "새 방송으로 시작", message }, function () {
       return postRound("/api/excel/rocket/newsession");
     });
   }
 
-  // 이번 방송 회차 칸(1 ~ 최대 회차)
+  // 이번 방송 엑셀 회차 기록(1 ~ 보통 회차 수, 넘으면 그만큼 더): 회차마다 성공 수 · 당첨 내역
   function renderRounds() {
     const ev = state && state.event;
     const session = (state && state.session) || {};
     const round = state && state.round;
-    const max = (ev && ev.maxRounds) || session.maxRounds || 10;
-    const unit = (ev && ev.prizeUnit) || "";
     const list = session.rounds || [];
+    const last = list.reduce((m, x) => Math.max(m, Number(x.roundNo) || 0), round && round.pending ? Number(round.roundNo) || 0 : 0);
+    const max = Math.max((ev && ev.maxRounds) || session.maxRounds || 10, last);
     const cells = [];
     for (let i = 1; i <= max; i += 1) {
       const r = list.find((x) => Number(x.roundNo) === i);
@@ -273,26 +278,28 @@ const RocketTab = (function () {
       let label = "";
       let title = `${i}회차`;
       if (r) {
-        if (r.status === "WON") {
-          cls = "is-won";
-          label = r.winBjNickname || "성공";
-          title += ` · 성공${r.winBjNickname ? ` (${r.winBjNickname})` : ""} · 당첨 금액 ${fmt(r.prizeAmount)}${unit}(방송 후원 ${fmt(r.prizeBasis)}${unit}의 ${r.prizeRate}%)`;
+        const wins = Number(r.winCount) || 0;
+        const who = (r.wins || []).map((w) => `${w.bjNickname || "BJ"} ${fmt(w.prizeAmount)}${w.prizeUnit || ""}`).join(", ");
+        if (wins > 0) {
+          cls = r.status === "OPEN" ? "is-won is-now" : "is-won";
+          label = wins > 1 ? `성공 ${wins}번` : (r.wins && r.wins[0] && r.wins[0].bjNickname) || "성공";
+          title += ` · 성공 ${wins}번${who ? ` (${who})` : ""}`;
         } else if (r.status === "ENDED") {
           cls = "is-lost";
           label = "당첨 없음";
-          title += " · 당첨 없이 종료";
+          title += " · 당첨 없이 종료(에너지 · 당첨 금액은 다음 회차로 이어짐)";
         } else {
           cls = "is-now";
-          label = r.status === "ARMED" ? "충전 완료" : "진행 중";
+          label = "진행 중";
         }
-      } else if (round && round.pending && Number(round.roundNo) === i && round.status !== "DONE") {
+        title += ` · 후원 ${fmt(r.totalAmount)}렉스 · 도전 ${Number(r.throwCount) || 0}회`;
+      } else if (round && round.pending && Number(round.roundNo) === i) {
         cls = "is-now";
-        label = round.status === "WAIT" ? "대기" : "다음";
+        label = "다음";
       }
       cells.push(`<li class="${cls}" title="${$("<i>").text(title).html().replace(/"/g, "&quot;")}"><b>${i}</b><span>${$("<i>").text(label).html() || "&nbsp;"}</span></li>`);
     }
     $("#rocketRounds").html(cells.join(""));
-    $("#rocketMaxRounds").text(max);
   }
 
   // ─────────────── 화면 ───────────────
@@ -324,27 +331,24 @@ const RocketTab = (function () {
     $("#rocketEventTitle").text(ev.title || "FLEXTV 이벤트");
     $("#rocketEventPeriod").text(`${kstText(ev.startDate)} ~ ${kstText(ev.endDate)}`);
     $("#rocketWinRate").text(`${ev.winRate}%`);
-    $("#rocketPrize").text(`방송 후원의 ${ev.prizeRate}%`);
+    $("#rocketPrize").text(`지난 성공 뒤 후원의 ${ev.prizeRate}%`);
     $("#rocketPrizeRateText").text(ev.prizeRate);
 
     if (round) {
       const goal = round.goalAmount || settings.goalAmount;
-      const max = round.maxRounds || ev.maxRounds || 10;
       const unit = round.prizeUnit || ev.prizeUnit || "";
-      const done = round.status === "DONE";
-      $("#rocketRoundNo").text(done ? `${max}회차 끝` : `${round.roundNo} / ${max}회차`);
-      $("#rocketRoundPrize").text(done ? "-" : `${fmt(round.prizeAmount)}${unit}`);
-      $("#rocketCarry").text(done ? "" : `이번 방송 후원 ${fmt(round.sessionTotal)}${unit} × ${round.prizeRate}%`);
-      $("#rocketFuel").text(goal && !done ? `${fmt(round.totalAmount)} / ${fmt(goal)}렉스` : "-");
-      $("#rocketRoundState").text(
-        done ? "이번 방송 회차 끝" : round.status === "WAIT" ? "성공 · 엑셀이 끝나면 다음 회차" : round.pending ? "다음 후원부터 시작" : round.status === "ARMED" ? "충전 완료" : "에너지 충전 중"
-      );
-      $("#rocketThrows").text(round.status === "ARMED" ? `이번 회차 도전 ${round.throwCount}회` : "");
+      const wins = Number(round.winCount) || 0;
+      $("#rocketRoundNo").text(round.pending ? `다음 후원부터 ${round.roundNo}회차` : `${round.roundNo}회차 진행 중`);
+      $("#rocketRoundPrize").text(`${fmt(round.prizeAmount)}${unit}`);
+      $("#rocketCarry").text(`지난 성공 뒤 후원 ${fmt(round.prizeBasis)}${unit} × ${round.prizeRate}%`);
+      $("#rocketFuel").text(goal ? `${fmt(round.totalAmount)} / ${fmt(goal)}렉스` : "-");
+      $("#rocketRoundState").text(round.status === "ARMED" ? "충전 완료" : "에너지 충전 중");
+      $("#rocketThrows").text(round.pending ? "" : `이번 회차 도전 ${Number(round.throwCount) || 0}회${wins ? ` · 성공 ${wins}번` : ""}`);
     }
     renderRounds();
     const session = (state && state.session) || {};
     const active = ev.status === "ACTIVE";
-    $("#btnRocketEndRound").prop("disabled", !(active && round && (!round.pending || round.status === "WAIT")));
+    $("#btnRocketEndRound").prop("disabled", !(active && round && !round.pending));
     $("#btnRocketNewSession").prop("disabled", !(active && settings.saved && session.no && ((session.rounds || []).length > 0 || (round && !round.pending))));
 
     if (!settings.saved) showNotice("에너지 목표와 도전 금액을 저장해야 이 방송에서 이벤트가 시작돼요.");
@@ -447,12 +451,49 @@ const RocketTab = (function () {
         options: opt,
         goalAmount: parseAmount($("#rocketGoal").val()) || PREVIEW_GOAL,
         minAmount: parseAmount($("#rocketMin").val()) || PREVIEW_MIN,
-        event: ev ? { winRate: ev.winRate, prizeRate: ev.prizeRate, prizeUnit: ev.prizeUnit, maxRounds: ev.maxRounds } : null,
-        round: state && state.round && state.round.status !== "DONE" ? state.round : null,
+        event: ev ? { winRate: ev.winRate, prizeRate: ev.prizeRate, prizeUnit: ev.prizeUnit } : null,
+        round: (state && state.round) || null,
         sound: $("#rocketPreviewSound").prop("checked"),
       },
       window.location.origin
     );
+  }
+
+  // 미리보기에서 도전하면(위젯이 rocket:throw 를 보냄) 후원 알림 위젯처럼 룰렛을 위젯과 따로 띄운다
+  let previewQueue = Promise.resolve();
+  function previewRoulette(m) {
+    previewQueue = previewQueue.then(function () { return playPreviewRoulette(m); }).catch(function () {});
+  }
+  function playPreviewRoulette(m) {
+    if (typeof EventRoulette === "undefined") return Promise.resolve();
+    const w = m.wheel || {};
+    const stage = document.getElementById("rocketPreviewStage");
+    const caption = document.getElementById("rocketPreviewCaption");
+    const win = m.result === "WIN";
+    const time = parseSeconds(w.time, 2, 10, DEFAULT_OPTIONS.wheelTime);
+    const hold = parseSeconds(w.hold, 1, 10, DEFAULT_OPTIONS.wheelHold);
+    const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+    renderCaption(caption, w.text, { donor: m.sponsorNickname, bj: m.bjNickname, amount: fmt(m.amount) }, m.prize);
+    const r = EventRoulette.create(document.getElementById("rocketPreviewWheel"), { theme: w.theme || opt.wheelTheme, winName: w.winName || opt.winName, loseName: w.loseName || opt.loseName });
+    r.idle();
+    stage.classList.add("show");
+    const rs = w.sound !== "off" && $("#rocketPreviewSound").prop("checked") && EventRoulette.sound;
+    return wait(350)
+      .then(function () {
+        if (rs) {
+          rs.setVolume((Number(opt.volume) || 0) / 100);
+          rs.reel(time);
+        }
+        return r.spin(win, time, rs ? rs.tick : null);
+      })
+      .then(function () {
+        if (rs) rs.stop();
+        if (typeof EventNameTags !== "undefined") EventNameTags.result(caption, win);
+        return wait(hold * 1000);
+      })
+      .then(function () {
+        stage.classList.remove("show");
+      });
   }
 
   function onChange() {
@@ -530,6 +571,7 @@ const RocketTab = (function () {
       const m = ev.data || {};
       if (m.type === "rocket:ready") sendPreview();
       else if (m.type === "rocket:busy") setTestDisabled(!!m.busy);
+      else if (m.type === "rocket:throw") previewRoulette(m);
     });
   }
 
