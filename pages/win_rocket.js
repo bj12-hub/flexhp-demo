@@ -7,7 +7,9 @@
 // 작은 안내 글자는 방송에서 읽히지 않아 넣지 않는다.
 // 에너지(목표까지 쌓인 후원)와 당첨 금액(지정 BJ 후원 × 비율, 기본 7%)은 엑셀 회차가 바뀌어도 이어지고,
 // 성공하면 둘 다 0부터 다시 쌓인다(새 방송이어도 0부터). 성공 뒤 기다리지 않고 바로 다음 후원부터 다시 충전한다.
-//  /pages/rocket/{key}     실제 방송(프리셋 키)
+//  /pages/rocket/{key}     실제 방송(프리셋 키), 목표 UI + 룰렛 칸 하나로(440 × 800)
+//  /pages/rocket/{key}?part=goal       목표 UI만(440 × 660)  ┐ 같은 프리셋에서 따로 두 소스로 넣으면 OBS 에서 각각 옮기고 키울 수 있다.
+//  /pages/rocket/{key}?part=roulette   룰렛 칸만(440 × 140)  ┘ 소리는 goal 이 알림 소리, roulette 이 룰렛 소리만 내서 겹치지 않는다
 //  /pages/rocket/preview   도우미 설정 탭 미리보기: 부모 창이 postMessage 로 설정 · 테스트를 보낸다(서버 연결 없음)
 axios.defaults.withCredentials = true;
 
@@ -71,8 +73,18 @@ const prizeOf = (total, rate) => Math.floor((Math.max(0, Number(total) || 0) * M
 const bjNames = {};
 
 // ─────────────── 화면 크기 · 표시 ───────────────
+// 주소의 ?part= 로 한 요소만 보여 준다. 두 소스는 같은 이벤트를 같은 순서로 받아 같은 때 움직이고, 보이지 않는 쪽은 숨겨 둔다
+const PART = (function () {
+  const p = new URLSearchParams(window.location.search).get("part");
+  return p === "goal" || p === "roulette" ? p : "all";
+})();
+const PART_HEIGHT = { all: 800, goal: 660, roulette: 140 };
+// 소리를 나눠 낸다: 목표 UI 는 알림 소리(충전 · 준비 · 도전 · 성공 · 실패), 룰렛 칸은 룰렛 도는 소리와 결과 음성
+const alertSoundHere = PART !== "roulette";
+const wheelSoundHere = PART !== "goal";
+$id("rocketRoot").setAttribute("data-part", PART);
 function fitToWindow() {
-  const k = Math.min(window.innerWidth / 440, window.innerHeight / 800) || 1;
+  const k = Math.min(window.innerWidth / 440, window.innerHeight / PART_HEIGHT[PART]) || 1;
   $id("rocketRoot").style.transform = `scale(${k})`;
 }
 window.addEventListener("resize", fitToWindow);
@@ -304,7 +316,7 @@ function chime(kind) {
 }
 function alertEvent(kind, e) {
   const t = OPT.tpl && OPT.tpl[kind];
-  if (!t || !t.on) return;
+  if (!t || !t.on || !alertSoundHere) return;
   if (OPT.sound === "chime") chime(kind);
   else if (OPT.sound === "voice") speak(fill(t.text, e));
 }
@@ -370,14 +382,14 @@ async function spinZone(e) {
   r.idle();
   await sleep(350);
   // 룰렛 소리: 모터가 돌고 칸마다 카지노 음, 멈출 때 철컥
-  const reelSound = w.sound === "on";
+  const reelSound = w.sound === "on" && wheelSoundHere;
   if (reelSound) machine("reel", w.time);
   await r.spin(win, w.time, reelSound ? () => machine("tick") : null);
   if (reelSound) machine("stop");
   if (typeof EventNameTags !== "undefined") EventNameTags.result($id("evZoneText"), win);
   resultAt = performance.now();
   resultHold = w.hold * 1000;
-  if (w.voice) speak(`${win ? w.winName : w.loseName}!`);
+  if (w.voice && wheelSoundHere) speak(`${win ? w.winName : w.loseName}!`);
 }
 // 결과 표시 시간만큼 남겨 둔 뒤 룰렛 칸을 비운다
 async function hideZone() {
@@ -401,7 +413,7 @@ async function countdown() {
   for (const [i, word] of ["3", "2", "1"].entries()) {
     el.textContent = word;
     retrigger(el, "go");
-    if (OPT.fx.count) FX.count();
+    if (OPT.fx.count && alertSoundHere) FX.count();
     Logo.beat(i);
     await sleep(950);
   }
@@ -491,7 +503,7 @@ async function onArmed(e) {
   applyRound(Object.assign(roundOf(e), { totalAmount: e.totalAmount, status: "ARMED", throwCount: 0 }));
   Logo.slosh = 0.8;
   render(true);
-  if (OPT.sound === "chime") {
+  if (OPT.sound === "chime" && alertSoundHere) {
     if (machineOn()) machine("ready");
     else (CHIMES[OPT.chime] || CHIMES.dingdong)();
   }
@@ -508,7 +520,7 @@ async function onThrow(e) {
   alertEvent("throw", e);
   // 룰렛 소리가 나면 모터 소리가 겹치지 않게 충전음은 뺀다
   const w = wheelOf(e);
-  if (OPT.fx.count && !(w.on && w.sound === "on")) FX.power();
+  if (OPT.fx.count && alertSoundHere && !(w.on && w.sound === "on")) FX.power();
   await Promise.all([spinZone(e), countdown()]);
   if (e.result === "WIN") await igniteSuccess(e);
   else await igniteFail(e);
@@ -523,7 +535,7 @@ async function igniteFail(e) {
   Logo.slosh = 1.6;
   Logo.target = 0.86;
   setTimeout(() => render(), 700);
-  if (OPT.fx.fail) FX.glitch();
+  if (OPT.fx.fail && alertSoundHere) FX.glitch();
   alertEvent("fail", e);
   await sleep(2000);
   $id("lgWrap").classList.remove("glitch");
@@ -533,14 +545,14 @@ async function igniteFail(e) {
 async function igniteSuccess(e) {
   ov.classList.add("boom");
   render();
-  if (OPT.fx.launch) FX.boom();
+  if (OPT.fx.launch && alertSoundHere) FX.boom();
   await sleep(620);
   retrigger($id("lgFlash"), "on");
   const colors = ["#ff024a", "#00fff6", "#ffffff", "#ffd54a"];
   sparks(220, 220, colors, 90, 12);
   confetti(220, 250, colors, 140, 9);
   // 알림음이 룰렛 머신이면 성공 알림(잭팟)이 팡파르를 대신한다
-  if (OPT.fx.launch && !(machineOn() && OPT.tpl.land && OPT.tpl.land.on)) FX.land();
+  if (OPT.fx.launch && alertSoundHere && !(machineOn() && OPT.tpl.land && OPT.tpl.land.on)) FX.land();
   alertEvent("land", e);
   await sleep(4800);
   // 당첨 금액은 이 BJ가 받아 가서 에너지와 함께 0부터 다시 쌓인다

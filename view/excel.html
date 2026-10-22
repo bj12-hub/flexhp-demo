@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/help_ui.css?202506221531">
-    <link rel="stylesheet" href="../css/rocket_setting.css?202610221900">
+    <link rel="stylesheet" href="../css/rocket_setting.css?202610222100">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
     <link rel="stylesheet" href="../css/event_roulette.css?202610221700">
     <link rel="stylesheet" href="../css/event_nametag.css?202610221900">
@@ -1057,16 +1057,40 @@
                                           <a href="#" class="btn" id="btn_addpreset"><span class="ico"><img src="../images/ico_preset_plus.png" alt="" ></span>프리셋 추가</a>
                                         </div>
                                       </div>
-                                      <div class="url-area">
-                                        <div class="url-input">
-                                            <input class="form-control urlCopy" type="text" id="urlCopyRocket" value="" readonly>
+                                      <!-- 프리셋 하나에 주소 셋: 목표 UI · 룰렛(따로 두 소스) · 하나로(둘을 합친 440 × 800). 목표 UI · 룰렛 주소는 rocket.js 가 아래 주소에 ?part= 를 붙여 채운다 -->
+                                      <div class="url-area rocket-urls">
+                                        <div class="rocket-url-row">
+                                          <p class="rocket-url-tit">목표 UI <span>OBS 소스 가로 440 · 세로 660 · 늘 떠 있음 · 알림 소리</span></p>
+                                          <div class="url-input">
+                                            <input class="form-control" type="text" id="urlCopyRocketGoal" value="" readonly>
+                                          </div>
+                                          <div class="url-btn-box">
+                                            <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopyRocketGoal">URL복사</button>
+                                            <a class="btn" data-rocket-open="goal" title="화면보기">화면보기</a>
+                                          </div>
                                         </div>
-                                        <div class="url-btn-box">
-                                          <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopyRocket">URL복사</button>
-                                          <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                                        <div class="rocket-url-row">
+                                          <p class="rocket-url-tit">룰렛 <span>OBS 소스 가로 440 · 세로 140 · 평소 투명, 도전 때만 · 룰렛 소리</span></p>
+                                          <div class="url-input">
+                                            <input class="form-control" type="text" id="urlCopyRocketRoulette" value="" readonly>
+                                          </div>
+                                          <div class="url-btn-box">
+                                            <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopyRocketRoulette">URL복사</button>
+                                            <a class="btn" data-rocket-open="roulette" title="화면보기">화면보기</a>
+                                          </div>
+                                        </div>
+                                        <div class="rocket-url-row is-all">
+                                          <p class="rocket-url-tit">하나로 쓰기 <span>OBS 소스 가로 440 · 세로 800 · 위 목표 UI + 아래 룰렛 칸</span></p>
+                                          <div class="url-input">
+                                            <input class="form-control urlCopy" type="text" id="urlCopyRocket" value="" readonly>
+                                          </div>
+                                          <div class="url-btn-box">
+                                            <button class="btn btn-copy" title="복사" data-clipboard-target="#urlCopyRocket">URL복사</button>
+                                            <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
+                                          </div>
                                         </div>
                                         <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
-                                        <p class="rocket-help">OBS 브라우저 소스 크기: 가로 440 · 세로 800 (배경 투명). 이 URL 하나에 위 목표 UI(440 × 660)와 아래 룰렛 칸(440 × 140)이 함께 들어 있어요.</p>
+                                        <p class="rocket-help">OBS에 <b>목표 UI</b>와 <b>룰렛</b> 주소를 따로 두 소스로 넣으면 위치 · 크기를 각각 바꿀 수 있어요(배경 투명). 같은 이벤트를 같은 때 받아 함께 움직이고, 소리는 목표 UI가 알림 소리 · 룰렛이 룰렛 도는 소리만 내서 겹치지 않아요. 한 소스로 쓰려면 '하나로 쓰기' 주소만 넣으세요(따로 두 소스와 함께 넣으면 소리가 겹쳐요).</p>
                                       </div>
                                     </div>
                                     <hr class="delimiter">
@@ -1270,8 +1294,8 @@
                                         <div class="setup-item-list">
                                           <p class="setup-txt">룰렛 표시</p>
                                           <div class="setup-item">
-                                            <p class="rocket-value">FLEXTV 이벤트 위젯 아래 룰렛 칸 · 도전 때만</p>
-                                            <p class="rocket-help">목표 UI와 룰렛은 따로 있는 요소지만 같은 위젯 URL 하나에 들어 있어요. 목표 UI는 늘 떠 있고, 룰렛은 그 아래 룰렛 칸(440 × 140)에 도전 후원이 들어올 때만 떠요. 룰렛 위 문구에 후원자 · 지정 BJ 이름표가 함께 떠요. OBS에는 이 위젯 URL 하나만 넣으면 돼요(후원 알림 위젯에는 룰렛이 뜨지 않아요).</p>
+                                            <p class="rocket-value">룰렛 칸(위 '룰렛' 주소, 또는 '하나로 쓰기' 아래쪽) · 도전 때만</p>
+                                            <p class="rocket-help">목표 UI와 룰렛은 따로 있는 요소예요. 목표 UI는 늘 떠 있고, 룰렛 칸(440 × 140)은 평소 투명하다가 도전 후원이 들어올 때만 룰렛이 떠요. 룰렛 위 문구에 후원자 · 지정 BJ 이름표가 함께 떠요. OBS에는 '목표 UI' · '룰렛' 주소를 따로 두 소스로 넣거나(각각 옮기고 키울 수 있음), '하나로 쓰기' 주소 하나만 넣어요. 후원 알림 위젯에는 룰렛이 뜨지 않아요.</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list">
@@ -1421,10 +1445,10 @@
 
     <script src="../customjs/team.js?202506141400"></script>
     <script src="../customjs/preset.js?2505191239"></script>
-    <script src="../customjs/excel.js?202512291902"></script>
+    <script src="../customjs/excel.js?202610222100"></script>
     <script src="../pages/event_roulette.js?202610221700"></script>
     <script src="../pages/event_nametag.js?202610221900"></script>
-    <script src="../customjs/rocket.js?202610221900"></script>
+    <script src="../customjs/rocket.js?202610222100"></script>
 
 </body>
 

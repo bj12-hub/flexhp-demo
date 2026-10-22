@@ -2,6 +2,12 @@
    help_ui.css 의 어두운 테마를 따른다: 패널 #2C3344 · 입력 #1d2331 · 라벨 #00FFF6 · 버튼 #1faaa5 · 보조 #707070 · 안내 #bbb · 주의 #E59C4D */
 
 .rocket-tab .rocket-help {margin:6px 0 0; font-size:13px; line-height:1.5; color:#bbb}
+/* 프리셋 주소 셋(목표 UI · 룰렛 · 하나로): 칸마다 이름 한 줄 + 기존 주소 칸 · 버튼 */
+.rocket-urls .rocket-url-row {margin-bottom:12px}
+.rocket-urls .rocket-url-row:after {display:block; clear:both; content:''}
+.rocket-urls .rocket-url-tit {margin:0 0 6px; font-size:14px; font-weight:700; color:#fff}
+.rocket-urls .rocket-url-tit span {margin-left:8px; font-size:12px; font-weight:400; color:#aaa}
+.rocket-urls .rocket-url-row.is-all .rocket-url-tit {color:#ccc}
 .rocket-tab .rocket-warn {margin:6px 0 0; font-size:13px; line-height:1.5; color:#E59C4D}
 .rocket-tab .rocket-value {margin:4px 0 0; font-weight:700; color:#fff}
 .rocket-tab .btn.rocket-btn-sub {background-color:#707070; color:#fff}

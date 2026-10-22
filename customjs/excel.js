@@ -334,6 +334,8 @@ function setCurrentPresetId(parentTab, t_div) {
 
     t_div.addClass("selected").siblings().removeClass("selected");
     parentTab.find(".urlCopy").val(current_rocket_preset_div.attr("url"));
+    // 같은 프리셋의 목표 UI · 룰렛 주소(따로 두 소스)
+    if (typeof RocketTab !== "undefined") RocketTab.setUrls(current_rocket_preset_div.attr("url"));
   }
 }
 

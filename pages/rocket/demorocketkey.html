@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
-    <link rel="stylesheet" href="../../css/rocket_widget.css?202610221900">
+    <link rel="stylesheet" href="../../css/rocket_widget.css?202610222100">
     <link rel="stylesheet" href="../../css/event_roulette.css?202610221700">
     <link rel="stylesheet" href="../../css/event_nametag.css?202610221900">
 
@@ -29,6 +29,7 @@
 <!-- OBS 소스 440 × 800 하나에 두 요소가 따로 들어 있다(URL 하나) -->
 <!--   위 440 × 660: 방송 내내 늘 떠 있는 목표 UI — FLEXTV 로고(메인 이미지) · 목표 · 남은 양 + 누적 당첨 금액(회차는 보여 주지 않는다) -->
 <!--   아래 440 × 140: 룰렛 칸 — 평소에는 비어 있고(투명), 도전 때만 '후원자 → 지정 BJ' 이름표 문구와 룰렛이 떴다가 사라진다 -->
+<!-- 따로 두 소스로: /pages/rocket/{키}?part=goal (목표 UI 440 × 660) · ?part=roulette (룰렛 칸 440 × 140), 소리는 나눠 낸다 -->
 <body style="background-color:rgba(0, 0, 0, 0)">
   <div id="rocketRoot">
     <div class="ov off" id="ov">
@@ -92,7 +93,7 @@
   </div>
   <script src="../event_roulette.js?202610221700"></script>
   <script src="../event_nametag.js?202610221900"></script>
-  <script src="../win_rocket.js?202610221900"></script>
+  <script src="../win_rocket.js?202610222100"></script>
 </body>
 
 </html>

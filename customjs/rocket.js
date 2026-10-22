@@ -526,6 +526,11 @@ const RocketTab = (function () {
       const url = $("#urlCopyRocket").val();
       if (url) openWin(url, "플렉스", 440, 800);
     });
+    t.on("click", "[data-rocket-open]", function () {
+      const part = $(this).data("rocket-open");
+      const url = $(part === "goal" ? "#urlCopyRocketGoal" : "#urlCopyRocketRoulette").val();
+      if (url) openWin(url, "플렉스", 440, part === "goal" ? 660 : 140);
+    });
     $("#btnRocketEndRound").on("click", endRound);
     $("#btnRocketNewSession").on("click", newSession);
 
@@ -537,13 +542,24 @@ const RocketTab = (function () {
     });
   }
 
+  // 프리셋 주소 하나에서 목표 UI · 룰렛 주소를 만든다(excel.js 가 프리셋을 고를 때 부른다)
+  function partUrl(url, part) {
+    return url ? url + (url.indexOf("?") >= 0 ? "&" : "?") + "part=" + part : "";
+  }
+  function setUrls(url) {
+    url = url == null ? $("#urlCopyRocket").val() : url;
+    $("#urlCopyRocketGoal").val(partUrl(url, "goal"));
+    $("#urlCopyRocketRoulette").val(partUrl(url, "roulette"));
+  }
+
   function init() {
     if (inited) return;
     bind();
     fillForm(true);
     load();
+    setUrls();
     inited = true;
   }
 
-  return { init, save, reset, reload: load };
+  return { init, save, reset, reload: load, setUrls };
 })();
