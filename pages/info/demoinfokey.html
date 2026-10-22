@@ -18,10 +18,6 @@
 
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/help_ui.css?202506221531">
-    <!-- FLEXTV 이벤트 룰렛(배너형) + 룰렛 위 문구의 후원자 · 지정 BJ 이름표(따로 있는 요소) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
-    <link rel="stylesheet" href="../../css/event_roulette.css?202610221700">
-    <link rel="stylesheet" href="../../css/event_nametag.css?202610221700">
 
     <script type="text/javascript" src="../../js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
@@ -72,37 +68,6 @@
     /* .roulette-area .item.current {
     } */
 
-    /* FLEXTV 이벤트 룰렛: 기존 룰렛 자리(알림 아래)에 룰렛 문구와 함께 뜬다.
-       평소에는 보이지 않고, 에너지 100% 뒤 도전 금액 이상 후원(도전)일 때만 튀어나와 돌고 결과를 보여 준 뒤 사라진다 */
-    .ev-roulette-layer {
-        position:absolute;
-        left:0;
-        right:0;
-        bottom:10px;
-        z-index:2;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        gap:8px;
-        visibility:hidden;
-        opacity:0;
-        pointer-events:none;
-    }
-    .ev-roulette-layer.show { visibility:visible; animation:evrLayerIn .5s cubic-bezier(.2, 1.5, .4, 1) both; }
-    .ev-roulette-layer.hide { visibility:visible; animation:evrLayerOut .45s ease-in both; }
-    @keyframes evrLayerIn { 0% { opacity:0; transform:translateY(26px) scale(.8); } 55% { opacity:1; } 100% { opacity:1; transform:none; } }
-    @keyframes evrLayerOut { 0% { opacity:1; transform:none; } 100% { opacity:0; transform:translateY(18px) scale(.9); } }
-    .ev-roulette-text {
-        margin:0;
-        padding:0 12px;
-        font-family:"Black Han Sans", "Noto Sans KR", sans-serif;
-        font-size:22px;
-        color:#ffffff;
-        text-align:center;
-        text-shadow:-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
-    }
-    .ev-roulette-box.is-banner { width:440px; max-width:96vw; height:76px; --evr-h:76px; }
-
     </style>
 
 </head>
@@ -142,12 +107,6 @@
 
             </div>
 
-            <!-- FLEXTV 이벤트 룰렛 (win_info_tts.js showRocketRoulette): 위 문구에 후원자 · 지정 BJ 이름표(event_nametag.js), 아래 룰렛 -->
-            <div class="ev-roulette-layer" id="evRouletteLayer" aria-hidden="true">
-                <p class="ev-roulette-text"></p>
-                <div class="ev-roulette-box"></div>
-            </div>
-
             <!-- roulette -->
             <div class="rouletteContainer" style="display:none;">
                 <div class="roulette-area">
@@ -167,9 +126,7 @@
 
     <!-- <script src="../win_info.js?240304"></script> -->
      <script src="../../customjs/common.js?202512291902"></script>
-    <script src="../event_roulette.js?202610221700"></script>
-    <script src="../event_nametag.js?202610221700"></script>
-    <script src="../win_info_tts.js?202610221700"></script>
+    <script src="../win_info_tts.js?202610221900"></script>
     <script src="../roulette.js?040507"></script>
 
 </body>

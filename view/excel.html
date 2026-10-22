@@ -18,10 +18,10 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/help_ui.css?202506221531">
-    <link rel="stylesheet" href="../css/rocket_setting.css?202610221700">
+    <link rel="stylesheet" href="../css/rocket_setting.css?202610221900">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap">
     <link rel="stylesheet" href="../css/event_roulette.css?202610221700">
-    <link rel="stylesheet" href="../css/event_nametag.css?202610221700">
+    <link rel="stylesheet" href="../css/event_nametag.css?202610221900">
 
     <script src="../customjs/global.js?202506031446"></script>
     <script type="text/javascript" src="../js/jquery-1.12.4.min.js"></script>
@@ -1066,7 +1066,7 @@
                                           <a class="btn" id="btn_open_pop" title="화면보기">화면보기</a>
                                         </div>
                                         <p class="txt-warn"><img src="../images/ico_warn.png" alt="경고">URL은 보안을 위해 공유 및 화면에 노출을 금지합니다.</p>
-                                        <p class="rocket-help">OBS 브라우저 소스 크기: 가로 440 · 세로 660 (배경 투명)</p>
+                                        <p class="rocket-help">OBS 브라우저 소스 크기: 가로 440 · 세로 800 (배경 투명). 이 URL 하나에 위 목표 UI(440 × 660)와 아래 룰렛 칸(440 × 140)이 함께 들어 있어요.</p>
                                       </div>
                                     </div>
                                     <hr class="delimiter">
@@ -1112,7 +1112,7 @@
                                         <iframe id="rocketPreviewFrame" title="FLEXTV 이벤트 위젯 미리보기" src="../pages/rocket/preview"></iframe>
                                       </div>
                                       <div class="rocket-preview-test">
-                                        <p class="rocket-screen-note">방송 화면에는 <b>FLEXTV 로고 · 목표 · 남은 양</b>과 맨 위 <b>누적 당첨 금액</b>만 늘 나와요(회차는 나오지 않아요). 당첨 금액은 지난 성공 뒤 후원의 일정 비율이라 후원마다 올라가고, 성공하면 0부터 다시 쌓여요.</p>
+                                        <p class="rocket-screen-note">방송 화면에는 <b>FLEXTV 로고 · 목표 · 남은 양</b>과 맨 위 <b>누적 당첨 금액</b>만 늘 나와요(회차는 나오지 않아요). 그 아래 <b>룰렛 칸</b>은 평소에 비어 있다가 도전 때만 '후원자 → 지정 BJ' 문구와 룰렛이 떠요. 당첨 금액은 지난 성공 뒤 후원의 일정 비율이라 후원마다 올라가고, 성공하면 0부터 다시 쌓여요.</p>
                                         <p class="rocket-test-tit">미리보기 테스트 <span>(이 화면에서만 움직여요)</span></p>
                                         <div class="rocket-test-btns">
                                           <button type="button" class="btn" data-rocket-test="charge">에너지 충전</button>
@@ -1126,13 +1126,6 @@
                                         <div class="custom-control custom-checkbox custom-control-inline rocket-sound-check">
                                           <input type="checkbox" class="custom-control-input" id="rocketPreviewSound" checked>
                                           <label class="custom-control-label" for="rocketPreviewSound">미리보기 소리</label>
-                                        </div>
-                                        <!-- 룰렛은 위젯과 따로: 미리보기에서 도전하면 후원 알림 위젯처럼 여기 따로 뜬다 -->
-                                        <p class="rocket-test-tit">후원 알림 위젯 · 룰렛 <span>(위젯과 따로, 도전 때만 떠요)</span></p>
-                                        <div class="ev-try-stage ev-preview-stage" id="rocketPreviewStage">
-                                          <p class="ev-try-caption" id="rocketPreviewCaption"></p>
-                                          <div class="ev-try-roulette" id="rocketPreviewWheel"></div>
-                                          <p class="ev-preview-idle">평소에는 비어 있어요. 위 '도전 실패' · '도전 성공'을 누르면 문구(후원자 → 지정 BJ)와 룰렛이 여기 떠요.</p>
                                         </div>
                                         <p class="rocket-test-tit">방송 화면(OBS) <span>(연결된 위젯에 보내요 · 기록은 남지 않아요)</span></p>
                                         <div class="rocket-test-btns">
@@ -1267,7 +1260,7 @@
                                           </div>
                                           <ol class="rocket-steps">
                                             <li><b>1</b>에너지 100% 뒤 지정 BJ에게 <span id="rocketStepMin">도전 금액</span> 이상 후원</li>
-                                            <li><b>2</b>3 · 2 · 1 카운트다운 동안 후원 알림 위젯에 '후원자 → 지정 BJ' 문구와 룰렛이 떠서 돌아요</li>
+                                            <li><b>2</b>3 · 2 · 1 카운트다운 동안 위젯 아래 룰렛 칸에 '후원자 → 지정 BJ' 문구와 룰렛이 떠서 돌아요</li>
                                             <li><b>3</b>성공 칸에 멈추면 성공, 아니면 실패 연출 뒤 룰렛은 사라져요</li>
                                           </ol>
                                           <p class="rocket-help" id="rocketWheelHelp"></p>
@@ -1277,8 +1270,8 @@
                                         <div class="setup-item-list">
                                           <p class="setup-txt">룰렛 표시</p>
                                           <div class="setup-item">
-                                            <p class="rocket-value">후원 알림 위젯(룰렛 후원) 아래쪽 · 도전 때만</p>
-                                            <p class="rocket-help">FLEXTV 이벤트 위젯은 목표 UI만 늘 띄우고, 룰렛은 따로 지금 쓰는 후원 알림 위젯 아래쪽(기존 룰렛 자리)에 도전 후원이 들어올 때만 떠요. 룰렛 위 문구에 후원자 · 지정 BJ 이름표가 함께 떠요. OBS에 후원 알림 위젯이 있어야 해요.</p>
+                                            <p class="rocket-value">FLEXTV 이벤트 위젯 아래 룰렛 칸 · 도전 때만</p>
+                                            <p class="rocket-help">목표 UI와 룰렛은 따로 있는 요소지만 같은 위젯 URL 하나에 들어 있어요. 목표 UI는 늘 떠 있고, 룰렛은 그 아래 룰렛 칸(440 × 140)에 도전 후원이 들어올 때만 떠요. 룰렛 위 문구에 후원자 · 지정 BJ 이름표가 함께 떠요. OBS에는 이 위젯 URL 하나만 넣으면 돼요(후원 알림 위젯에는 룰렛이 뜨지 않아요).</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list">
@@ -1319,7 +1312,7 @@
                                           <p class="setup-txt">미리 돌려보기</p>
                                           <div class="setup-item">
                                             <div class="ev-try">
-                                              <!-- 후원 알림 위젯과 같은 모양: 위 문구(예시 후원자 · 지정 BJ 이름표) + 룰렛 -->
+                                              <!-- 위젯 아래 룰렛 칸과 같은 모양: 위 문구(예시 후원자 · 지정 BJ 이름표) + 룰렛 -->
                                               <div class="ev-try-stage" id="rocketWheelStage">
                                                 <p class="ev-try-caption" id="rocketWheelCaption"></p>
                                                 <div class="ev-try-roulette" id="rocketWheelTry"></div>
@@ -1345,7 +1338,7 @@
                                           <p class="setup-txt">룰렛 문구</p>
                                           <div class="setup-item">
                                             <input type="text" id="rocketWheelText" class="form-control rocket-wide" maxlength="40">
-                                            <p class="rocket-help">후원 알림 위젯의 룰렛 위에 나와요. {닉네임}은 후원자 이름표, {BJ}는 지정 BJ 이름표로 보여요. 쓸 수 있는 말: {닉네임} {BJ} {렉스} {당첨금액}</p>
+                                            <p class="rocket-help">위젯 아래 룰렛 칸의 룰렛 위에 나와요. {닉네임}은 후원자 이름표, {BJ}는 지정 BJ 이름표로 보여요. 닉네임은 최대 10글자까지 다 보이고, 문구가 룰렛보다 길어지면 글자가 조금 작아져요. 쓸 수 있는 말: {닉네임} {BJ} {렉스} {당첨금액}</p>
                                           </div>
                                         </div>
                                         <div class="setup-item-list">
@@ -1430,8 +1423,8 @@
     <script src="../customjs/preset.js?2505191239"></script>
     <script src="../customjs/excel.js?202512291902"></script>
     <script src="../pages/event_roulette.js?202610221700"></script>
-    <script src="../pages/event_nametag.js?202610221700"></script>
-    <script src="../customjs/rocket.js?202610221700"></script>
+    <script src="../pages/event_nametag.js?202610221900"></script>
+    <script src="../customjs/rocket.js?202610221900"></script>
 
 </body>
 

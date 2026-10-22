@@ -14,8 +14,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../css/event_roulette.css">
-<link rel="stylesheet" href="../css/event_nametag.css">
 <style>
   /* 기본 초기화(아티팩트 틀이 해 주던 것) */
   html { -webkit-text-size-adjust: 100%; }
@@ -87,8 +85,9 @@
     background: radial-gradient(260px 240px at 20% 85%, rgba(255, 2, 74, .22), transparent 70%), radial-gradient(300px 260px at 90% 10%, rgba(0, 255, 246, .12), transparent 70%), linear-gradient(160deg, #1b1630, #0e0c18 60%, #120e1c);
   }
   /* 위젯 문서는 밝은 색 체계라, 틀도 같게 두어야 투명 배경이 흰색으로 덮이지 않는다 */
-  .stage iframe { display: block; width: 100%; aspect-ratio: 2 / 3; border: 0; background: transparent; color-scheme: normal; }
-  .stage .tag { position: absolute; left: 12px; bottom: 10px; font-size: 11px; color: var(--muted); }
+  /* 위젯 440 × 800: 위 660 목표 UI + 아래 140 룰렛 칸 */
+  .stage iframe { display: block; width: 100%; aspect-ratio: 440 / 800; border: 0; background: transparent; color-scheme: normal; }
+  .stage .tag { display: block; padding: 0 12px 10px; font-size: 11px; color: var(--muted); }
   .panel { display: grid; gap: 22px; padding: 22px; border-radius: 18px; background: var(--panel); border: 1px solid var(--line); min-width: 0; }
   .panel-row { display: grid; gap: 10px; }
   .panel-row .label { font-size: 13px; font-weight: 700; color: var(--cyan); }
@@ -112,20 +111,6 @@
   .busy { font-size: 13px; color: var(--gold); min-height: 1.4em; }
   .note { font-size: 13px; color: var(--muted); }
 
-  /* 룰렛: 목표 위젯과 따로, 후원 알림 위젯 자리에 도전 때만 뜬다(위 문구에 후원자 · 지정 BJ 이름표) */
-  .roulette-box { display: grid; gap: 10px; }
-  .roulette-box .label { font-size: 13px; font-weight: 700; color: var(--cyan); }
-  .roulette-stage {
-    position: relative; min-height: 160px; display: grid; place-items: center; gap: 10px; padding: 22px 16px; border-radius: 18px; overflow: hidden; border: 1px solid var(--line);
-    background: radial-gradient(320px 160px at 15% 90%, rgba(255, 2, 74, .18), transparent 70%), linear-gradient(160deg, #1b1630, #0e0c18 60%, #120e1c);
-  }
-  .roulette-text { font-family: var(--display); font-size: 22px; line-height: 1.2; text-align: center; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000; }
-  .roulette-host { width: 440px; max-width: 100%; height: 76px; --evr-h: 76px; }
-  .roulette-text, .roulette-host { visibility: hidden; }
-  .roulette-stage.show .roulette-text, .roulette-stage.show .roulette-host { visibility: visible; animation: rouletteIn .5s cubic-bezier(.2, 1.5, .4, 1) both; }
-  .roulette-stage.show .roulette-idle { visibility: hidden; }
-  .roulette-idle { position: absolute; inset: auto 16px; text-align: center; font-size: 14px; color: var(--muted); }
-  @keyframes rouletteIn { 0% { opacity: 0; transform: translateY(20px) scale(.85); } 100% { opacity: 1; transform: none; } }
 
   /* 당첨 금액과 회차 */
   .rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -193,12 +178,12 @@
   <section class="section" aria-labelledby="demo-title">
     <div class="section-head">
       <h2 id="demo-title">직접 눌러 보기</h2>
-      <p class="lead">왼쪽은 방송 화면(OBS)에 늘 떠 있는 목표 위젯을 그대로 띄운 미리보기예요. 룰렛은 위젯과 따로, 도전 후원이 들어올 때만 아래 후원 알림 위젯 자리에 후원자 · 지정 BJ 이름표와 함께 떠요. 예시로 지난 성공 뒤 들어온 후원이 1,500,000렉스라 당첨 금액 105,000렉스(7%)가 쌓인 상태에서 시작해요.</p>
+      <p class="lead">왼쪽은 방송 화면(OBS)에 넣는 이벤트 위젯을 그대로 띄운 미리보기예요. URL 하나에 위 목표 UI와 아래 룰렛 칸이 따로 들어 있어요. 목표 UI는 늘 떠 있고, 룰렛은 도전 후원이 들어올 때만 아래 칸에 '후원자 → 지정 BJ' 이름표 문구와 함께 떠요. 예시로 지난 성공 뒤 들어온 후원이 1,500,000렉스라 당첨 금액 105,000렉스(7%)가 쌓인 상태에서 시작해요.</p>
     </div>
     <div class="demo">
       <div class="stage">
-        <iframe id="widget" src="../pages/rocket/preview" title="FLEXTV 이벤트 위젯 미리보기 (440 × 660)"></iframe>
-        <span class="tag">방송 화면 위젯 440 × 660 · 배경 투명</span>
+        <iframe id="widget" src="../pages/rocket/preview" title="FLEXTV 이벤트 위젯 미리보기 (440 × 800)"></iframe>
+        <span class="tag">방송 화면 위젯 440 × 800 · 배경 투명 · 아래 140은 룰렛 칸(도전 때만)</span>
       </div>
       <div class="panel">
         <div class="panel-row">
@@ -231,14 +216,6 @@
         <p class="note">이 화면에서만 움직이는 미리보기예요. 실제 방송에서는 도전마다 서버가 결과를 정하고, 위젯은 그 결과를 보여 줘요. 목표 100,000렉스 · 도전 금액 1,000렉스 이상 · 당첨 금액 비율 7% · 성공 확률 5%는 예시 값이에요.</p>
       </div>
     </div>
-    <div class="roulette-box">
-      <span class="label">후원 알림 위젯 · 룰렛 (목표 위젯과 따로, 도전 때만)</span>
-      <div class="roulette-stage" id="rouletteStage">
-        <p class="roulette-text" id="rouletteText"></p>
-        <div class="roulette-host" id="rouletteHost"></div>
-        <p class="roulette-idle">평소에는 비어 있어요. 충전 완료 뒤 '도전 실패' · '도전 성공'을 누르면 여기에 '후원자 → 지정 BJ' 문구와 룰렛이 떠요.</p>
-      </div>
-    </div>
   </section>
 
   <section class="section" aria-labelledby="carry-title">
@@ -248,7 +225,7 @@
     </div>
     <div class="rules">
       <div class="rule key"><b>당첨 금액 = 지난 성공 뒤 후원 × 7%</b><p>지난 성공 뒤 지정 BJ에게 들어온 후원을 모두 더한 금액의 7%예요(렉스). 후원이 들어올 때마다 올라가고, 성공하면 그 BJ가 받아 가서 0부터 다시 쌓여요. 새 방송이어도 0부터예요.</p></div>
-      <div class="rule"><b>룰렛은 도전 금액 이상 후원에서만</b><p>에너지 100% 뒤 스트리머가 정한 도전 금액(예: 1,000렉스) 이상 후원해야 룰렛이 돌아요. 100렉스처럼 적은 후원은 룰렛 없이 당첨 금액에만 더해져요. 룰렛은 늘 떠 있는 목표 위젯과 따로, 후원 알림 위젯에서 도전 때만 튀어나와 돌고 결과를 보여 준 뒤 사라져요. 룰렛 위 문구에 후원자 → 지정 BJ 닉네임이 이름표로 떠요. 성공은 금빛으로 번쩍이고, 실패는 흑백으로 가라앉아요.</p></div>
+      <div class="rule"><b>룰렛은 도전 금액 이상 후원에서만</b><p>에너지 100% 뒤 스트리머가 정한 도전 금액(예: 1,000렉스) 이상 후원해야 룰렛이 돌아요. 100렉스처럼 적은 후원은 룰렛 없이 당첨 금액에만 더해져요. 룰렛은 늘 떠 있는 목표 UI와 따로 있는 요소로, 같은 위젯 아래 룰렛 칸에서 도전 때만 튀어나와 돌고 결과를 보여 준 뒤 사라져요. 룰렛 위 문구에 후원자 → 지정 BJ 닉네임이 이름표로 떠요. 성공은 금빛으로 번쩍이고, 실패는 흑백으로 가라앉아요.</p></div>
       <div class="rule"><b>당첨 없으면 다음 회차로 그대로</b><p>엑셀 회차가 당첨 없이 끝나면 쌓인 에너지와 당첨 금액이 다음 회차에 그대로 이어져요. 1회차에 모인 금액이 2회차에도 같이 진행돼요.</p></div>
       <div class="rule"><b>당첨되면 바로 0부터</b><p>당첨자가 나오면 기다리지 않고 다음 후원부터 다시 목표까지 쌓아요. 그래서 한 엑셀 회차에 당첨이 여러 번 나올 수도 있어요. 회차는 도우미 탭에 기록으로만 남고 방송 위젯에는 나오지 않아요.</p></div>
     </div>
@@ -275,16 +252,16 @@
   <section class="section" aria-labelledby="screen-title">
     <div class="section-head">
       <h2 id="screen-title">방송 화면</h2>
-      <p class="lead">위젯에는 FLEXTV 로고 · 목표 · 남은 양을 크게 보여 주고, 맨 위에 누적 당첨 금액 한 줄을 둬요(회차는 보여 주지 않아요). 방송에서 읽기 어려운 작은 글자는 넣지 않았어요. 이 위젯은 방송 내내 떠 있고, 룰렛은 위젯에 넣지 않고 후원 알림 위젯에서 따로 돌아요.</p>
+      <p class="lead">위젯에는 FLEXTV 로고 · 목표 · 남은 양을 크게 보여 주고, 맨 위에 누적 당첨 금액 한 줄을 둬요(회차는 보여 주지 않아요). 방송에서 읽기 어려운 작은 글자는 넣지 않았어요. 목표 UI는 방송 내내 떠 있고, 룰렛은 목표 UI와 겹치지 않게 같은 위젯 아래 룰렛 칸(440 × 140)에서 도전 때만 따로 돌아요. OBS에는 위젯 URL 하나(440 × 800)만 넣으면 돼요.</p>
     </div>
     <figure class="figure">
       <img src="media/broadcast.gif" alt="1280 × 720 방송 화면 오른쪽 위에 FLEXTV 이벤트 위젯이 놓인 녹화. 3회차 당첨 금액 105,000렉스가 후원마다 올라가고, 실패, 당첨 없이 회차 종료(4회차, 금액 그대로), 다시 충전 완료 뒤 성공, 5회차 대기로 이어진다." width="1280" height="720" loading="lazy">
-      <figcaption>방송 화면 녹화(반복). 후원마다 맨 위 당첨 금액이 올라가요(방송 후원 × 7%) → 실패 → 당첨 없이 회차 종료(4회차, 금액 그대로) → 성공 → 그 엑셀이 끝날 때까지 5회차 대기. 이 녹화는 예전 모습이에요(맨 위 회차 표시 · 성공 뒤 대기 · 위젯 안 룰렛). 지금은 위젯에 목표 UI와 누적 당첨 금액만 늘 떠 있고, 성공하면 바로 0부터 다시 쌓이며, 룰렛은 후원 알림 위젯에서 따로 돌아요.</figcaption>
+      <figcaption>방송 화면 녹화(반복). 후원마다 맨 위 당첨 금액이 올라가요(방송 후원 × 7%) → 실패 → 당첨 없이 회차 종료(4회차, 금액 그대로) → 성공 → 그 엑셀이 끝날 때까지 5회차 대기. 이 녹화는 예전 모습이에요(맨 위 회차 표시 · 성공 뒤 대기 · 위젯 안 룰렛). 지금은 목표 UI와 누적 당첨 금액만 늘 떠 있고, 성공하면 바로 0부터 다시 쌓이며, 룰렛은 위젯 아래 룰렛 칸에서 도전 때만 따로 돌아요.</figcaption>
     </figure>
     <div class="two">
       <figure class="figure">
         <img src="media/widget-flow.png" alt="위젯 상태 5가지: 에너지 충전 중, 충전 완료, 3 2 1 카운트다운과 함께 나타난 룰렛, 실패(룰렛이 흑백으로 가라앉음), 성공(룰렛이 금빛으로 번쩍, 맨 위 3회차 누적 106,365렉스)" width="1378" height="437" loading="lazy">
-        <figcaption>에너지 충전 → 충전 완료(로고 뒤 빛, '남은 0'이 빛나요) → 3 · 2 · 1과 함께 룰렛이 나타나 돌고 → 실패면 룰렛이 흑백으로 가라앉고, 성공이면 룰렛이 금빛으로 번쩍이며 로고가 한 바퀴 돌아요(꽃가루). 결과를 보여 준 뒤 룰렛은 사라져요. 그림 속 룰렛은 위젯 안에 띄우던 예전 모습이고, 지금은 후원 알림 위젯에서 이름표와 함께 따로 떠요.</figcaption>
+        <figcaption>에너지 충전 → 충전 완료(로고 뒤 빛, '남은 0'이 빛나요) → 3 · 2 · 1과 함께 룰렛이 나타나 돌고 → 실패면 룰렛이 흑백으로 가라앉고, 성공이면 룰렛이 금빛으로 번쩍이며 로고가 한 바퀴 돌아요(꽃가루). 결과를 보여 준 뒤 룰렛은 사라져요. 그림 속 룰렛은 로고 위에 겹쳐 띄우던 예전 모습이고, 지금은 목표 UI 아래 룰렛 칸에서 이름표 문구와 함께 따로 떠요.</figcaption>
       </figure>
       <figure class="figure">
         <img src="media/widget-carry.png" alt="위젯의 당첨 금액과 회차 상태 4가지: 후원으로 3회차 당첨 금액이 105,350렉스로 오름, 당첨 없이 회차 종료되어 4회차(금액 그대로), 4회차 성공 112,560렉스, 성공 뒤 5회차 대기" width="1104" height="437" loading="lazy">
@@ -305,7 +282,7 @@
     <div class="rules">
       <div class="rule"><b>에너지 목표 · 도전 금액</b><p>스트리머가 정해요. 저장하면 바로 적용되고, 쌓인 에너지 · 당첨 금액은 그대로예요.</p></div>
       <div class="rule"><b>알림 소리</b><p>위젯에 글자를 띄우지 않고 소리로 알려요. 기본 알림음 '룰렛 머신'은 충전 때 동전, 100%면 준비 음, 도전 때 레버와 돌아가는 릴 소리를 내고, 성공은 잭팟 팡파르 · 실패는 내려가는 '와-와' 소리예요.</p></div>
-      <div class="rule"><b>룰렛</b><p>룰렛은 목표 위젯과 따로 후원 알림 위젯에서 돌고, 위 문구에 후원자 · 지정 BJ 이름표가 떠요. 모양 3가지(일반 · 골드 · 크리스마스), 회전 시간, 결과 표시 시간, 결과 음성, 칸 이름을 정하고 미리 돌려 볼 수 있어요.</p></div>
+      <div class="rule"><b>룰렛</b><p>룰렛은 목표 UI와 따로 위젯 아래 룰렛 칸에서 돌고, 위 문구에 후원자 · 지정 BJ 이름표가 떠요(닉네임 최대 10글자까지 다 보여요). 모양 3가지(일반 · 골드 · 크리스마스), 회전 시간, 결과 표시 시간, 결과 음성, 칸 이름을 정하고 미리 돌려 볼 수 있어요.</p></div>
       <div class="rule"><b>지금 회차 끝내기 · 새 방송으로 시작</b><p>회차를 손으로 끝내면 다음 후원부터 다음 회차로 기록돼요(에너지 · 당첨 금액은 그대로). 새 방송으로 시작하면 1회차부터, 에너지 · 당첨 금액도 0부터 다시 쌓여요.</p></div>
     </div>
   </section>
@@ -333,56 +310,11 @@
   </footer>
 </div>
 
-<script src="../pages/event_roulette.js"></script>
-<script src="../pages/event_nametag.js"></script>
 <script>
   (function () {
     var frame = document.getElementById("widget");
     var busyEl = document.getElementById("busy");
     var soundEl = document.getElementById("sound");
-    var rStage = document.getElementById("rouletteStage");
-    var rHost = document.getElementById("rouletteHost");
-    var rText = document.getElementById("rouletteText");
-    var rQueue = Promise.resolve();
-
-    function wait(ms) {
-      return new Promise(function (done) { setTimeout(done, ms); });
-    }
-    // 위젯이 도전을 받으면(rocket:throw) 후원 알림 위젯처럼 문구(후원자 → 지정 BJ 이름표) + 룰렛을 따로 띄워 돌린다
-    function playRoulette(m) {
-      if (typeof EventRoulette === "undefined") return Promise.resolve();
-      var w = m.wheel || {};
-      var win = m.result === "WIN";
-      var time = Math.max(2, Math.min(10, Number(w.time) || 4));
-      var hold = Math.max(1, Math.min(10, Number(w.hold) || 3));
-      var r = EventRoulette.create(rHost, { theme: w.theme || theme(), winName: w.winName || "성공", loseName: w.loseName || "실패" });
-      r.idle();
-      var amount = (Number(m.amount) || 0).toLocaleString("ko-KR");
-      if (typeof EventNameTags !== "undefined") {
-        EventNameTags.caption(rText, w.text, { donor: m.sponsorNickname, bj: m.bjNickname, amount: amount, prize: m.prize || "" });
-        EventNameTags.result(rText, null);
-      } else {
-        rText.textContent = (m.sponsorNickname || "후원자") + "님 → " + (m.bjNickname || "BJ") + " 도전! 결과는?";
-      }
-      rStage.classList.add("show");
-      var rs = soundEl.checked && w.sound !== "off" && EventRoulette.sound;
-      return wait(350)
-        .then(function () {
-          if (rs) {
-            rs.setVolume(0.7);
-            rs.reel(time);
-          }
-          return r.spin(win, time, rs ? rs.tick : null);
-        })
-        .then(function () {
-          if (rs) rs.stop();
-          if (typeof EventNameTags !== "undefined") EventNameTags.result(rText, win);
-          return wait(hold * 1000);
-        })
-        .then(function () {
-          rStage.classList.remove("show");
-        });
-    }
 
     function theme() {
       var el = document.querySelector('input[name="theme"]:checked');
@@ -410,7 +342,6 @@
       var m = ev.data || {};
       if (m.type === "rocket:ready") sendConfig();
       if (m.type === "rocket:busy") busyEl.textContent = m.busy ? "연출 중… 누른 순서대로 이어서 보여 줘요" : "";
-      if (m.type === "rocket:throw") rQueue = rQueue.then(function () { return playRoulette(m); }).catch(function () {});
     });
     frame.addEventListener("load", function () { setTimeout(sendConfig, 300); });
 

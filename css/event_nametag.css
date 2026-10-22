@@ -1,6 +1,9 @@
 /* FLEXTV 이벤트 이름표(pages/event_nametag.js) — 룰렛과 따로 있는 요소. 룰렛 위 문구 안에서
-   후원자(핑크) · 지정 BJ(청록) 닉네임을 문구 글자 크기에 맞춘 이름표로 보여 준다. 긴 이름은 … 로 줄인다. */
-.evn-tag { display: inline-block; box-sizing: border-box; max-width: 9em; height: 1.6em; margin: 0 .12em; padding: 0 .55em; border: 2px solid #ffffff; border-radius: 999px; vertical-align: middle; font-family: inherit; font-size: .92em; line-height: calc(1.6em - 4px); letter-spacing: .01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 2px 8px rgba(0, 0, 0, .45); animation: evnPop .45s cubic-bezier(.2, 1.6, .4, 1) both; transition: filter .4s; }
+   후원자(핑크) · 지정 BJ(청록) 닉네임을 문구 글자 크기에 맞춘 이름표로 보여 준다.
+   닉네임은 최대 10글자라 10글자가 다 보이게 자리를 잡고(넓은 글자 10개 + 여백 ≈ 11.2em), 문구는 한 줄로 둔다.
+   문구가 칸보다 넓으면 스크립트가 글자 크기를 줄여 맞춘다. */
+.evn-caption { white-space: nowrap; }
+.evn-tag { display: inline-block; box-sizing: border-box; max-width: 12em; height: 1.6em; margin: 0 .12em; padding: 0 .55em; border: 2px solid #ffffff; border-radius: 999px; vertical-align: middle; font-family: inherit; font-size: .92em; line-height: calc(1.6em - 4px); letter-spacing: .01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 2px 8px rgba(0, 0, 0, .45); animation: evnPop .45s cubic-bezier(.2, 1.6, .4, 1) both; transition: filter .4s; }
 .evn-tag.is-donor { background: linear-gradient(180deg, #ff4f80, #ff024a 60%, #c8003b); color: #ffffff; text-shadow: 0 2px 0 rgba(80, 0, 28, .55); }
 .evn-tag.is-bj { background: linear-gradient(180deg, #8afffb, #00fff6 55%, #00c4bd); color: #181b2b; text-shadow: none; animation-delay: .15s; }
 @keyframes evnPop { 0% { opacity: 0; transform: scale(.5); } 100% { opacity: 1; transform: none; } }

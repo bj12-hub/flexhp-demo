@@ -18,18 +18,18 @@ const RocketTab = (function () {
     volume: 70,
     fx: { count: true, launch: true, fail: true },
     wheelOn: true,
-    wheelWhere: "src", // 늘 후원 알림 위젯(FLEXTV 이벤트 위젯과 따로)
+    wheelWhere: "widget", // 늘 이벤트 위젯 아래 룰렛 칸(목표 UI와 따로 있는 요소, URL 하나)
     wheelTheme: "normal",
     wheelTime: 4,
     wheelHold: 3,
     wheelVoice: false,
     winName: "성공",
     loseName: "실패",
-    wheelText: "{닉네임}님 → {BJ} 도전! 결과는?", // {닉네임} · {BJ} 는 이름표로 보인다(pages/event_nametag.js)
+    wheelText: "{닉네임}님 → {BJ}", // {닉네임} · {BJ} 는 이름표로 보인다(pages/event_nametag.js, 닉네임 최대 10글자)
     wheelSound: "on",
   };
-  // 이름표 전의 기본 문구(지정 BJ 가 없음)는 새 기본 문구로 바꿔 보여 준다
-  const OLD_WHEEL_TEXT = "{닉네임}님 도전! 결과는?";
+  // 예전 기본 문구(이름표 전 · '도전! 결과는?' 이 붙어 있던 때)는 새 기본 문구로 바꿔 보여 준다
+  const OLD_WHEEL_TEXTS = ["{닉네임}님 도전! 결과는?", "{닉네임}님 → {BJ} 도전! 결과는?"];
   // 미리보기에서 값을 비워 둘 때만 쓰는 보기용 숫자(저장되지 않음)
   const PREVIEW_GOAL = 100000;
   const PREVIEW_MIN = 1000;
@@ -49,7 +49,7 @@ const RocketTab = (function () {
     const m = Object.assign(clone(DEFAULT_OPTIONS), o || {});
     m.tpl = Object.assign(clone(DEFAULT_OPTIONS.tpl), (o && o.tpl) || {});
     m.fx = Object.assign(clone(DEFAULT_OPTIONS.fx), (o && o.fx) || {});
-    if (!m.wheelText || m.wheelText === OLD_WHEEL_TEXT) m.wheelText = DEFAULT_OPTIONS.wheelText;
+    if (!m.wheelText || OLD_WHEEL_TEXTS.indexOf(m.wheelText) >= 0) m.wheelText = DEFAULT_OPTIONS.wheelText;
     return m;
   }
 
@@ -71,7 +71,7 @@ const RocketTab = (function () {
   const winRate = () => Number(state && state.event && state.event.winRate) || 5;
 
   // ─────────────── 룰렛 모양 · 미리 돌려보기 (pages/event_roulette.js) ───────────────
-  // 미리 돌려보기는 후원 알림 위젯과 같은 모양: 위 문구(룰렛 문구 + 예시 이름표 '도도쭈' → 'BJ A') + 룰렛
+  // 미리 돌려보기는 위젯 아래 룰렛 칸과 같은 모양: 위 문구(룰렛 문구 + 예시 이름표 '도도쭈' → 'BJ A') + 룰렛
   const TRY_WHO = { donor: "도도쭈", bj: "BJ A", amount: "5,000" };
   let tryRoulette = null;
   let tryKey = "";
@@ -459,43 +459,6 @@ const RocketTab = (function () {
     );
   }
 
-  // 미리보기에서 도전하면(위젯이 rocket:throw 를 보냄) 후원 알림 위젯처럼 룰렛을 위젯과 따로 띄운다
-  let previewQueue = Promise.resolve();
-  function previewRoulette(m) {
-    previewQueue = previewQueue.then(function () { return playPreviewRoulette(m); }).catch(function () {});
-  }
-  function playPreviewRoulette(m) {
-    if (typeof EventRoulette === "undefined") return Promise.resolve();
-    const w = m.wheel || {};
-    const stage = document.getElementById("rocketPreviewStage");
-    const caption = document.getElementById("rocketPreviewCaption");
-    const win = m.result === "WIN";
-    const time = parseSeconds(w.time, 2, 10, DEFAULT_OPTIONS.wheelTime);
-    const hold = parseSeconds(w.hold, 1, 10, DEFAULT_OPTIONS.wheelHold);
-    const wait = (ms) => new Promise((done) => setTimeout(done, ms));
-    renderCaption(caption, w.text, { donor: m.sponsorNickname, bj: m.bjNickname, amount: fmt(m.amount) }, m.prize);
-    const r = EventRoulette.create(document.getElementById("rocketPreviewWheel"), { theme: w.theme || opt.wheelTheme, winName: w.winName || opt.winName, loseName: w.loseName || opt.loseName });
-    r.idle();
-    stage.classList.add("show");
-    const rs = w.sound !== "off" && $("#rocketPreviewSound").prop("checked") && EventRoulette.sound;
-    return wait(350)
-      .then(function () {
-        if (rs) {
-          rs.setVolume((Number(opt.volume) || 0) / 100);
-          rs.reel(time);
-        }
-        return r.spin(win, time, rs ? rs.tick : null);
-      })
-      .then(function () {
-        if (rs) rs.stop();
-        if (typeof EventNameTags !== "undefined") EventNameTags.result(caption, win);
-        return wait(hold * 1000);
-      })
-      .then(function () {
-        stage.classList.remove("show");
-      });
-  }
-
   function onChange() {
     readForm();
     applyVisibility();
@@ -561,7 +524,7 @@ const RocketTab = (function () {
     });
     $("#tab-rocket #btn_open_pop").on("click", function () {
       const url = $("#urlCopyRocket").val();
-      if (url) openWin(url, "플렉스", 440, 660);
+      if (url) openWin(url, "플렉스", 440, 800);
     });
     $("#btnRocketEndRound").on("click", endRound);
     $("#btnRocketNewSession").on("click", newSession);
@@ -571,7 +534,6 @@ const RocketTab = (function () {
       const m = ev.data || {};
       if (m.type === "rocket:ready") sendPreview();
       else if (m.type === "rocket:busy") setTestDisabled(!!m.busy);
-      else if (m.type === "rocket:throw") previewRoulette(m);
     });
   }
 

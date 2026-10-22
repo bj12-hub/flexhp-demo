@@ -1,7 +1,9 @@
 // FlexTV 도우미 · FLEXTV 이벤트 OBS 위젯 (내부 이름은 rocket: 주소 /pages/rocket · 소켓 'rocket' · API /api/pages/rocket)
 // 서버(RocketService)가 보내는 socket.io 'rocket' 이벤트를 받은 순서대로 연출한다.
 // 추첨은 서버가 하고, 여기서는 결과를 받아 3 · 2 · 1 → 실패 / 성공을 보여 준다.
-// 방송 화면에는 FLEXTV 로고(메인 이미지) · 목표 · 남은 양과 맨 위 누적 당첨 금액만 보여 준다(회차는 보여 주지 않는다).
+// OBS 소스 440 × 800(URL 하나)에 두 요소가 따로 들어 있다.
+//  위 440 × 660: 늘 떠 있는 목표 UI — FLEXTV 로고(메인 이미지) · 목표 · 남은 양과 맨 위 누적 당첨 금액(회차는 보여 주지 않는다)
+//  아래 440 × 140: 룰렛 칸 — 도전 때만 '후원자 → 지정 BJ' 이름표 문구와 룰렛이 3 · 2 · 1과 같은 때 돌고 결과 뒤 사라진다
 // 작은 안내 글자는 방송에서 읽히지 않아 넣지 않는다.
 // 에너지(목표까지 쌓인 후원)와 당첨 금액(지정 BJ 후원 × 비율, 기본 7%)은 엑셀 회차가 바뀌어도 이어지고,
 // 성공하면 둘 다 0부터 다시 쌓인다(새 방송이어도 0부터). 성공 뒤 기다리지 않고 바로 다음 후원부터 다시 충전한다.
@@ -29,14 +31,14 @@ const DEFAULT_OPTIONS = {
   rate: 1,
   volume: 70,
   fx: { count: true, launch: true, fail: true },
-  wheelOn: true, // 룰렛은 이 위젯이 아니라 후원 알림 위젯에서 돈다
+  wheelOn: true, // 룰렛은 이 위젯 아래 룰렛 칸에서 도전 때만 돈다(목표 UI와 따로 있는 요소)
   wheelTheme: "normal", // 룰렛 모양(배너형): normal · gold · xmas
   wheelTime: 4, // 룰렛 회전 시간(초)
   wheelHold: 3, // 결과 표시 시간(초)
   wheelVoice: false, // 룰렛 결과 음성
   winName: "성공",
   loseName: "실패",
-  wheelText: "{닉네임}님 → {BJ} 도전! 결과는?", // 후원 알림 위젯 룰렛 위 문구({닉네임} · {BJ} 는 이름표)
+  wheelText: "{닉네임}님 → {BJ}", // 룰렛 칸 위 문구({닉네임} · {BJ} 는 이름표, 닉네임 최대 10글자)
   wheelSound: "on",
 };
 
@@ -70,10 +72,12 @@ const bjNames = {};
 
 // ─────────────── 화면 크기 · 표시 ───────────────
 function fitToWindow() {
-  const k = Math.min(window.innerWidth / 440, window.innerHeight / 660) || 1;
+  const k = Math.min(window.innerWidth / 440, window.innerHeight / 800) || 1;
   $id("rocketRoot").style.transform = `scale(${k})`;
 }
 window.addEventListener("resize", fitToWindow);
+// 숨은 탭 안 미리보기처럼 크기 0으로 열린 뒤 보이게 될 때도 다시 맞춘다
+if (window.ResizeObserver) new ResizeObserver(fitToWindow).observe(document.documentElement);
 fitToWindow();
 
 const money = (n) => `${fmt(n)}${S.unit}`;
@@ -305,9 +309,8 @@ function alertEvent(kind, e) {
   else if (OPT.sound === "voice") speak(fill(t.text, e));
 }
 
-// ─────────────── 룰렛: 이 위젯에는 띄우지 않는다 ───────────────
-// 이 위젯은 늘 떠 있는 목표 UI 다. 룰렛은 따로, 후원 알림 위젯(pages/info.html)에서 도전 때만 돈다.
-// 여기서는 그 룰렛이 멈출 때에 맞춰 결과 연출을 보여 주려고 기다리기만 한다.
+// ─────────────── 룰렛 칸(pages/event_roulette.js · pages/event_nametag.js) ───────────────
+// 목표 UI와 따로 있는 요소로, 같은 위젯 아래 칸에서 도전 때만 위 문구(후원자 → 지정 BJ 이름표)와 함께 돈다.
 const clampNum = (v, a, b, d) => {
   const n = Math.round(Number(v));
   return Number.isFinite(n) ? Math.max(a, Math.min(b, n)) : d;
@@ -322,17 +325,73 @@ function wheelOf(e) {
   w.hold = clampNum(w.hold, 1, 10, DEFAULT_OPTIONS.wheelHold);
   return w;
 }
-async function waitWheel(e) {
-  const w = wheelOf(e);
-  // 미리보기: 부모 창(이벤트 안내 페이지)이 따로 그리는 룰렛 · 이름표를 같은 때 돌릴 수 있게 알린다
-  if (isPreview && window.parent !== window && w.on) {
-    window.parent.postMessage(
-      { type: "rocket:throw", result: e.result, sponsorNickname: e.sponsorNickname, bjNickname: e.bjNickname || bjNames[String(e.bjMemberId)] || "", amount: e.amount, prize: fmt(S.prize) + S.unit, wheel: w },
-      window.location.origin
-    );
+let roulette = null;
+let rouletteKey = "";
+let resultAt = 0;
+let resultHold = 0;
+function rouletteFor(w) {
+  const theme = EventRoulette.themeOf(w.theme);
+  const key = [theme, w.winName, w.loseName].join("|");
+  if (!roulette || key !== rouletteKey) {
+    roulette = EventRoulette.create($id("evZoneWheel"), { theme, winName: w.winName, loseName: w.loseName });
+    rouletteKey = key;
   }
-  // 룰렛을 쓰면 후원 알림 위젯의 룰렛이 멈추는 때, 안 쓰면 카운트다운이 끝나는 때 결과를 보여 준다
-  await sleep(w.on ? Math.max(3400, w.time * 1000 + 200) : 3400);
+  return roulette;
+}
+// 위 문구: {닉네임} → 후원자 이름표, {BJ} → 지정 BJ 이름표
+function zoneCaption(e, w) {
+  const el = $id("evZoneText");
+  const d = { donor: e.sponsorNickname, bj: e.bjNickname || bjNames[String(e.bjMemberId)] || "", amount: fmt(e.amount), prize: money(S.prize) };
+  if (typeof EventNameTags !== "undefined") {
+    EventNameTags.caption(el, w.text, d);
+    EventNameTags.result(el, null);
+    return;
+  }
+  el.textContent = String(w.text || DEFAULT_OPTIONS.wheelText)
+    .replace("{닉네임}", d.donor || "후원자")
+    .replace("{BJ}", d.bj || "BJ")
+    .replace("{렉스}", d.amount)
+    .replace("{당첨금액}", d.prize);
+}
+// 룰렛을 쓰면 아래 칸에 문구와 룰렛이 튀어나와 3 · 2 · 1과 같은 때 돌고 서버 결과 칸에 멈춘다. 안 쓰면 카운트다운 길이만 기다린다
+async function spinZone(e) {
+  const w = wheelOf(e);
+  resultAt = 0;
+  if (!w.on || typeof EventRoulette === "undefined") {
+    await sleep(3400);
+    return;
+  }
+  const win = e.result === "WIN";
+  const zone = $id("evZone");
+  zone.classList.remove("hide");
+  retrigger(zone, "show");
+  zoneCaption(e, w);
+  const r = rouletteFor(w);
+  r.idle();
+  await sleep(350);
+  // 룰렛 소리: 모터가 돌고 칸마다 카지노 음, 멈출 때 철컥
+  const reelSound = w.sound === "on";
+  if (reelSound) machine("reel", w.time);
+  await r.spin(win, w.time, reelSound ? () => machine("tick") : null);
+  if (reelSound) machine("stop");
+  if (typeof EventNameTags !== "undefined") EventNameTags.result($id("evZoneText"), win);
+  resultAt = performance.now();
+  resultHold = w.hold * 1000;
+  if (w.voice) speak(`${win ? w.winName : w.loseName}!`);
+}
+// 결과 표시 시간만큼 남겨 둔 뒤 룰렛 칸을 비운다
+async function hideZone() {
+  if (resultAt) {
+    const left = resultHold - (performance.now() - resultAt);
+    if (left > 0) await sleep(left);
+  }
+  resultAt = 0;
+  const zone = $id("evZone");
+  if (!zone.classList.contains("show")) return;
+  zone.classList.remove("show");
+  zone.classList.add("hide");
+  await sleep(450);
+  zone.classList.remove("hide");
 }
 
 // ─────────────── 연출 ───────────────
@@ -447,10 +506,13 @@ async function onThrow(e) {
   ov.classList.add("busy");
   render(true);
   alertEvent("throw", e);
-  if (OPT.fx.count) FX.power();
-  await Promise.all([waitWheel(e), countdown()]);
+  // 룰렛 소리가 나면 모터 소리가 겹치지 않게 충전음은 뺀다
+  const w = wheelOf(e);
+  if (OPT.fx.count && !(w.on && w.sound === "on")) FX.power();
+  await Promise.all([spinZone(e), countdown()]);
   if (e.result === "WIN") await igniteSuccess(e);
   else await igniteFail(e);
+  await hideZone();
   ov.classList.remove("busy");
   render();
 }
